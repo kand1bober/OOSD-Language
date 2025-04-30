@@ -1,0 +1,12 @@
+all: build 
+
+build: compiler
+
+compiler: 
+	cd Lang && make
+
+run: 
+	cd Lang && ./Differenciator
+
+clean: 
+	cd Lang && make clean
