@@ -1,51 +1,6 @@
-#include "../Headers/tree_input.h"
-#include "../Headers/tree_functions.h"
-
-//------------------DRIVER-----------------------
-enum TreeErrors MakeTreeData( struct File_text* dump, struct File_text* file, struct Tree* tree )
-{
-    ON_DEBUG( printf(RED "====== START MakeTreeData ======\n" DELETE_COLOR); )
-
-    //-------------------FILE WORK-------------------
-    char filepath[256] = {};
-    GetFilePath( filepath, tree_data_name_old);
-    FILE* stream = fopen( filepath, "r" );
-
-    struct stat file_info = {};
-    stat( filepath, &file_info );
-    unsigned long int size_of_stream = (unsigned long int)file_info.st_size;
-    file->stream_size = size_of_stream;
-
-    if( file->stream_size > 0 )
-    {
-        file->buffer = (char*)calloc( size_of_stream + 1, sizeof(char) );
-        fseek(stream, sizeof(char) * 0L,  SEEK_SET);
-        fread( (void*)file->buffer, sizeof(char), size_of_stream, stream);
-
-        //------INPUT-----------------
-        struct ParserSrc src = {};
-            //----Init------
-            src.p = 0;
-            src.old_p = 0;
-            strcpy( src.s, file->buffer );
-            src.tree = tree;
-            //--------------
-
-        Node_t* answer = nullptr;
-        GetG( &src );
-        //----------------------------
-
-        fclose(stream);
-        free( file->buffer );
-    }
-
-    return GOOD_INPUT;
-}
-//-----------------------------------------------
-
 
 //------------RECURSIVE DESCENT------------------
-void GetG( struct ParserSrc* src )
+void GetG(struct ParserSrc* src)
 {
     if( src->s[src->p] != '$' )
     {
