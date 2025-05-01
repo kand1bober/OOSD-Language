@@ -5,7 +5,7 @@
 
 
 //-----------------------------------------------
-void LexicalAnalysis(char* filename)
+StrList* LexicalAnalysis(const char* filename)
 {
     Lexer lexer = {};
 
@@ -14,16 +14,18 @@ void LexicalAnalysis(char* filename)
     MakeAnalysis(&lexer);
 
     CloseLexer(&lexer, filename);
+
+    return lexer.list;
 }
 //-----------------------------------------------
 
 
 //-----------------------------------------------
-void InitLexer(Lexer* lexer, char* filename)
+void InitLexer(Lexer* lexer, const char* filename)
 {
     OpenFile(&lexer->file, filename);
  
-    lexer->list = ListCtor();
+    lexer->list = StrListCtor();
     lexer->list_size = 0;
 
     lexer->colomn = 0;
@@ -32,7 +34,7 @@ void InitLexer(Lexer* lexer, char* filename)
 }
 
 
-void CloseLexer(Lexer* lexer, char* filename)
+void CloseLexer(Lexer* lexer, const char* filename)
 {
     /*
     * leaving functions ...
@@ -50,7 +52,7 @@ void MakeAnalysis(Lexer* lexer)
     wchar_t symbol = 0;
 
     wchar_t* code = lexer->pos;             // 
-    List* list = lexer->list;               // 
+    StrList* list = lexer->list;            // 
     size_t list_size = lexer->list_size;    //
 
     while (code != code + lexer->file.size)
@@ -65,7 +67,7 @@ void MakeAnalysis(Lexer* lexer)
 }             
 
 
-void ReadLexem(wchar_t* code, List* list, size_t* list_size)
+void ReadLexem(wchar_t* code, StrList* list, size_t* list_size)
 {
     wchar_t lexem[256] = {0};
     wchar_t* lexem_ptr = lexem;
@@ -78,25 +80,7 @@ void ReadLexem(wchar_t* code, List* list, size_t* list_size)
         lexem_ptr++;
     }
 
-    ListAdd(list, lexem, *list_size);
+    StrListAdd(list, lexem, *list_size);
     list_size++;
 }
 //-----------------------------------------------
-
-
-// void ReadToken(Lexer* lexer, Token* token)
-// {
-//     SkipSpaces(lexer->pos);
-
-//     wchar_t head_symbol = 0;
-//     switch (head_symbol)
-//     {
-    
-//     }
-
-//     SkipSpaces(lexer->pos);
-// }
-
-// wchar_t symbol = L'а';
-
-

@@ -8,7 +8,7 @@
 // }
 
 
-void OpenFile(FileInfo* file_info, char* filename)
+void OpenFile(FileInfo* file_info, const char* filename)
 {
     FILE* file = fopen("../filename", "r");
 

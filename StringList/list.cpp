@@ -1,9 +1,9 @@
 #include "list.h"
 
-List_t* ListCreateNode (const wchar_t* string)
+StrList* StrListCreateNode (const wchar_t* string)
 {
     int str_len = wcslen(string); 
-    List_t* new_node = (List_t* )malloc( sizeof(List_t) + (str_len + 1) * sizeof(wchar_t) );
+    StrList* new_node = (StrList* )malloc( sizeof(StrList) + (str_len + 1) * sizeof(wchar_t) );
 
     if (!new_node)
     {   
@@ -21,9 +21,9 @@ List_t* ListCreateNode (const wchar_t* string)
 }
 
 
-List_t* ListCtor ()
+StrList* StrListCtor ()
 {
-    List_t* phantom = ListCreateNode (LIST_POISON);
+    StrList* phantom = StrListCreateNode (STR_LIST_POISON);
 
     phantom->next = phantom;
     phantom->prev = phantom;
@@ -32,10 +32,10 @@ List_t* ListCtor ()
 }
 
 
-ListInfo_t ListDtor (List_t* list) 
+StrListInfo_t StrListDtor (StrList* list) 
 {
-    List_t* curr_node = list;
-    List_t* next_node = curr_node->next;
+    StrList* curr_node = list;
+    StrList* next_node = curr_node->next;
 
     while (curr_node->next != list)
     {
@@ -46,13 +46,13 @@ ListInfo_t ListDtor (List_t* list)
 
     free (curr_node);
 
-    return kGoodList;
+    return kGoodStrList;
 }
  
 
-List_t* ListGetNode (List_t* list, int number)
+StrList* StrListGetNode (StrList* list, int number)
 {
-    List_t* curr_node = list;
+    StrList* curr_node = list;
 
     for (int i = 0; i < number; i++)
     {
@@ -70,11 +70,11 @@ List_t* ListGetNode (List_t* list, int number)
 *
 * 3rd arg -- position in the list (if you want to add in the end, 3rd arg = size of list)
 */
-ListInfo_t ListAdd (List_t* list, const wchar_t* string, size_t number)
+StrListInfo_t StrListAdd (StrList* list, const wchar_t* string, size_t number)
 {
-    List_t* new_node = ListCreateNode (string);
+    StrList* new_node = StrListCreateNode (string);
 
-    List_t* tmp_node = ListGetNode (list, number);
+    StrList* tmp_node = StrListGetNode (list, number);
 
     new_node->prev = tmp_node;
     new_node->next = tmp_node->next;
@@ -82,20 +82,20 @@ ListInfo_t ListAdd (List_t* list, const wchar_t* string, size_t number)
     tmp_node->next->prev = new_node;
     tmp_node->next = new_node;
 
-    return kGoodList;
+    return kGoodStrList;
 }       
 
 
-ListInfo_t ListDelete (List_t* list, int number)
+StrListInfo_t StrListDelete (StrList* list, int number)
 {
-    List_t* tmp_node = ListGetNode( list, number );
+    StrList* tmp_node = StrListGetNode( list, number );
 
     tmp_node->prev->next = tmp_node->next;
     tmp_node->next->prev = tmp_node->prev;
 
     free( tmp_node );
 
-    return kGoodList;
+    return kGoodStrList;
 }
 
 
@@ -106,10 +106,10 @@ ListInfo_t ListDelete (List_t* list, int number)
 *
 * return -- number of elem node, if found; (< 0), if not found
 */
-int ListFindNode (List_t* list, const wchar_t* string)
+int StrListFindNode (StrList* list, const wchar_t* string)
 {
-    List_t* tmp_node = list->next;
-    List_t* next_node = nullptr;
+    StrList* tmp_node = list->next;
+    StrList* next_node = nullptr;
     int iter = 0;
 
     while (1)

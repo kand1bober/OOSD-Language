@@ -23,7 +23,7 @@ typedef struct
     size_t size;
 } FileInfo;
 
-void OpenFile(FileInfo* file_info, char* filename);
+void OpenFile(FileInfo* file_info, const char* filename);
 void CloseFile(FileInfo* file_info);
 
 void SkipSpaces(wchar_t* str);
