@@ -12,11 +12,9 @@ typedef enum
     kRightBracket,      // )
     kLeftCurlyBracket,  // {
     kRightCurlyBracket, // }
-
     kIf = 11,           // if    
     kWhile = 12,        // while   
     kEqual = 13,        // "="  
- 
     kSin = 21,          // sin
     kCos,               // cos
     kFloor,             // floor 
@@ -26,7 +24,6 @@ typedef enum
     kDiv,               // / 
     kDiff,              // diff 
     kSqrt,              // sqrt
-
     kEcmp = 31,         // "=="
     kBcmp,              // "<"
     kAcmp,              // ">"
@@ -36,15 +33,11 @@ typedef enum
     kAND,               // "&&"
     kOR,                // "||"
     kNOT,               // "!"
- 
     kStep = 41,         // consistent execution ";"
     kEnum,              // enumeration ","
-
     kNumber = 51,       // float number
-
     kIn = 61,           // input
     kOut,               // output
-
     kRet = 71,          // ret
     kBreak,             // break
     kContinue,          // continue
