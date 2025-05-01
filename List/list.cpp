@@ -1,9 +1,9 @@
 #include "list.h"
 
-List_t* ListCreateNode (const char* string)
+List_t* ListCreateNode (const wchar_t* string)
 {
-    int str_len = strlen(string); 
-    List_t* new_node = (List_t* )malloc( sizeof(List_t) + str_len + 1);
+    int str_len = wcslen(string); 
+    List_t* new_node = (List_t* )malloc( sizeof(List_t) + (str_len + 1) * sizeof(wchar_t) );
 
     if (!new_node)
     {   
@@ -15,7 +15,7 @@ List_t* ListCreateNode (const char* string)
     new_node->next = nullptr;
     new_node->prev = nullptr;
 
-    strncpy(GET_NODE_DATA(new_node), string, str_len + 1);
+    wcsncpy(GET_NODE_DATA(new_node), string, str_len + 1);
 
     return new_node;
 }
@@ -70,7 +70,7 @@ List_t* ListGetNode (List_t* list, int number)
 *
 * 3rd arg -- position in the list (if you want to add in the end, 3rd arg = size of list)
 */
-ListInfo_t ListAdd (List_t* list, const char* string, int number)
+ListInfo_t ListAdd (List_t* list, const wchar_t* string, size_t number)
 {
     List_t* new_node = ListCreateNode (string);
 
@@ -106,7 +106,7 @@ ListInfo_t ListDelete (List_t* list, int number)
 *
 * return -- number of elem node, if found; (< 0), if not found
 */
-int ListFindNode (List_t* list, const char* string)
+int ListFindNode (List_t* list, const wchar_t* string)
 {
     List_t* tmp_node = list->next;
     List_t* next_node = nullptr;
@@ -120,7 +120,7 @@ int ListFindNode (List_t* list, const char* string)
         {
             if (tmp_node != list)
             {
-                if (!strcmp( GET_NODE_DATA(tmp_node), string))
+                if (!wcscmp( GET_NODE_DATA(tmp_node), string))
                 {
                     return iter;
                 }

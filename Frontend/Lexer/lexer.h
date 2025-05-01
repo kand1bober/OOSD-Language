@@ -1,5 +1,6 @@
 #include <sys/stat.h>
-#include "stdlib.h"
+#include <stdlib.h>
+#include <wchar.h>
 
 #include "../../Utilities/utilities.h"
 #include "../../List/list.h"
@@ -93,9 +94,9 @@ typedef struct
 {   
     FileInfo file;
 
-    size_t pos;       // position in array
-    size_t line;      // y position
-    size_t colomn;    // x position
+    wchar_t* pos;        // position in array
+    size_t line;      // y position  // just for debug
+    size_t colomn;    // x position  // just for debug
 
     List* list;
     size_t list_size;
@@ -108,6 +109,7 @@ void InitLexer(Lexer* lexer, char* filename);
 void CloseLexer(Lexer* lexer, char* filename);
 
 void MakeAnalysis(Lexer* lexer);
+void ReadLexem(wchar_t* code, List* list, size_t* list_size);
 
 #endif 
 

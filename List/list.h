@@ -3,10 +3,12 @@
 #include <stdint.h>
 #include <string.h>
 
+#include <wchar.h>
+
 #ifndef LIST_FUNC_HEADER
 #define LIST_FUNC_HEADER
 
-    const char LIST_POISON[] = "BADBABA";
+    const wchar_t LIST_POISON[] = L"BADBABA";
 
     typedef enum ListInfo
     {
@@ -21,10 +23,10 @@
         int str_len;      // without '\0'
     } List_t;
 
-    #define GET_NODE_DATA(node_ptr) (char*)node_ptr + sizeof(List_t) // makes offset from struct beginning
+    #define GET_NODE_DATA(node_ptr) (wchar_t*)node_ptr + sizeof(List_t) // makes offset from struct beginning
 
     //-------------------------------------------
-    List_t* ListCreateNode (const char* string);
+    List_t* ListCreateNode (const wchar_t* string);
 
     List_t* ListCtor();
 
@@ -32,11 +34,11 @@
 
     List_t* ListGetNode (List_t* list, int number);
 
-    ListInfo_t ListAdd (List_t* list, const char* string, int number);
+    ListInfo_t ListAdd (List_t* list, const wchar_t* string, size_t number);
 
     ListInfo_t ListDelete (List_t* list, int number);
 
-    int ListFindNode (List_t* list, const char* string);
+    int ListFindNode (List_t* list, const wchar_t* string);
     //-------------------------------------------
 
 #endif

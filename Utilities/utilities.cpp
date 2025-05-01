@@ -23,7 +23,7 @@ void OpenFile(FileInfo* file_info, char* filename)
     size_t size = (size_t)info.st_size + 1;
     file_info->size = size;
 
-    char* array = (char*)calloc(size, sizeof(char));
+    wchar_t* array = (wchar_t*)calloc(size, sizeof(wchar_t));
 
     fread(array, 1, size, file_info->file);
 
@@ -44,12 +44,10 @@ void CloseFile(FileInfo* file_info)
 }
 
 
-char* SkipSpaces(char* str)
+void SkipSpaces(wchar_t* str)
 {
     while(*str == ' ' || *str == '\t' || *str == '\n')
     {
         str++;
     }
-
-    return str;
 }

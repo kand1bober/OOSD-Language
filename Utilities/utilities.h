@@ -19,14 +19,14 @@
 typedef struct
 {   
     FILE* file;
-    char* code;
+    wchar_t* code;
     size_t size;
 } FileInfo;
 
 void OpenFile(FileInfo* file_info, char* filename);
 void CloseFile(FileInfo* file_info);
 
-char* SkipSpaces(char* str);
+void SkipSpaces(wchar_t* str);
 
 #endif 
 
