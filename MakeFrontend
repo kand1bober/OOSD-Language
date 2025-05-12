@@ -1,12 +1,37 @@
-all: build 
 
-build: compiler
+CC = g++
 
-compiler: 
-	cd Lang && make
+CFLAGS = -fsanitize=address,undefined -D _DEBUG -O0 -Wall -Wextra
 
-run: 
-	cd Lang && ./Differenciator
+SOURCES_DIR_FRONT = Frontend/Lexer
+SOURCES_FRONT = $(wildcard $(SOURCES_DIR_FRONT)/*cpp ) 
+OBJECTS_FRONT = $(SOURCES_FRONT:.cpp =.o) 
 
-clean: 
-	cd Lang && make clean
+SOURCES_DIR_LIST = StringList
+SOURCES_LIST = $(wildcard $(SOURCES_DIR_LIST)/*cpp ) 
+OBJECTS_LIST = $(SOURCES_LIST:.cpp =.o) 
+
+SOURCES_DIR_UTILITIES = Utilities
+SOURCES_UTILITIES = $(wildcard $(SOURCES_DIR_UTILITIES)/*cpp ) 
+OBJECTS_UTILITIES = $(SOURCES_UTILITIES:.cpp=.o) 
+
+OBJECTS_MAIN = Frontend/main.o
+
+EXECUTABLE = Front
+
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS_FRONT) $(OBJECTS_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_MAIN)
+	$(CC) $(OBJECTS_FRONT) $(OBJECTS_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_MAIN) $(CFLAGS) -o $(EXECUTABLE)
+
+
+%.o: %.cpp
+	$(CC) -c $(CFLAGS) -IFrontend/Lexer -IStringList -IUtilities $< -o $@ 
+
+Frontend/main.o: Frontend/main.cpp
+	$(CC) -c $(CFLAGS) $< -o $@
+
+clean:
+	@rm $(EXECUTABLE) /home/vyacheslav/Language/Utilities/utilities.o /home/vyacheslav/Language/Frontend/main.o
+

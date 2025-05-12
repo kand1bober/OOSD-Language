@@ -3,40 +3,18 @@
 #include <stdint.h>
 #include <string.h>
 #include <assert.h>
+#include <math.h>
 
-#include "../Frontend/Lexer/lexer.h"
+#include "../Frontend/keywords.h"
+#include "../Utilities/utilities.h"
+#include "configuration.h"
 
 #ifndef TREE_HEADER
 #define TREE_HEADER
 
 const uint64_t POISON = 0xBADBABA;
 
-typedef union
-{
-    double num;
-    char* str;
-    
-} Data_t;
-
-typedef enum
-{
-    kConstant = 1,
-    kIdentifier,
-    kKeyword,
-    kFunctionDefinition,
-    kParameters,
-    kVarDeclaration,
-    kCall,
-} NodeTypes;
-
-typedef struct node_t 
-{   
-    Data_t data;
-    NodeTypes type;
-    node_t* left;
-    node_t* right;
-    node_t* parent;
-} Node_t;
+typedef uint64_t Data;
 
 typedef enum 
 {
@@ -44,20 +22,56 @@ typedef enum
     kBadTree,
 } TreeInfo;
 
-enum Direction
+typedef enum 
 {
     kLeft = 1,
     kRight = 2,
     kNoBranch = 3,
-};
+} Direction;
+
+typedef enum
+{
+    kNoType = 0, // default/initial
+
+    kConst = 1,
+    kIdentifier = 2,
+    kKeyWord = 3,
+    kFuncDef = 4,
+    kParam = 5,
+    kVarDecl = 6,
+    kCall = 7,
+} NodeTypes;
+
+typedef struct node_t 
+{   
+    Data data;
+    NodeTypes type;
+    node_t* left;
+    node_t* right;
+    node_t* parent;
+} Node;
 
 typedef struct
 {
-    Data_t data;
-    KeyWords type;
-    TreeInfo info;
-    Node_t* root;
-} Tree_t;
+    Data data;           
+    NodeTypes type;          
 
+    TreeInfo info;
+    Node* root;
+} Tree;
+
+//-----------------------------------------------
+Tree* TreeCtor();
+TreeInfo TreeDtor(Tree* tree);
+
+Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, Data data, NodeTypes type);
+TreeInfo InsertLeave (Tree* tree, Node* parent, Direction branch, Node* to_connect);
+TreeInfo InsertNode(Node* left, Node* right, Node* node);
+void FreeTree (Tree* tree, Node* node);
+TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type);
+TreeInfo FindNode(Node* node_search, Data to_find, Node** answer);
+Node* CopyNode (Tree* tree, Node* node_to_copy);
+Node* CopyBranch (Tree* tree, Node* to_copy, Node* parent);
+//-----------------------------------------------
 
 #endif

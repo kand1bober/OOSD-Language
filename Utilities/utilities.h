@@ -1,20 +1,27 @@
 #include <sys/stat.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <ctype.h>
+#include <wchar.h> 
+#include <cwchar> 
+#include <wctype.h>
+#include <locale.h>
 
 #ifndef UTILITIES_HEADER
 #define UTILITIES_HEADER
 
-#define DELETE_COLOR "\u001b[0m"
-#define BLACK "\u001b[30m"
-#define RED "\u001b[31;1m"
-#define ORANGE "\033[93m"
-#define GREEN "\u001b[32;1m"
-#define YELLOW "\u001b[33;1m"
-#define SINIY "\u001b[34m"
-#define PURPLE "\u001b[35;1m"
-#define BLUE "\033[96m"
-#define WHITE "\u001b[37;1m"
+#define DELETE_COLOR L"\u001b[0m"
+#define BLACK        L"\u001b[30m"
+#define RED          L"\u001b[31;1m"
+#define ORANGE       L"\033[93m"
+#define GREEN        L"\u001b[32;1m"
+#define YELLOW       L"\u001b[33;1m"
+#define SINIY        L"\u001b[34m"
+#define PURPLE       L"\u001b[35;1m"
+#define BLUE         L"\033[96m"
+#define WHITE        L"\u001b[37;1m"
+
+#define kSizeOfCyrillic 2
 
 typedef struct
 {   
@@ -26,7 +33,7 @@ typedef struct
 void OpenFile(FileInfo* file_info, const char* filename);
 void CloseFile(FileInfo* file_info);
 
-void SkipSpaces(wchar_t* str);
+wchar_t* SkipSpaces(wchar_t* ptr);
 
 #endif 
 

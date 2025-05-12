@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
-
 #include <wchar.h>
+
+#include "../Frontend/keywords.h"
+
 
 #ifndef NUMBER_LIST_FUNC_HEADER
 #define NUMBER_LIST_FUNC_HEADER
@@ -20,11 +22,12 @@
     {
         struct num_list* next; 
         struct num_list* prev;
-        double data;      
+        KeyCode type;           // instruction 
+        uint64_t data;          // number if node == kNumber(kConst in Tree)
     } NumList;
 
     //-------------------------------------------
-    NumList* NumListCreateNode (const double data);
+    NumList* NumListCreateNode (const uint64_t data, const int type);
 
     NumList* NumListCtor();
 
@@ -32,7 +35,7 @@
 
     NumList* NumListGetNode (NumList* list, int number);
 
-    NumListInfo_t NumListAdd (NumList* list, const double data, size_t number);
+    NumListInfo_t NumListAdd (NumList* list, uint64_t data, KeyCode type, size_t number);
 
     NumListInfo_t NumListDelete (NumList* list, int number);
 

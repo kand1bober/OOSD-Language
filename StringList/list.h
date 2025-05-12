@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <filesystem>
 
 #include <wchar.h>
 
@@ -23,7 +24,7 @@
         int str_len;      // without '\0'
     } StrList;
 
-    #define GET_NODE_DATA(node_ptr) (wchar_t*)node_ptr + sizeof(StrList) // makes offset from struct beginning
+    #define GET_NODE_DATA(node_ptr) (wchar_t*)((char*)node_ptr + sizeof(StrList)) // makes offset from struct beginning
 
     //-------------------------------------------
     StrList* StrListCreateNode (const wchar_t* string);

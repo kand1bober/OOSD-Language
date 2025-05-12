@@ -1,487 +1,462 @@
+#include "syntax.h"
+#include <cstdint>
 
-//------------RECURSIVE DESCENT------------------
-void GetG(struct ParserSrc* src)
-{
-    if( src->s[src->p] != '$' )
-    {
-        SyntaxError (__FILE__, __PRETTY_FUNCTION__, __LINE__);
-        exit(0);
-    }
-    src->p++;
+// //------------RECURSIVE DESCENT------------------
+// /*
+// * Get  Assignment   
+// */
+// void GetA(RecursiveDescent* src)
+// {
 
-    src->tree->root = GetE( src );
+// }
+
+
+// /*
+// * Get Begin/End
+// */
+// void GetG(RecursiveDescent* src)
+// {
+//     if (src->s[src->p] != '$')
+//         SYNTAX_ERROR
+
+//     src->p++;
+
+//     src->tree->root = GetE( src );
     
-    if( src->s[src->p] != '$' )
-    {
-        printf(RED "Syntax error in the end of GetG\n" DELETE_COLOR);
-        exit(0);
-    }
-    src->p++;
-}
+//     if( src->s[src->p] != '$' )
+//         SYNTAX_ERROR
+
+//     src->p++;
+// }
 
 
-Node_t* GetE( struct ParserSrc* src )
-{
-    Node_t* val = GetT( src );
+// /*
+// * Get Plus/Minus
+// */
+// Node* GetE(RecursiveDescent* src)
+// {
+//     Node* val = GetT(src);
  
-    while( (src->s[src->p] == '+') || (src->s[src->p] == '-') )
-    {
-        int op = src->p;
+//     while( (src->s[src->p] == '+') || (src->s[src->p] == '-') )
+//     {
+//         int op = src->p;
 
-        src->p++;
-        Node_t* val2 = GetT( src );
-        if( src->s[op] == '+' )
-        {
-            Node_t* tmp_node = nullptr;
-            Data_t value = {};
-            value.op = kAdd;
-            tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//         src->p++;
+//         Node* val2 = GetT( src );
+//         if( src->s[op] == '+' )
+//         {
+//             Node* tmp_node = nullptr;
+//             Data_t value = {};
+//             value.op = kAdd;
+//             tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
 
-            InsertLeave( src->tree, tmp_node, LEFT, val );
-            InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+//             InsertLeave( src->tree, tmp_node, LEFT, val );
+//             InsertLeave( src->tree, tmp_node, RIGHT, val2 );
 
-            //----exchange----
-            Node_t* new_tmp = tmp_node;
-            tmp_node = val;
-            val = new_tmp;
-            //----------------
-        }
-        else
-        {
-            Node_t* tmp_node = nullptr;
-            Data_t value = {};
-            value.op = kSub;
-            tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//             //----exchange----
+//             Node* new_tmp = tmp_node;
+//             tmp_node = val;
+//             val = new_tmp;
+//             //----------------
+//         }
+//         else
+//         {
+//             Node* tmp_node = nullptr;
+//             Data_t value = {};
+//             value.op = kSub;
+//             tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
 
-            InsertLeave( src->tree, tmp_node, LEFT, val );
-            InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+//             InsertLeave( src->tree, tmp_node, LEFT, val );
+//             InsertLeave( src->tree, tmp_node, RIGHT, val2 );
 
-            //----exchange----
-            Node_t* new_tmp = tmp_node;
-            tmp_node = val;
-            val = new_tmp;
-            //----------------
-        }
-    }
+//             //----exchange----
+//             Node* new_tmp = tmp_node;
+//             tmp_node = val;
+//             val = new_tmp;
+//             //----------------
+//         }
+//     }
 
-    return val;
-}
+//     return val;
+// }
 
 
-Node_t* GetT( struct ParserSrc* src )
+// /*
+// * Get Mul/Div
+// */
+// Node* GetT(RecursiveDescent* src )
+// {
+//     Node* val = GetD( src );
+
+//     while( src->s[src->p] == '*' || src->s[src->p] == '/' )
+//     {
+//         int op = src->p;
+//         src->p++;
+//         Node* val2 = GetD( src );
+//         if( src->s[op] == '*' )
+//         {
+//             Node* tmp_node = nullptr;
+//             Data_t value = {};
+//             value.op = kMul;
+//             tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//             // val *= val2;
+//             InsertLeave( src->tree, tmp_node, LEFT, val );
+//             InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+
+//             //----exchange----
+//             Node* new_tmp = tmp_node;
+//             tmp_node = val;
+//             val = new_tmp;
+//             //----------------
+//         }
+//         else if( src->s[op] == '/' )
+//         {
+//             Node* tmp_node = nullptr;
+//             Data_t value = {};
+//             value.op = kDiv;
+//             tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//             // val *= val2;
+//             InsertLeave( src->tree, tmp_node, LEFT, val );
+//             InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+
+//             //----exchange----
+//             Node* new_tmp = tmp_node;
+//             tmp_node = val;
+//             val = new_tmp;
+//             //----------------
+//         }
+//         else 
+//             SYNTAX_ERROR
+//     }
+//     return val;
+// }
+
+
+// /*
+// * Get Power Operation 
+// */
+// Node* GetD(RecursiveDescent* src )
+// {
+//     Node* val = GetSL( src ); 
+
+//     while( src->s[src->p] == '^' )
+//     {
+//         int op = src->p;
+//         src->p++;
+//         Node* val2 = GetSL( src ); 
+
+//         Node* tmp_node = nullptr;
+//         Data_t value = {};
+//         value.op = kDeg;
+//         tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+
+//         InsertLeave( src->tree, tmp_node, LEFT, val );
+//         InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+
+//         //----exchange----
+//         Node* new_tmp = tmp_node;
+//         tmp_node = val;
+//         val = new_tmp;
+//         //----------------
+//     }
+
+//     return val;
+// }
+
+
+// /*
+// * Get Sin/Cos/Tg/Ctg/Log Operation 
+// */
+// Node* GetT(RecursiveDescent* src )
+// {
+//     Data_t value = {};
+//     Node* val1 = nullptr;
+//     Node* val2 = nullptr;
+//     Node* val = nullptr;
+
+//     switch( src->s[src->p] )
+//     {   
+//         case 's':
+//         {
+//             if (!strncmp( src->s + src->p, "sin", 3 ))
+//             {
+//                 src->p += 3;
+
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     value.op = kSin;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//                 else 
+//                     SYNTAX_ERROR
+//             }
+//             else 
+//                 SYNTAX_ERROR
+
+//             break;
+//         }
+
+//         case 'c':
+//         {
+//             if( strncmp( src->s + src->p, "cos", 3 ) == 0  )
+//             {
+//                 src->p += 3;
+
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     value.op = kCos;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//                 else
+//                     SYNTAX_ERROR
+//             }
+//             else if(  strncmp( src->s + src->p, "ctg", 3 ) == 0 )
+//             {
+//                 src->p += 3;
+
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     value.op = kCtg;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//                 else
+//                     SYNTAX_ERROR
+//             }
+//             else 
+//                 SYNTAX_ERROR
+
+//             break;
+//         }
+
+//         case 't':
+//         {
+//             if( strncmp( src->s + src->p, "tg", 2 ) == 0 )
+//             {
+//                 src->p += 2;
+
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     value.op = kTg;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//                 else
+//                     SYNTAX_ERROR
+//             }
+//             else
+//                 SYNTAX_ERROR
+
+//             break;
+//         }
+
+//         case 'e':
+//         {
+//             if( strncmp( src->s + src->p, "exp", 3 ) == 0  )
+//             {
+//                 src->p += 3;
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     value.op = kExp;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//                 else
+//                     SYNTAX_ERROR
+//             }
+//             else
+//                 SYNTAX_ERROR
+
+//             break;
+//         }
+
+//         case 'l':
+//         {
+//             if( strncmp( src->s + src->p, "log", 3 ) == 0 )
+//             {   
+//                 src->p += 3;
+
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+
+//                     val1 = GetP( src );
+
+//                     if( src->s[src->p] != ',' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR
+
+//                     src->p++;
+
+//                     value.op = kLog;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, LEFT, val1 );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//                 else
+//                     SYNTAX_ERROR
+//             }
+//             else if( strncmp( src->s + src->p, "ln", 2 ) == 0 )
+//             {
+//                 src->p += 2;
+
+//                 if( src->s[src->p] == '(' )
+//                 {
+//                     src->p++;
+//                     val2 = GetP( src ); 
+
+//                     if( src->s[src->p] != ')' )
+//                         SYNTAX_ERROR 
+
+//                     src->p++;
+
+//                     value.op = kLn;
+//                     val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
+//                     InsertLeave( src->tree, val, RIGHT, val2 );
+//                 }
+//             }
+//             else 
+//                 SYNTAX_ERROR
+
+//             break;
+//         }
+
+//         default:
+//         {
+//             val = GetP( src );
+//             break;  
+//         }
+//     }
+
+//     return val;
+// }
+
+
+/*
+* Get Bracket
+*/
+Node* GetP(RecursiveDescent* src )
 {
-    Node_t* val = GetD( src );
-
-    while( src->s[src->p] == '*' || src->s[src->p] == '/' )
+    if (src->cur_node->type == kLeftBracket)
     {
-        int op = src->p;
-        src->p++;
-        Node_t* val2 = GetD( src );
-        if( src->s[op] == '*' )
-        {
-            Node_t* tmp_node = nullptr;
-            Data_t value = {};
-            value.op = kMul;
-            tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-            // val *= val2;
-            InsertLeave( src->tree, tmp_node, LEFT, val );
-            InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+        src->cur_node = src->cur_node->next;
 
-            //----exchange----
-            Node_t* new_tmp = tmp_node;
-            tmp_node = val;
-            val = new_tmp;
-            //----------------
-        }
-        else if( src->s[op] == '/' )
-        {
-            Node_t* tmp_node = nullptr;
-            Data_t value = {};
-            value.op = kDiv;
-            tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-            // val *= val2;
-            InsertLeave( src->tree, tmp_node, LEFT, val );
-            InsertLeave( src->tree, tmp_node, RIGHT, val2 );
+        Node* val = GetE(src);
 
-            //----exchange----
-            Node_t* new_tmp = tmp_node;
-            tmp_node = val;
-            val = new_tmp;
-            //----------------
-        }
-        else 
-        {
-            printf(RED "unknown problem in %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-            exit(0);
-        }
-    }
-    return val;
-}
+        if (src->cur_node->type == kLeftBracket)
+            SYNTAX_ERROR    // closing bracket needed //TODO: SYNTAX_ERROR(CLOSING_BRACKET), enum ошибок
 
-
-Node_t* GetD( struct ParserSrc* src )
-{
-    Node_t* val = GetSL( src ); 
-
-    while( src->s[src->p] == '^' )
-    {
-        int op = src->p;
-        src->p++;
-        Node_t* val2 = GetSL( src ); 
-
-        Node_t* tmp_node = nullptr;
-        Data_t value = {};
-        value.op = kDeg;
-        tmp_node = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-
-        InsertLeave( src->tree, tmp_node, LEFT, val );
-        InsertLeave( src->tree, tmp_node, RIGHT, val2 );
-
-        //----exchange----
-        Node_t* new_tmp = tmp_node;
-        tmp_node = val;
-        val = new_tmp;
-        //----------------
-    }
-
-    return val;
-}
-
-
-Node_t* GetSL( struct ParserSrc* src )
-{
-    Data_t value = {};
-    Node_t* val1 = nullptr;
-    Node_t* val2 = nullptr;
-    Node_t* val = nullptr;
-
-    switch( src->s[src->p] )
-    {   
-        case 's':
-        {
-            if( strncmp( src->s + src->p, "sin", 3 ) == 0 )
-            {
-                src->p += 3;
-
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kSin;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-                else 
-                {
-                    printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                    exit(0);
-                }
-            }
-            else 
-            {
-                printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-            }
-
-            break;
-        }
-
-        case 'c':
-        {
-            if( strncmp( src->s + src->p, "cos", 3 ) == 0  )
-            {
-                src->p += 3;
-
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kCos;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-                else
-                {
-                    printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                    exit(0);
-                }
-            }
-            else if(  strncmp( src->s + src->p, "ctg", 3 ) == 0 )
-            {
-                src->p += 3;
-
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kCtg;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-                else
-                {
-                    printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                    exit(0);
-                }
-            }
-            else 
-            {
-                printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                exit(0);
-            }
-
-            break;
-        }
-
-        case 't':
-        {
-            if( strncmp( src->s + src->p, "tg", 2 ) == 0 )
-            {
-                src->p += 2;
-
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kTg;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-                else
-                {
-                    printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );  
-                    exit(0);
-                }
-            }
-            else
-            {
-                printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );   
-                exit(0);
-            }
-
-            break;
-        }
-
-        case 'e':
-        {
-            if( strncmp( src->s + src->p, "exp", 3 ) == 0  )
-            {
-                src->p += 3;
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kExp;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-                else
-                {
-                    printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                    exit(0);
-                }
-            }
-            else
-            {
-                printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                exit(0);
-            }
-
-            break;
-        }
-
-        case 'l':
-        {
-            if( strncmp( src->s + src->p, "log", 3 ) == 0 )
-            {   
-                src->p += 3;
-
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-
-                    val1 = GetP( src );
-
-                    if( src->s[src->p] != ',' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }   
-                    src->p++;
-
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kLog;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, LEFT, val1 );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-                else
-                {
-                    printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                    exit(0);
-                }
-            }
-            else if( strncmp( src->s + src->p, "ln", 2 ) == 0 )
-            {
-                src->p += 2;
-
-                if( src->s[src->p] == '(' )
-                {
-                    src->p++;
-                    val2 = GetP( src ); 
-
-                    if( src->s[src->p] != ')' )
-                    {
-                        printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );
-                        exit(0);
-                    }
-                    src->p++;
-
-                    value.op = kLn;
-                    val = CreateNode( src->tree, NULL, NULL, NULL, value, OP );
-                    InsertLeave( src->tree, val, RIGHT, val2 );
-                }
-            }
-            else 
-            {
-                printf(RED "Syntax error %s in %s on line %d " DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__ );  
-                exit(0);
-            }
-            break;
-        }
-
-        default:
-        {
-            val = GetP( src );
-            break;  
-        }
-    }
-
-    return val;
-}
-
-
-Node_t* GetP( struct ParserSrc* src )
-{
-    if( src->s[src->p] == '(' )
-    {
-        src->p++;
-        Node_t* val = GetE( src );
-        if( src->s[src->p] != ')' )
-        {
-            printf(RED "Syntax error in GetP\n" DELETE_COLOR);
-            exit(0);
-        }
-        src->p++;
+        src->cur_node = src->cur_node->next;
 
         return val;
     }
-    else if( '0' <= src->s[src->p] && src->s[src->p] <= '9' )
+    else if (src->cur_node->type == kNumber)
     {
-        return GetN( src );
+        return GetN(src);
     }
-    else if( src->s[src->p] == 'x' )
+    else if (src->cur_node->type == kSin  || src->cur_node->type == kCos   || src->cur_node->type == kFloor || 
+             src->cur_node->type == kPlus || src->cur_node->type == kMinus || src->cur_node->type == kMul   ||
+             src->cur_node->type == kDiv  || src->cur_node->type == kDiff  || src->cur_node->type == kSqrt  ||
+             src->cur_node->type == kPow)  // F(E)
     {
-        return GetV( src );
+        KeyCode data = kError;
+
+        switch((int)src->cur_node->type)
+        {
+            case kSin:
+                data = kSin;
+                break;
+
+
+        }
+
+        return(CreateNode(src->tree, NULL, NULL, NULL, , kConst));
     }
-    else 
+    else if (src->cur_node->type == )
     {
-        printf("Wrong input\n");
-        exit(0);
+
+    }
+    else  
+    {
+        SYNTAX_ERROR
     }
 }
 
-Node_t* GetN( struct ParserSrc* src )
-{
-    int val = 0;
-    src->old_p = src->p;
 
-    while( '0' <= src->s[src->p] && src->s[src->p] <= '9' )
-    {   
-        val = val*10 + src->s[src->p] - '0';
-        src->p++;
-    }
-    assert( src->old_p != src->p );
+/*
+* Get Number
+*/
+Node* GetN(RecursiveDescent* src )
+{    
+    src->old_node = src->cur_node;
 
-    Node_t* new_node = nullptr;
-    Data_t value = {};
-    value.num = (double)val;
-    new_node = CreateNode( src->tree, NULL, NULL, NULL, value, NUM );
+    Data val = src->cur_node->data;
+
+    Node* new_node = CreateNode(src->tree, NULL, NULL, NULL, val, kConst);
+
     return new_node;
 }
 
-Node_t* GetV (struct ParserSrc* src)
+
+/*
+* Get Identifier
+*/
+Node* GetId (RecursiveDescent* src)
 {
-    char val[2] = "";
-    src->old_p = src->p;
+    src->old_node = src->cur_node;
 
-    val[0] = src->s[src->p];
-    src->p++;
+    Data val = src->cur_node->data;
+    NodeTypes type = kNoType;
 
-    assert( src->old_p != src->p );
+    Node* new_node = CreateNode(src->tree, NULL, NULL, NULL, val, kIdentifier);
 
-    Node_t* new_node = nullptr;
-    Data_t value = {};
-    value.var = val;
-    new_node = CreateNode( src->tree, NULL, NULL, NULL, value, VAR );
     return new_node;
 }
-//-----------------------------------------------
-
-
-//-----------------------------------------------
-void SyntaxError (const char* file, const char* func, const unsigned long int line)
-{
-    printf(RED "Syntax error:" 
-               "file: %s\n"
-               "func: %s\n" 
-               "line: %d\n" DELETE_COLOR, file, func, line);
-}
-//-----------------------------------------------

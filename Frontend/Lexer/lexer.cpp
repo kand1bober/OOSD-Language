@@ -13,6 +13,8 @@ StrList* LexicalAnalysis(const char* filename)
 
     MakeAnalysis(&lexer);
 
+    ListDot(lexer.list);
+
     CloseLexer(&lexer, filename);
 
     return lexer.list;
@@ -34,12 +36,9 @@ void InitLexer(Lexer* lexer, const char* filename)
 }
 
 
-void CloseLexer(Lexer* lexer, const char* filename)
+void CloseLexer(Lexer* lexer, const char* filename) 
 {
-    /*
-    * leaving functions ...
-    *
-    */
+    StrListDtor(lexer->list);
 
     CloseFile(&lexer->file);
 }
@@ -49,38 +48,46 @@ void CloseLexer(Lexer* lexer, const char* filename)
 //-----------------------------------------------
 void MakeAnalysis(Lexer* lexer)
 {
-    wchar_t symbol = 0;
+    Lexem* lexem_arr = nullptr;
+    SplitLexems(lexer, lexem_arr);
 
-    wchar_t* code = lexer->pos;             // 
-    StrList* list = lexer->list;            // 
-    size_t list_size = lexer->list_size;    //
 
-    while (code != code + lexer->file.size)
-    {
-        SkipSpaces(code);
 
-        ReadLexem(code, list, &list_size);
-    }
-
-    lexer->pos = code;
-    lexer->list_size = list_size;
+    free(lexem_arr);
 }             
 
 
-void ReadLexem(wchar_t* code, StrList* list, size_t* list_size)
-{
-    wchar_t lexem[256] = {0};
-    wchar_t* lexem_ptr = lexem;
+void SplitLexems(Lexer* lexer, Lexem* lexem_arr)
+{   
+    wchar_t* code = lexer->pos;
+    char* char_code = (char*)code;
 
-    while (*code != ' ' || *code != '\t' || *code != '\n' )
-    {   
-        *lexem_ptr = *code;
+    size_t spaces_num = 0;
 
-        code++;
-        lexem_ptr++;
-    }
+    wprintf(L"%ls\n", code + 1);
+    // for (size_t i = 0; i < lexer->file.size; i++)
+    // {
+    //     char_code = (char*)code;
+    //     if (iswspace(*code))
+    //     {   
+    //         *code = '\0';
+    //     }
+    //     else if (iswspace(*(wchar_t*)(char_code + 2)))
+    //     {
+    //         *(wchar_t*)(char_code + 2) = '\0';
+    //     }
 
-    StrListAdd(list, lexem, *list_size);
-    list_size++;
+    //     code++;
+    // }
+
+    // lexem_arr = (Lexem*)calloc(spaces_num, sizeof(Lexem));
+
+    // code = lexer->pos;
+    // for (size_t i = 0; i < spaces_num; i++)
+    // {   
+    //     wcscpy();
+    // }
 }
+ 
 //-----------------------------------------------
+

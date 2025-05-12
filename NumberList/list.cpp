@@ -1,6 +1,6 @@
 #include "list.h"
 
-NumList* NumListCreateNode (const double data)
+NumList* NumListCreateNode (const uint64_t data, KeyCode type)
 {
     NumList* new_node = (NumList* )malloc(sizeof(NumList));
 
@@ -11,6 +11,7 @@ NumList* NumListCreateNode (const double data)
     }
 
     new_node->data = data;
+    new_node->type = type;
 
     new_node->next = nullptr;
     new_node->prev = nullptr;
@@ -21,7 +22,7 @@ NumList* NumListCreateNode (const double data)
 
 NumList* NumListCtor ()
 {
-    NumList* phantom = NumListCreateNode ((const double)NUM_LIST_POISON);
+    NumList* phantom = NumListCreateNode ((const double)NUM_LIST_POISON, kNumber);
 
     phantom->next = phantom;
     phantom->prev = phantom;
@@ -68,9 +69,9 @@ NumList* NumListGetNode (NumList* list, int number)
 *
 * 3rd arg -- position in the list (if you want to add in the end, 3rd arg = size of list)
 */
-NumListInfo_t NumListAdd (NumList* list, const double data, size_t number)
+NumListInfo_t NumListAdd (NumList* list, uint64_t data, KeyCode type, size_t number)
 {
-    NumList* new_node = NumListCreateNode(data);
+    NumList* new_node = NumListCreateNode(data, type);
 
     NumList* tmp_node = NumListGetNode(list, number);
 
@@ -104,7 +105,7 @@ NumListInfo_t NumListDelete (NumList* list, int number)
 *
 * return -- number of elem node, if found; (< 0), if not found
 */
-int NumListFindNode (NumList* list, const double data)
+int NumListFindNode (NumList* list, KeyCode key_code, const uint64_t data)
 {
     NumList* tmp_node = list->next;
     NumList* next_node = nullptr;
@@ -118,7 +119,7 @@ int NumListFindNode (NumList* list, const double data)
         {
             if (tmp_node != list)
             {
-                if (data == list->data)
+                if (key_code == list->type && list->data == data)
                 {
                     return iter;
                 }

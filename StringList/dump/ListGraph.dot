@@ -1,0 +1,14 @@
+digraph G
+{
+label="List";
+ labelloc="t";
+ fontsize=30
+ fontname="Verdana";
+ fontcolor="#FFFFFF"
+
+rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
+
+node_0x506000000020 -> node_0x506000000020 [color ="#ff6699"];
+node_0x506000000020 -> node_0x506000000020 [color ="#34cb34"];
+
+}

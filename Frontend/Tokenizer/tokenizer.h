@@ -1,9 +1,11 @@
 #include <wchar.h>
+#include <ctype.h>
+#include <wctype.h>
 
 #include "../../NumberList/list.h"
 #include "../../StringList/list.h"
-
-#include "keywords.h"
+#include "../keywords.h"
+#include "../../Utilities/utilities.h"
 
 #ifndef TOKENIZER_HEADER
 #define TOKENIZER_HEADER
@@ -22,10 +24,9 @@ typedef struct
     size_t num_list_size;
     StrList* str_list;
     size_t str_list_size;
-
 } Tokenizer;    
 
 void MakeTokenization(Tokenizer* tokenizer);
-int SearchKeyWord(const wchar_t* lexem);
+KeyCode SearchKeyWord(const wchar_t* lexem);
 
 #endif
