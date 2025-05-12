@@ -33,7 +33,8 @@ typedef struct
 void OpenFile(FileInfo* file_info, const char* filename);
 void CloseFile(FileInfo* file_info);
 
-wchar_t* SkipSpaces(wchar_t* ptr);
+wchar_t* SkipNulls(wchar_t* ptr);
+wchar_t* OverwriteSpaces(wchar_t* ptr);
 
 #endif 
 

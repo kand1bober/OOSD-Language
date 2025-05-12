@@ -7,8 +7,52 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
+{ node_0x506000000020 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000020 } | { { prev: 0x5070000001e0 } | { next: 0x508000000120 } }  "] 
+}
+node_0x508000000120 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: ячейка-из-говна } | { curr: 0x508000000120 } | { { prev: 0x506000000020 } | { next: 0x504000000010 } }  "] 
+node_0x504000000010 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: мэйн } | { curr: 0x504000000010 } | { { prev: 0x508000000120 } | { next: 0x506000000080 } }  "] 
+node_0x506000000080 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: кунимэн } | { curr: 0x506000000080 } | { { prev: 0x504000000010 } | { next: 0x5060000000e0 } }  "] 
+node_0x5060000000e0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data: кишкоблуд } | { curr: 0x5060000000e0 } | { { prev: 0x506000000080 } | { next: 0x507000000170 } }  "] 
+node_0x507000000170 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data: забаристый } | { curr: 0x507000000170 } | { { prev: 0x5060000000e0 } | { next: 0x5080000001a0 } }  "] 
+node_0x5080000001a0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 5 } | { data: ячейка-из-говна } | { curr: 0x5080000001a0 } | { { prev: 0x507000000170 } | { next: 0x503000000070 } }  "] 
+node_0x503000000070 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 6 } | { data: x } | { curr: 0x503000000070 } | { { prev: 0x5080000001a0 } | { next: 0x504000000050 } }  "] 
+node_0x504000000050 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 7 } | { data: равно } | { curr: 0x504000000050 } | { { prev: 0x503000000070 } | { next: 0x504000000090 } }  "] 
+node_0x504000000090 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 8 } | { data: 15 } | { curr: 0x504000000090 } | { { prev: 0x504000000050 } | { next: 0x5040000000d0 } }  "] 
+node_0x5040000000d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 9 } | { data: конец } | { curr: 0x5040000000d0 } | { { prev: 0x504000000090 } | { next: 0x506000000140 } }  "] 
+node_0x506000000140 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 10 } | { data: на-базу } | { curr: 0x506000000140 } | { { prev: 0x5040000000d0 } | { next: 0x5030000000a0 } }  "] 
+node_0x5030000000a0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 11 } | { data: x } | { curr: 0x5030000000a0 } | { { prev: 0x506000000140 } | { next: 0x504000000110 } }  "] 
+node_0x504000000110 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 12 } | { data: конец } | { curr: 0x504000000110 } | { { prev: 0x5030000000a0 } | { next: 0x5070000001e0 } }  "] 
+node_0x5070000001e0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 13 } | { data: с-горемыкой } | { curr: 0x5070000001e0 } | { { prev: 0x504000000110 } | { next: 0x506000000020 } }  "] 
 
-node_0x506000000020 -> node_0x506000000020 [color ="#ff6699"];
-node_0x506000000020 -> node_0x506000000020 [color ="#34cb34"];
+node_0x506000000020 -> node_0x508000000120 [color ="#ff6699"];
+node_0x506000000020 -> node_0x5070000001e0 [color ="#34cb34"];
+node_0x508000000120 -> node_0x504000000010 [color ="#ff6699"];
+node_0x508000000120 -> node_0x506000000020 [color ="#34cb34"];
+node_0x504000000010 -> node_0x506000000080 [color ="#ff6699"];
+node_0x504000000010 -> node_0x508000000120 [color ="#34cb34"];
+node_0x506000000080 -> node_0x5060000000e0 [color ="#ff6699"];
+node_0x506000000080 -> node_0x504000000010 [color ="#34cb34"];
+node_0x5060000000e0 -> node_0x507000000170 [color ="#ff6699"];
+node_0x5060000000e0 -> node_0x506000000080 [color ="#34cb34"];
+node_0x507000000170 -> node_0x5080000001a0 [color ="#ff6699"];
+node_0x507000000170 -> node_0x5060000000e0 [color ="#34cb34"];
+node_0x5080000001a0 -> node_0x503000000070 [color ="#ff6699"];
+node_0x5080000001a0 -> node_0x507000000170 [color ="#34cb34"];
+node_0x503000000070 -> node_0x504000000050 [color ="#ff6699"];
+node_0x503000000070 -> node_0x5080000001a0 [color ="#34cb34"];
+node_0x504000000050 -> node_0x504000000090 [color ="#ff6699"];
+node_0x504000000050 -> node_0x503000000070 [color ="#34cb34"];
+node_0x504000000090 -> node_0x5040000000d0 [color ="#ff6699"];
+node_0x504000000090 -> node_0x504000000050 [color ="#34cb34"];
+node_0x5040000000d0 -> node_0x506000000140 [color ="#ff6699"];
+node_0x5040000000d0 -> node_0x504000000090 [color ="#34cb34"];
+node_0x506000000140 -> node_0x5030000000a0 [color ="#ff6699"];
+node_0x506000000140 -> node_0x5040000000d0 [color ="#34cb34"];
+node_0x5030000000a0 -> node_0x504000000110 [color ="#ff6699"];
+node_0x5030000000a0 -> node_0x506000000140 [color ="#34cb34"];
+node_0x504000000110 -> node_0x5070000001e0 [color ="#ff6699"];
+node_0x504000000110 -> node_0x5030000000a0 [color ="#34cb34"];
+node_0x5070000001e0 -> node_0x506000000020 [color ="#ff6699"];
+node_0x5070000001e0 -> node_0x504000000110 [color ="#34cb34"];
 
 }

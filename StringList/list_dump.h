@@ -12,19 +12,19 @@ static const char output_graph[] = "StringList/dump/ListGraph.dot";
 static const char output_html[]  = "StringList/dump/ListGraph.html";
 
 const size_t START_OUTPUT_FILE_SIZE =  10;
-static const char default_pointer_color[] = "#FFE9C7";
-static const char pointer_left_color[] = "#9ACD32"; 
-static const char pointer_right_color[] = "#FF2B00";
+static const wchar_t default_pointer_color[] = L"#FFE9C7";
+static const wchar_t pointer_left_color[] = L"#9ACD32"; 
+static const wchar_t pointer_right_color[] = L"#FF2B00";
 
-static const char first_fillcolor[] = "#ff6699"; 
-static const char second_fillcolor[] = "#34cb34";
-static const char third_fillcolor[] = "#9966FF";
+static const wchar_t first_fillcolor[] = L"#ff6699"; 
+static const wchar_t second_fillcolor[] = L"#34cb34";
+static const wchar_t third_fillcolor[] = L"#9966FF";
 
-static const char bgcolor[] = "#ffd480";
-static const char fontcolor[] = "#FFFFFF";
+static const wchar_t bgcolor[] = L"#ffd480";
+static const wchar_t fontcolor[] = L"#FFFFFF";
 
-static const char fontname[] = "Verdana";
-static const char graph_header[] = "List";
+static const wchar_t fontname[] = L"Verdana";
+static const wchar_t graph_header[] = L"List";
 
 //-------------------------------------------------------------------
 StrListInfo_t ListDot (StrList* list);

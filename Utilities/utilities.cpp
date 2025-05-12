@@ -52,11 +52,21 @@ void CloseFile(FileInfo* file_info)
 }
 
 
-wchar_t* SkipSpaces(wchar_t* ptr)
+wchar_t* SkipNulls(wchar_t* ptr)
 {
-    while (iswspace(*ptr))
+    while (*ptr == '\0')
         ptr ++;
 
     return ptr;
 }
 
+wchar_t* OverwriteSpaces(wchar_t* ptr)
+{
+    while (iswspace(*ptr))
+    {
+        *ptr = '\0';
+        ptr++;
+    }
+
+    return ptr;
+}
