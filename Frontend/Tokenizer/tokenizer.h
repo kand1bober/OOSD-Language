@@ -4,6 +4,7 @@
 
 #include "../../NumberList/list.h"
 #include "../../StringList/list.h"
+#include "../../StringList/list_dump.h"
 #include "../keywords.h"
 #include "../../Utilities/utilities.h"
 

@@ -11,7 +11,7 @@ void LexicalAnalysis(Lexer* lexer, const char* filename)
 
     MakeAnalysis(lexer);
 
-    ListDot(lexer->list);
+    StrListDot(lexer->list);
 
     // CloseLexer(&lexer, filename);
 }
