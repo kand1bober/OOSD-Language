@@ -1,6 +1,6 @@
 #include "list_dump.h"
 
-StrListInfo_t ListDot (StrList* list)
+StrListInfo_t StrListDot (StrList* list)
 {
     FileInfo file = {};
 

@@ -27,7 +27,7 @@ static const wchar_t fontname[] = L"Verdana";
 static const wchar_t graph_header[] = L"List";
 
 //-------------------------------------------------------------------
-StrListInfo_t ListDot (StrList* list);
+StrListInfo_t StrListDot (StrList* list);
 
 StrListInfo_t BeginDotOutput (FileInfo* file);
 

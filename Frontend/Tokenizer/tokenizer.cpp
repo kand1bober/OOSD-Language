@@ -1,72 +1,58 @@
 #include "tokenizer.h"
 
-void MakeTokenization(Tokenizer* tokenizer)
+void Tokenization(Tokenizer* tokenizer)
 {
-    StrList* str_list = tokenizer->str_list->next;      //
-    size_t str_list_size = tokenizer->str_list_size;    // take from struct
+    StrList* str_list = tokenizer->str_list->next;
 
-    tokenizer->num_list = NumListCtor();                //
-    NumList* num_list = tokenizer->num_list;            // take from struct
-    size_t num_list_size = tokenizer->num_list_size;    //
+    tokenizer->num_list = NumListCtor();
+    tokenizer->num_list_size = 0;
 
-    KeyCode token_encoding = kNOP; // init
-    uint64_t token_data = 0xBADBABA; 
-    wchar_t* wrong_character = nullptr;
+    tokenizer->id_table = StrListCtor();
+    tokenizer->id_table_size = 0;
+
+    KeyCode token_type = kId;
     while (str_list != tokenizer->str_list) 
     {
-        if (iswdigit(*GET_NODE_DATA(str_list)))
+        token_type = SearchKeyWord(GET_NODE_DATA(str_list), str_list->str_len);
+        if (token_type == kId)
         {
-            token_data = wcstoull(GET_NODE_DATA(str_list), &wrong_character, 10);
-            token_encoding = kNumber;
+            StrListAdd(tokenizer->id_table, GET_NODE_DATA(tokenizer->str_list), tokenizer->id_table_size);
+            tokenizer->id_table_size++;
+            NumListAdd(tokenizer->num_list, kPtrData, {.ptr = StrListGetNode(tokenizer->id_table, tokenizer->id_table_size)}, tokenizer->num_list_size);
+            tokenizer->num_list_size++;
         }
         else  
         {
-            token_data = 0xBADBABA;
-            token_encoding = SearchKeyWord(GET_NODE_DATA(str_list));
+            NumListAdd(tokenizer->num_list, kNumData, {.number = token_type}, tokenizer->num_list_size);
+            tokenizer->num_list_size++;
         }
 
-        NumListAdd(num_list, token_data, token_encoding, num_list_size);
-        num_list_size++;
+        str_list = str_list->next;
     }   
 
-    tokenizer->num_list_size = num_list_size;   // return struct
+    StrListDot(tokenizer->id_table);
 }
 
 
-KeyCode SearchKeyWord(const wchar_t* lexem)
+KeyCode SearchKeyWord(const wchar_t* str, int str_len)
 {   
-    for (int i = 0; i < keywords_amount; i++)
+    int len_to_compare = 0;
+
+    for (int i = 0; i < kKeyWordsAmount; i++)
     {       
-        if (!wcsncmp(lexem, keyword_table[i].key_word, keyword_table[i].key_word_len))
+        len_to_compare = (str_len > keyword_table[i].key_word_len) ? str_len : keyword_table[i].key_word_len;
+        if (!wcsncmp(str, keyword_table[i].key_word, len_to_compare))
         {
             return keyword_table[i].key_code;
         }
-        else 
-        {
-            // добавить имя, не найденное в таблице ключ. слов в таблицу имён, присвоить номер 
-
-        }
-        
-        //TODO: здесь больше условий. Например несколько лексем это один токен 
     }
 
-    return kError;  // not found
+    return kId;  // keyword not found
 }
 
 
-void MakeNameTable()
+void CloseTokenizer(Tokenizer* tokenizer)
 {
-    FileInfo file_info = {};
-
-    OpenFile(&file_info, "../../name_table.txt");
-
-        
-    
+    StrListDtor(tokenizer->id_table);
+    NumListDtor(tokenizer->num_list);
 }
-
-
-void AddToNameTable()
-{
-
-}
-

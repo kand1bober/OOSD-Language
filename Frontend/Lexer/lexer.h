@@ -29,7 +29,7 @@ typedef struct
 } Lexem;
 
 //-----------------------------------------------
-StrList* LexicalAnalysis(const char* filename);
+void LexicalAnalysis(Lexer* lexer, const char* filename);
 
 void InitLexer(Lexer* lexer, const char* filename);
 void CloseLexer(Lexer* lexer, const char* filename);

@@ -1,6 +1,6 @@
 #include "list.h"
 
-NumList* NumListCreateNode (const uint64_t data, KeyCode type)
+NumList* NumListCreateNumNode (const int64_t data)
 {
     NumList* new_node = (NumList* )malloc(sizeof(NumList));
 
@@ -10,8 +10,30 @@ NumList* NumListCreateNode (const uint64_t data, KeyCode type)
         exit(1);
     }
 
-    new_node->data = data;
-    new_node->type = type;
+    new_node->data_type = kNumData;
+    new_node->data.number = data;
+    new_node->data.ptr = NULL;
+
+    new_node->next = nullptr;
+    new_node->prev = nullptr;
+
+    return new_node;
+}
+
+
+NumList* NumListCreatePtrNode (void* data)
+{
+    NumList* new_node = (NumList* )malloc(sizeof(NumList));
+
+    if (!new_node)
+    {   
+        printf("Failed to allocate new node\n");
+        exit(1);
+    }
+
+    new_node->data_type = kPtrData;
+    new_node->data.ptr = data;
+    new_node->data.number = NUM_LIST_POISON;    
 
     new_node->next = nullptr;
     new_node->prev = nullptr;
@@ -22,7 +44,7 @@ NumList* NumListCreateNode (const uint64_t data, KeyCode type)
 
 NumList* NumListCtor ()
 {
-    NumList* phantom = NumListCreateNode ((const double)NUM_LIST_POISON, kNumber);
+    NumList* phantom = NumListCreateNumNode (NUM_LIST_POISON);
 
     phantom->next = phantom;
     phantom->prev = phantom;
@@ -65,13 +87,24 @@ NumList* NumListGetNode (NumList* list, int number)
 /*
 * 1st arg -- list, where to add
 *
-* 2nd arg -- string to add 
+* 2nd arg -- type of data: num or ptr 
 *
-* 3rd arg -- position in the list (if you want to add in the end, 3rd arg = size of list)
+* 3rd arg -- data: num or ptr
+*
+* 4th arg -- position in the list (if you want to add in the end, 3rd arg = size of list)
 */
-NumListInfo_t NumListAdd (NumList* list, uint64_t data, KeyCode type, size_t number)
+NumListInfo_t NumListAdd (NumList* list, DataTypes data_type, Data data, size_t number)
 {
-    NumList* new_node = NumListCreateNode(data, type);
+    NumList* new_node = NULL;
+
+    if (data_type == kNumData)
+    {
+        new_node = NumListCreateNumNode(data.number);
+    }
+    else if (data_type == kPtrData)
+    {
+        new_node = NumListCreatePtrNode(data.ptr);
+    }
 
     NumList* tmp_node = NumListGetNode(list, number);
 
@@ -97,49 +130,3 @@ NumListInfo_t NumListDelete (NumList* list, int number)
     return kGoodNumList;
 }
 
-
-/*
-* 1st arg -- list, where to find
-* 
-* 2nd arg -- string to search 
-*
-* return -- number of elem node, if found; (< 0), if not found
-*/
-int NumListFindNode (NumList* list, KeyCode key_code, const uint64_t data)
-{
-    NumList* tmp_node = list->next;
-    NumList* next_node = nullptr;
-    int iter = 0;
-
-    while (1)
-    {   
-        next_node = tmp_node->next;
-
-        if (next_node)
-        {
-            if (tmp_node != list)
-            {
-                if (key_code == list->type && list->data == data)
-                {
-                    return iter;
-                }
-                else  
-                {
-                    tmp_node = next_node;
-                    iter++;
-                }
-            }
-            else  
-            {
-                return -1;
-            }
-        }
-        else  
-        {
-            printf("Bad list allocation");
-            exit(1);
-        }
-    }
-
-    return -1;
-}

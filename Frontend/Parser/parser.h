@@ -4,6 +4,7 @@
 #include "../../NumberList/list.h"
 #include "../../Tree/tree.h"
 #include "../../Utilities/utilities.h"
+#include "../Tokenizer/tokenizer.h"
 
 #ifndef SYNTAX_HEADER
 #define SYNTAX_HEADER
@@ -19,17 +20,20 @@ typedef struct
     NumList* cur_node;
     NumList* old_node;
     Tree* tree;
-} RecursiveDescent;
+} Parser;
 
 //-----------------------------------------------
-// void GetG (RecursiveDescent* src);
-// Node* GetE (RecursiveDescent* src);
-// Node* GetT (RecursiveDescent* src);
-// Node* GetD (RecursiveDescent* src);
-// Node* GetSL(RecursiveDescent* src);
-Node* GetP (RecursiveDescent* src);
-Node* GetN (RecursiveDescent* src);
-Node* GetId (RecursiveDescent* src);
+// void GetG (Parser* src);
+// Node* GetE (Parser* src);
+// Node* GetT (Parser* src);
+// Node* GetD (Parser* src);
+// Node* GetSL(Parser* src);
+Node* GetP (Parser* src);
+Node* GetN (Parser* src);
+Node* GetId (Parser* src);
+
+void SyntaxAnalysis(Parser* parser, Tokenizer* tokenizer);
+void CloseParser(Parser* parser);
 //-----------------------------------------------
 
 #endif

@@ -5,19 +5,15 @@
 
 
 //-----------------------------------------------
-StrList* LexicalAnalysis(const char* filename)
+void LexicalAnalysis(Lexer* lexer, const char* filename)
 {
-    Lexer lexer = {};
+    InitLexer(lexer, filename);
 
-    InitLexer(&lexer, filename);
+    MakeAnalysis(lexer);
 
-    MakeAnalysis(&lexer);
+    ListDot(lexer->list);
 
-    ListDot(lexer.list);
-
-    CloseLexer(&lexer, filename);
-
-    return lexer.list;
+    // CloseLexer(&lexer, filename);
 }
 //-----------------------------------------------
 

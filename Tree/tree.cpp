@@ -24,7 +24,7 @@ TreeInfo TreeDtor(Tree* tree)
 }
 
 
-Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, Data data, NodeTypes type)
+Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, int64_t data, NodeTypes type)
 {
     assert(tree);
 
@@ -62,7 +62,7 @@ TreeInfo InsertLeave (Tree* tree, Node* parent, Direction branch, Node* to_conne
             } 
             else 
             {
-                printf(RED "your parent node have leaves\n"
+                wprintf(RED L"your parent node have leaves\n"
                 "So call InsertNode function instead of this function\n"
                 "And your node deleted for programm to not catch seg-fault\n"
                 "So create it again\n" DELETE_COLOR);
@@ -81,7 +81,7 @@ TreeInfo InsertLeave (Tree* tree, Node* parent, Direction branch, Node* to_conne
             }
             else 
             {
-                printf(RED "your parent node have leaves\n"
+                wprintf(RED L"your parent node have leaves\n"
                 "So call InsertNode function instead of this function\n"
                 "And your node deleted for programm to not catch seg-fault\n"
                 "So create it again\n" DELETE_COLOR);
@@ -98,7 +98,7 @@ TreeInfo InsertLeave (Tree* tree, Node* parent, Direction branch, Node* to_conne
     {
         tree->root = to_connect;
         to_connect->parent = nullptr;
-        ON_DEBUG( printf(RED "root inserted in beginning of tree\n" DELETE_COLOR); )
+        ON_DEBUG( wprintf(RED L"root inserted in beginning of tree\n" DELETE_COLOR); )
     }
 
     return kGoodTree;
@@ -110,7 +110,7 @@ TreeInfo InsertNode(Node* left, Node* right, Node* node)
 {
     if (left && right)
     {
-        ON_DEBUG( printf(SINIY "inserting in the middle of tree\n" DELETE_COLOR); ) 
+        ON_DEBUG( wprintf(SINIY L"inserting in the middle of tree\n" DELETE_COLOR); ) 
 
         if (left->parent == right->parent)
         {
@@ -129,13 +129,13 @@ TreeInfo InsertNode(Node* left, Node* right, Node* node)
         }
         else
         {
-            ON_DEBUG( printf(YELLOW "Pointers don't connect\n" DELETE_COLOR); )
+            ON_DEBUG( wprintf(YELLOW L"Pointers don't connect\n" DELETE_COLOR); )
             exit(1);
         }   
     }
     else if (!left && !right) 
     {
-        printf(RED "Two null pointers pasted -- means yout parent node have no leaves.\n"
+        wprintf(RED L"Two null pointers pasted -- means yout parent node have no leaves.\n"
         "free is used to avoid memory leaks\n"
         "Call InsertLeave To create leaves\n" DELETE_COLOR);
 
@@ -146,7 +146,7 @@ TreeInfo InsertNode(Node* left, Node* right, Node* node)
     }
     else if (left && !right)
     {
-        ON_DEBUG( printf(SINIY "insert, left exists, right doesn't\n" DELETE_COLOR); )
+        ON_DEBUG( wprintf(SINIY L"insert, left exists, right doesn't\n" DELETE_COLOR); )
         if (left->parent->left == left)
         {
             left->parent->left = node;
@@ -164,7 +164,7 @@ TreeInfo InsertNode(Node* left, Node* right, Node* node)
     }
     else if (!left && right)
     {
-        ON_DEBUG( printf(SINIY "insert, right exists, left doesn't\n" DELETE_COLOR); )
+        ON_DEBUG( wprintf(SINIY L"insert, right exists, left doesn't\n" DELETE_COLOR); )
 
         if (right->parent->left == right)
         {
@@ -210,7 +210,7 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
     {
         if (!node->left && !node->right)
         {
-            ON_DEBUG( printf(SINIY "deleting \"leave\" node\n" DELETE_COLOR); )
+            ON_DEBUG( wprintf(SINIY L"deleting \"leave\" node\n" DELETE_COLOR); )
 
             Node* tmp_parent = node->parent;
 
@@ -227,7 +227,7 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
         }
         else if (node->left && node->right)
         {
-            ON_DEBUG( printf(SINIY "deleting node with both branches\n( causes deletion of all nodes under )\n" DELETE_COLOR); )
+            ON_DEBUG( wprintf(SINIY L"deleting node with both branches\n( causes deletion of all nodes under )\n" DELETE_COLOR); )
  
             Node* tmp_parent = node->parent;
 
@@ -246,7 +246,7 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
         }
         else if (node->left && !node->right) 
         {
-            ON_DEBUG( printf(SINIY "deleting node with only left branch\n" DELETE_COLOR); )
+            ON_DEBUG( wprintf(SINIY L"deleting node with only left branch\n" DELETE_COLOR); )
 
             if (node->parent->left == node)
             {
@@ -263,7 +263,7 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
         }
         else if (!node->left && node->right)
         {
-            ON_DEBUG( printf(SINIY "extracting node with only right branch\n" DELETE_COLOR); )
+            ON_DEBUG( wprintf(SINIY L"extracting node with only right branch\n" DELETE_COLOR); )
 
             if (node->parent->left == node)
             {
@@ -281,7 +281,7 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
     }
     else 
     {   
-        printf(RED "wrong node pointer pasted to extract");
+        wprintf(RED L"wrong node pointer pasted to extract");
         return kBadTree;
     }
 
@@ -289,7 +289,7 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
 }
 
 
-TreeInfo FindNode(Node* node_search, Data to_find, Node** answer)
+TreeInfo FindNode(Node* node_search, int64_t to_find, Node** answer)
 {
     Node* left_search = node_search->left;
     Node* right_search = node_search->right;
@@ -313,7 +313,7 @@ TreeInfo FindNode(Node* node_search, Data to_find, Node** answer)
         return kGoodTree;
     }
 
-    printf(YELLOW "Haven't found this number in tree\n" DELETE_COLOR);
+    wprintf(YELLOW L"Haven't found this number in tree\n" DELETE_COLOR);
     return kBadTree;
 }
 

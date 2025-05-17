@@ -14,8 +14,6 @@
 
 const uint64_t POISON = 0xBADBABA;
 
-typedef uint64_t Data;
-
 typedef enum 
 {
     kGoodTree = 1,
@@ -44,7 +42,7 @@ typedef enum
 
 typedef struct node_t 
 {   
-    Data data;
+    int64_t data;
     NodeTypes type;
     node_t* left;
     node_t* right;
@@ -53,7 +51,7 @@ typedef struct node_t
 
 typedef struct
 {
-    Data data;           
+    int64_t data;           
     NodeTypes type;          
 
     TreeInfo info;
@@ -62,15 +60,23 @@ typedef struct
 
 //-----------------------------------------------
 Tree* TreeCtor();
+
 TreeInfo TreeDtor(Tree* tree);
 
-Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, Data data, NodeTypes type);
+Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, int64_t data, NodeTypes type);
+
 TreeInfo InsertLeave (Tree* tree, Node* parent, Direction branch, Node* to_connect);
+
 TreeInfo InsertNode(Node* left, Node* right, Node* node);
+
 void FreeTree (Tree* tree, Node* node);
+
 TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type);
-TreeInfo FindNode(Node* node_search, Data to_find, Node** answer);
+
+TreeInfo FindNode(Node* node_search, int64_t to_find, Node** answer);
+
 Node* CopyNode (Tree* tree, Node* node_to_copy);
+
 Node* CopyBranch (Tree* tree, Node* to_copy, Node* parent);
 //-----------------------------------------------
 

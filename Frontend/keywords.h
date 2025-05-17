@@ -8,7 +8,7 @@
 typedef enum 
 { 
     // default/initial
-    kError = -1,
+    kId = -1,           // identificator
 
     // brackets
     kNOP = 0,           // Not an operation
@@ -50,7 +50,7 @@ typedef enum
     kEnum,              // enumeration ","
 
     //input/output/var type
-    kNumber = 51,       // float number
+    kNumber = 51,       // float number ( var declaration ) 
     kIn = 61,           // input
     kOut,               // output
 
@@ -118,6 +118,6 @@ static const KeyWord keyword_table[] =
     #undef DEF_KEYWORD 
 };
 
-static const int keywords_amount = sizeof(keyword_table) / sizeof(KeyWord);
+static const int kKeyWordsAmount = sizeof(keyword_table) / sizeof(KeyWord);
 
 #endif 

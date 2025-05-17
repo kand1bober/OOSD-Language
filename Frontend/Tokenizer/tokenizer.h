@@ -22,11 +22,20 @@ typedef struct
 {   
     NumList* num_list;
     size_t num_list_size;
+
     StrList* str_list;
     size_t str_list_size;
+
+    StrList* id_table;
+    size_t id_table_size;
 } Tokenizer;    
 
-void MakeTokenization(Tokenizer* tokenizer);
-KeyCode SearchKeyWord(const wchar_t* lexem);
+void Tokenization(Tokenizer* tokenizer);
+
+void CloseTokenizer(Tokenizer* tokenizer);
+
+KeyCode SearchKeyWord(const wchar_t* str, int str_len);
+
+void AddId(const wchar_t* str);
 
 #endif

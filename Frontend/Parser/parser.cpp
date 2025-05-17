@@ -1,7 +1,11 @@
-#include "syntax.h"
-#include <cstdint>
+#include "parser.h"
 
 // //------------RECURSIVE DESCENT------------------
+void SyntaxAnalysis(Parser* parser, Tokenizer* tokenizer)
+{
+
+}
+
 // /*
 // * Get  Assignment   
 // */
@@ -383,80 +387,80 @@
 /*
 * Get Bracket
 */
-Node* GetP(RecursiveDescent* src )
-{
-    if (src->cur_node->type == kLeftBracket)
-    {
-        src->cur_node = src->cur_node->next;
+// Node* GetP(Parser* src )
+// {
+//     if (src->cur_node->type == kLeftBracket)
+//     {
+//         src->cur_node = src->cur_node->next;
 
-        Node* val = GetE(src);
+//         Node* val = GetE(src);
 
-        if (src->cur_node->type == kLeftBracket)
-            SYNTAX_ERROR    // closing bracket needed //TODO: SYNTAX_ERROR(CLOSING_BRACKET), enum ошибок
+//         if (src->cur_node->type == kLeftBracket)
+//             SYNTAX_ERROR    // closing bracket needed //TODO: SYNTAX_ERROR(CLOSING_BRACKET), enum ошибок
 
-        src->cur_node = src->cur_node->next;
+//         src->cur_node = src->cur_node->next;
 
-        return val;
-    }
-    else if (src->cur_node->type == kNumber)
-    {
-        return GetN(src);
-    }
-    else if (src->cur_node->type == kSin  || src->cur_node->type == kCos   || src->cur_node->type == kFloor || 
-             src->cur_node->type == kPlus || src->cur_node->type == kMinus || src->cur_node->type == kMul   ||
-             src->cur_node->type == kDiv  || src->cur_node->type == kDiff  || src->cur_node->type == kSqrt  ||
-             src->cur_node->type == kPow)  // F(E)
-    {
-        KeyCode data = kError;
+//         return val;
+//     }
+//     else if (src->cur_node->type == kNumber)
+//     {
+//         return GetN(src);
+//     }
+//     else if (src->cur_node->type == kSin  || src->cur_node->type == kCos   || src->cur_node->type == kFloor || 
+//              src->cur_node->type == kPlus || src->cur_node->type == kMinus || src->cur_node->type == kMul   ||
+//              src->cur_node->type == kDiv  || src->cur_node->type == kDiff  || src->cur_node->type == kSqrt  ||
+//              src->cur_node->type == kPow)  // F(E)
+//     {
+//         KeyCode data = kError;
 
-        switch((int)src->cur_node->type)
-        {
-            case kSin:
-                data = kSin;
-                break;
-
-
-        }
-
-        return(CreateNode(src->tree, NULL, NULL, NULL, , kConst));
-    }
-    else if (src->cur_node->type == )
-    {
-
-    }
-    else  
-    {
-        SYNTAX_ERROR
-    }
-}
+//         switch((int)src->cur_node->type)
+//         {
+//             case kSin:
+//                 data = kSin;
+//                 break;
 
 
-/*
-* Get Number
-*/
-Node* GetN(RecursiveDescent* src )
-{    
-    src->old_node = src->cur_node;
+//         }
 
-    Data val = src->cur_node->data;
+//         return(CreateNode(src->tree, NULL, NULL, NULL, , kConst));
+//     }
+//     else if (src->cur_node->type == )
+//     {
 
-    Node* new_node = CreateNode(src->tree, NULL, NULL, NULL, val, kConst);
+//     }
+//     else  
+//     {
+//         SYNTAX_ERROR
+//     }
+// }
 
-    return new_node;
-}
+
+// /*
+// * Get Number
+// */
+// Node* GetN(Parser* src )
+// {    
+//     src->old_node = src->cur_node;
+
+//     Data val = src->cur_node->data;
+
+//     Node* new_node = CreateNode(src->tree, NULL, NULL, NULL, val, kConst);
+
+//     return new_node;
+// }
 
 
-/*
-* Get Identifier
-*/
-Node* GetId (RecursiveDescent* src)
-{
-    src->old_node = src->cur_node;
+// /*
+// * Get Identifier
+// */
+// Node* GetId (Parser* src)
+// {
+//     src->old_node = src->cur_node;
 
-    Data val = src->cur_node->data;
-    NodeTypes type = kNoType;
+//     Data val = src->cur_node->data;
+//     NodeTypes type = kNoType;
 
-    Node* new_node = CreateNode(src->tree, NULL, NULL, NULL, val, kIdentifier);
+//     Node* new_node = CreateNode(src->tree, NULL, NULL, NULL, val, kIdentifier);
 
-    return new_node;
-}
+//     return new_node;
+// }
