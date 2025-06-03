@@ -93,7 +93,7 @@ NumList* NumListGetNode (NumList* list, int number)
 *
 * 4th arg -- position in the list (if you want to add in the end, 3rd arg = size of list)
 */
-NumListInfo_t NumListAdd (NumList* list, DataTypes data_type, Data data, size_t number)
+NumListInfo_t NumListAdd (NumList* list, DataTypes data_type, NumListData data, size_t number)
 {
     NumList* new_node = NULL;
 

@@ -22,14 +22,13 @@
     {   
         void* ptr;
         int64_t number;
-    } Data;
+    } NumListData;
 
     typedef enum 
     {
         kPtrData,   // for identifiers 
         kNumData,   // for enums
     } DataTypes;
-    
 
     typedef struct num_list
     {
@@ -37,7 +36,7 @@
         struct num_list* prev;
                
         DataTypes data_type;                   
-        Data data;
+        NumListData data;
     } NumList;
 
     //-------------------------------------------
@@ -50,7 +49,7 @@
 
     NumList* NumListGetNode (NumList* list, int number);
 
-    NumListInfo_t NumListAdd (NumList* list, DataTypes data_type, Data data, size_t number);
+    NumListInfo_t NumListAdd (NumList* list, DataTypes data_type, NumListData data, size_t number);
 
     NumListInfo_t NumListDelete (NumList* list, int number);
     //-------------------------------------------

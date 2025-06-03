@@ -40,9 +40,15 @@ typedef enum
     kCall = 7,
 } NodeTypes;
 
+typedef union 
+{
+    wchar_t* str;
+    int64_t num;
+} TreeData;
+
 typedef struct node_t 
 {   
-    int64_t data;
+    TreeData data;
     NodeTypes type;
     node_t* left;
     node_t* right;
@@ -63,7 +69,7 @@ Tree* TreeCtor();
 
 TreeInfo TreeDtor(Tree* tree);
 
-Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, int64_t data, NodeTypes type);
+Node* CreateNode(Node* left, Node* right, Node* parent, NodeTypes type, TreeData data);
 
 TreeInfo InsertLeave (Tree* tree, Node* parent, Direction branch, Node* to_connect);
 
@@ -73,7 +79,7 @@ void FreeTree (Tree* tree, Node* node);
 
 TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type);
 
-TreeInfo FindNode(Node* node_search, int64_t to_find, Node** answer);
+Node* FindNode(Node* node_search, NodeTypes type, TreeData to_find);
 
 Node* CopyNode (Tree* tree, Node* node_to_copy);
 

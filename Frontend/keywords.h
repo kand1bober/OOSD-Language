@@ -8,6 +8,7 @@
 typedef enum 
 { 
     // default/initial
+    kError = -1,        // Initial value
     kId = -1,           // identificator
 
     // brackets
@@ -26,8 +27,8 @@ typedef enum
     kSin = 21,          // sin
     kCos,               // cos
     kFloor,             // floor 
-    kPlus,              // +
-    kMinus,             // -
+    kAdd,               // +
+    kSub,               // -
     kMul,               // *
     kDiv,               // / 
     kDiff,              // diff 
@@ -60,7 +61,7 @@ typedef enum
     kContinue,          // continue
     kAbort,             // abort
 } KeyCode;
-
+    
 typedef struct 
 {
     const wchar_t* key_word;
@@ -89,8 +90,8 @@ static const KeyWord keyword_table[] =
     DEF_KEYWORD(L"синус",            "sin",      kSin),
     DEF_KEYWORD(L"косинус",          "cos",      kCos),
     DEF_KEYWORD(L"опустить",         "floor",    kFloor),
-    DEF_KEYWORD(L"собрать",          "+",        kPlus),
-    DEF_KEYWORD(L"вынуть",           "-",        kMinus),
+    DEF_KEYWORD(L"собрать",          "+",        kAdd),
+    DEF_KEYWORD(L"вынуть",           "-",        kSub),
     DEF_KEYWORD(L"умножить",         "*",        kMul),
     DEF_KEYWORD(L"поделить",         "/",        kDiv),
     DEF_KEYWORD(L"производная",      "diff",     kDiff),
@@ -110,7 +111,7 @@ static const KeyWord keyword_table[] =
     DEF_KEYWORD(L"ячейка-из-говна",  "number",   kNumber),
     DEF_KEYWORD(L"выслушать",        "in",       kIn),
     DEF_KEYWORD(L"высрать-в-чат",    "out",      kOut),
-    DEF_KEYWORD(L"на-базу",          "return",      kRet),
+    DEF_KEYWORD(L"на-базу",          "return",   kRet),
     DEF_KEYWORD(L"стоп",             "break",    kBreak),
     DEF_KEYWORD(L"продолжить",       "continue", kContinue),
     DEF_KEYWORD(L"аборт",            "abort",    kAbort),

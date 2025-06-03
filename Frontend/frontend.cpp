@@ -17,13 +17,12 @@ int main()
     tokenizer.str_list_size = lexer.list_size;
     Tokenization(frontend.tokenizer);
 
-    // SyntaxAnalysis(frontend.parser, frontend.tokenizer);
-
+    SyntaxAnalysis(frontend.parser, frontend.tokenizer);
 
     CloseLexer(frontend.lexer, "/home/vyacheslav/Language/Utilities/input.txt");
-
+    
     CloseTokenizer(frontend.tokenizer);
-
+    
     // CloseParser(frontend.parser);
     
     return 0;

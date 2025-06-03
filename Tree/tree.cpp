@@ -24,11 +24,21 @@ TreeInfo TreeDtor(Tree* tree)
 }
 
 
-Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, int64_t data, NodeTypes type)
+Node* CreateNode(Node* left, Node* right, Node* parent, NodeTypes type, TreeData data)
 {
-    assert(tree);
-
     Node* new_node = (Node*)calloc(1, sizeof(Node));
+    new_node->type = type;
+
+    if (type == kConst || type == kKeyWord || 
+        type == kFuncDef || type == kParam || 
+        type == kVarDecl || type == kCall )
+    {
+        new_node->data.num = data.num;
+    }         
+    else if (type == kIdentifier)
+    {
+        new_node->data.str = data.str;
+    }         
 
     new_node->left = left;
     new_node->right = right;
@@ -41,7 +51,6 @@ Node* CreateNode(Tree* tree, Node* left, Node* right, Node* parent, int64_t data
         right->parent = new_node;
 
     return new_node;
-
 }   
 
 
@@ -289,32 +298,45 @@ TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type)
 }
 
 
-TreeInfo FindNode(Node* node_search, int64_t to_find, Node** answer)
+Node* FindNode(Node* node_search, NodeTypes type, TreeData to_find)
 {
     Node* left_search = node_search->left;
     Node* right_search = node_search->right;
 
-    if (node_search->data != to_find)
+    if (node_search->type != type)
     {
         if (left_search)
         {
-            FindNode (left_search, to_find, answer);
+            return (FindNode (left_search, type, to_find));
         }
 
         if (right_search)
         {
-            FindNode (right_search, to_find, answer);
+            return (FindNode (right_search, type, to_find));
         }
-        return kGoodTree;
     }
     else 
     {
-        *answer = node_search;
-        return kGoodTree;
+
+        if (type == kConst || type == kKeyWord || 
+            type == kFuncDef || type == kParam || 
+            type == kVarDecl || type == kCall )
+        {
+            if (node_search->data.num == to_find.num)
+                return node_search;
+            else 
+                return NULL;
+        }         
+        else if (type == kIdentifier)
+        {
+            if (!wcscmp(node_search->data.str, to_find.str))
+                return node_search;
+            else 
+                return NULL;
+        } 
     }
 
-    wprintf(YELLOW L"Haven't found this number in tree\n" DELETE_COLOR);
-    return kBadTree;
+    return NULL;
 }
 
 
@@ -324,7 +346,7 @@ Node* CopyNode (Tree* tree, Node* node_to_copy)
     assert(node_to_copy);
 
     Node* answer = nullptr;
-    answer = CreateNode(tree, NULL, NULL, NULL, node_to_copy->data, node_to_copy->type);
+    answer = CreateNode(NULL, NULL, NULL, node_to_copy->type, node_to_copy->data);
         
     return answer;
 }
