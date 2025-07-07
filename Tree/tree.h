@@ -35,7 +35,7 @@ typedef enum
     kIdentifier = 2,
     kKeyWord = 3,
     kFuncDef = 4,
-    kParam = 5,
+    kParameters = 5,
     kVarDecl = 6,
     kCall = 7,
 } NodeTypes;

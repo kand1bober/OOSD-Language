@@ -18,9 +18,7 @@
 typedef struct 
 {
     NumList* cur_token;     // move in list of tokens
-    NumList* old_token;     
-    StrList* old_id;        // move in list of identifiers 
-    StrList* cur_id;
+    NumList* old_token;       
     Tree* tree;
 } Parser;
 
@@ -30,7 +28,6 @@ typedef struct
 // Node* GetT (Parser* src);
 // Node* GetP (Parser* src);
 // Node* GetN (Parser* src);
-
 
 
 Node* GetTransUnit(Parser* src);
@@ -86,6 +83,8 @@ Node* GetLogical_OR_Expr(Parser* src);
 Node* GetLogical_AND_Expr(Parser* src);
 
 Node* GetLogical_Equal_Expr(Parser* src);
+
+Node* GetRelationalExpr(Parser* src);
 
 Node* GetLAddExpr(Parser* src);
 

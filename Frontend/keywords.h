@@ -8,8 +8,8 @@
 typedef enum 
 { 
     // default/initial
-    kError = -1,        // Initial value
-    kId = -1,           // identificator
+    kError = -2,        // Initial value
+    kId = -1,           // identifier
 
     // brackets
     kNOP = 0,           // Not an operation
@@ -90,27 +90,27 @@ static const KeyWord keyword_table[] =
     DEF_KEYWORD(L"синус",            "sin",      kSin),
     DEF_KEYWORD(L"косинус",          "cos",      kCos),
     DEF_KEYWORD(L"опустить",         "floor",    kFloor),
-    DEF_KEYWORD(L"собрать",          "+",        kAdd),
-    DEF_KEYWORD(L"вынуть",           "-",        kSub),
+    DEF_KEYWORD(L"плюс",             "+",        kAdd),
+    DEF_KEYWORD(L"минус",            "-",        kSub),
     DEF_KEYWORD(L"умножить",         "*",        kMul),
     DEF_KEYWORD(L"поделить",         "/",        kDiv),
     DEF_KEYWORD(L"производная",      "diff",     kDiff),
     DEF_KEYWORD(L"корень",           "sqrt",     kSqrt),
     DEF_KEYWORD(L"степень",          "^",        kPow),
-    DEF_KEYWORD(L"натурал?",         "==",       kEcmp),
+    DEF_KEYWORD(L"равно?",           "==",       kEcmp),
     DEF_KEYWORD(L"под",              "<",        kBcmp),
     DEF_KEYWORD(L"над",              ">",        kAcmp),
     DEF_KEYWORD(L"сприподнизу",      "<=",       kBEcmp),
     DEF_KEYWORD(L"сприподверху",     ">=",       kAEcmp),
-    DEF_KEYWORD(L"не-равно",         "!=",       kNEcmp),
+    DEF_KEYWORD(L"не-равно?",        "!=",       kNEcmp),
     DEF_KEYWORD(L"и",                "&&",       kAND),
     DEF_KEYWORD(L"или",              "||",       kOR),
     DEF_KEYWORD(L"не",               "!",        kNOT),
     DEF_KEYWORD(L"конец",            ";",        kStep),
-    DEF_KEYWORD(L"да",               ",",        kEnum),
+    DEF_KEYWORD(L"к-тому-же",        ",",        kEnum),
     DEF_KEYWORD(L"ячейка-из-говна",  "number",   kNumber),
     DEF_KEYWORD(L"выслушать",        "in",       kIn),
-    DEF_KEYWORD(L"высрать-в-чат",    "out",      kOut),
+    DEF_KEYWORD(L"спиздануть",       "out",      kOut),
     DEF_KEYWORD(L"на-базу",          "return",   kRet),
     DEF_KEYWORD(L"стоп",             "break",    kBreak),
     DEF_KEYWORD(L"продолжить",       "continue", kContinue),

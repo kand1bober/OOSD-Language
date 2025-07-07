@@ -14,20 +14,20 @@
 
 typedef struct
 {       
-    wchar_t* str;      // string
+    wchar_t* str;   // string
     int len;        // length 
     KeyCode type;   // enum of operation
 } Token;
 
 typedef struct 
 {   
-    NumList* num_list;
+    NumList* num_list;      // 
     size_t num_list_size;
 
-    StrList* str_list;
+    StrList* str_list;      //
     size_t str_list_size;
 
-    StrList* id_table;
+    StrList* id_table;      // 
     size_t id_table_size;
 } Tokenizer;    
 
