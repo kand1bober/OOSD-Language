@@ -66,7 +66,7 @@ Node* GetExtDecl(Parser* src)
             {
                 GO_TO_PREV_TOKEN
                 GO_TO_PREV_TOKEN
-                node = GetDecl(src);  
+                node = GetDeclInit(src);  
             }
         } 
         else  
@@ -186,12 +186,10 @@ Node* GetDeclInit(Parser* src)
 
 Node* GetStateList(Parser* src)
 {
-
-}
-
-
-Node* GetState(Parser* src)
-{
+    Node* node = NULL;
+    Node* tmp_node = NULL;
+    Node* left_node = NULL;
+    Node* right_node = NULL;
 
 }
 
@@ -203,39 +201,140 @@ Node* GetCompoundState(Parser* src)
     Node* right_node = NULL;
     Node* tmp_node = NULL;
 
+    SYNTAX_ASSERT(kLeftCurlyBracket)
+    GO_TO_NEXT_TOKEN
 
+    
 
     return node;
 }
 
 
-// Node* GetLabeledState(Parser* src)
-// {
+Node* GetState(Parser* src)
+{
+    Node* node = NULL;
+    Node* left_node = NULL;
+    Node* right_node = NULL;
 
-// }
+    if (TOKEN_VAL == kIf || TOKEN_VAL == kWhile) 
+    {
+        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+        GO_TO_NEXT_TOKEN
+        SYNTAX_ASSERT(kLeftBracket)
+        GO_TO_NEXT_TOKEN
+        left_node = GetExpr(src);
+        SYNTAX_ASSERT(kRightBracket)
+        GO_TO_NEXT_TOKEN
+        right_node = GetState(src); 
+
+        InsertLeave(src->tree, node, kLeft, left_node);
+        InsertLeave(src->tree, node, kRight, right_node);
+    }
+    else if (TOKEN_VAL == kContinue || TOKEN_VAL == kBreak) 
+    {
+        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+        GO_TO_NEXT_TOKEN
+    }
+    else if (TOKEN_VAL == kRet)
+    {
+        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+        GO_TO_NEXT_TOKEN
+        right_node = GetExpr(src);
+        InsertLeave(src->tree, node, kRight, right_node);
+    }
+    else if()
+    {
+
+    }
+    else 
+    {
+        //TODO: разобраться, что делать с вариантом "необязательного" выражения 
+        // пока что Я думаю, что это может означать конец выражения, и конец синтакического разбора 
+
+        node = GetExpr(src);
+    }
 
 
-// Node* GetExprState(Parser* src)
-// {
-
-// }
+    return node; 
+}
 
 
 // Node* GetSelectState(Parser* src)
 // {
+//     Node* node = NULL;
+//     Node* left_node = NULL;
+//     Node* right_node = NULL;
 
+//     if (TOKEN_VAL == kIf)
+//     {
+//         node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+//         GO_TO_NEXT_TOKEN
+//         SYNTAX_ASSERT(kLeftBracket)
+//         GO_TO_NEXT_TOKEN
+//         left_node = GetExpr(src);
+//         SYNTAX_ASSERT(kRightBracket)
+//         GO_TO_NEXT_TOKEN
+//         right_node = GetState(src);
+
+//         InsertLeave(src->tree, node, kLeft, left_node);
+//         InsertLeave(src->tree, node, kRight, right_node);
+//     }
+//     else
+//         SYNTAX_ERROR
 // }
+
 
 // Node* GetCyclicState(Parser* src)
 // {
+//     Node* node = NULL;
+//     Node* left_node = NULL;
+//     Node* right_node = NULL;
 
+//     if (TOKEN_VAL == kWhile)
+//     {
+//         node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+//         GO_TO_NEXT_TOKEN
+//         SYNTAX_ASSERT(kLeftBracket)
+//         GO_TO_NEXT_TOKEN
+//         left_node = GetExpr(src);
+//         SYNTAX_ASSERT(kRightBracket)
+//         GO_TO_NEXT_TOKEN
+//         right_node = GetState(src); 
+
+//         InsertLeave(src->tree, node, kLeft, left_node);
+//         InsertLeave(src->tree, node, kRight, right_node);
+//     }
+//     else 
+//         SYNTAX_ERROR
+
+//     return node;
 // }
 
-// Node* GetJumpState(Parser* src)
-// {
 
-// }
+Node* GetSelectStateState(Parser* src)
+{   
+    Node* node = NULL;
+    Node* right_node = NULL; 
 
+    if (TOKEN_VAL == kContinue || TOKEN_VAL == kBreak)
+    {
+        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+        GO_TO_NEXT_TOKEN
+    }
+    else if (TOKEN_VAL == kRet)
+    {
+        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+        GO_TO_NEXT_TOKEN
+        right_node = GetExpr(src);
+        InsertLeave(src->tree, node, kRight, right_node);
+    }
+    else  
+        SYNTAX_ERROR
+
+    return node;
+}
+
+//-----------------------------------------------
 
 Node* GetExpr(Parser* src)
 {
@@ -456,8 +555,7 @@ Node* GetPrimaryExpr(Parser* src)
                     GO_TO_NEXT_TOKEN
                     node = GetExpr(src);
 
-                    if (TOKEN_VAL != kRightBracket)
-                        SYNTAX_ERROR
+                    SYNTAX_ASSERT(kRightBracket)
                     
                     GO_TO_NEXT_TOKEN
                     break;
@@ -477,14 +575,12 @@ Node* GetPrimaryExpr(Parser* src)
                     SET_OLD_TOKEN
                     GO_TO_NEXT_TOKEN
 
-                    if (TOKEN_VAL != kLeftBracket)
-                        SYNTAX_ERROR
+                    SYNTAX_ASSERT(kLeftBracket)
                     GO_TO_NEXT_TOKEN
 
                     Node* right_node = GetExpr(src);
                     
-                    if (TOKEN_VAL != kRightBracket)
-                        SYNTAX_ERROR
+                    SYNTAX_ASSERT(kRightBracket)
                     GO_TO_NEXT_TOKEN
 
                     node = CreateNode(NULL, NULL, NULL, kConst, {.num = OLD_TOKEN_VAL});
