@@ -5,7 +5,7 @@
 #include <assert.h>
 #include <math.h>
 
-#include "../Frontend/keywords.h"
+#include "../Common/keywords.h"
 #include "../Utilities/utilities.h"
 #include "configuration.h"
 
@@ -48,8 +48,8 @@ typedef union
 
 typedef struct node_t 
 {   
-    TreeData data;
     NodeTypes type;
+    TreeData data;
     node_t* left;
     node_t* right;
     node_t* parent;

@@ -1,7 +1,7 @@
 #include "parser.h"
 
 // //------------RECURSIVE DESCENT------------------
-void SyntaxAnalysis(Parser* parser, Tokenizer* tokenizer)
+void StartParser(Parser* parser, Lexer* tokenizer)
 {
     parser->cur_token = tokenizer->num_list;
 
@@ -17,7 +17,7 @@ void SyntaxAnalysis(Parser* parser, Tokenizer* tokenizer)
 #define OLD_TOKEN_VAL    src->old_token->data.number
 
 //-----------------------------------------------
-Node* GetTransUnit(Parser* src, Tokenizer* tokenizer)
+Node* GetTransUnit(Parser* src, Lexer* tokenizer)
 {   
     Node* node = NULL;
     Node* tmp_node = NULL;
@@ -191,6 +191,13 @@ Node* GetStateList(Parser* src)
     Node* left_node = NULL;
     Node* right_node = NULL;
 
+    node = GetState(src);
+    GO_TO_NEXT_TOKEN
+
+    //TODO: вопрос чем соединять узлы, видимо здесь запятая и появляется 
+    while (TOKEN_VAL == )
+
+    return node;
 }
 
 
@@ -242,9 +249,9 @@ Node* GetState(Parser* src)
         right_node = GetExpr(src);
         InsertLeave(src->tree, node, kRight, right_node);
     }
-    else if()
+    else if (TOKEN_VAL == kLeftCurlyBracket)
     {
-
+        node = GetCompoundState(src);
     }
     else 
     {
@@ -256,82 +263,6 @@ Node* GetState(Parser* src)
 
 
     return node; 
-}
-
-
-// Node* GetSelectState(Parser* src)
-// {
-//     Node* node = NULL;
-//     Node* left_node = NULL;
-//     Node* right_node = NULL;
-
-//     if (TOKEN_VAL == kIf)
-//     {
-//         node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-//         GO_TO_NEXT_TOKEN
-//         SYNTAX_ASSERT(kLeftBracket)
-//         GO_TO_NEXT_TOKEN
-//         left_node = GetExpr(src);
-//         SYNTAX_ASSERT(kRightBracket)
-//         GO_TO_NEXT_TOKEN
-//         right_node = GetState(src);
-
-//         InsertLeave(src->tree, node, kLeft, left_node);
-//         InsertLeave(src->tree, node, kRight, right_node);
-//     }
-//     else
-//         SYNTAX_ERROR
-// }
-
-
-// Node* GetCyclicState(Parser* src)
-// {
-//     Node* node = NULL;
-//     Node* left_node = NULL;
-//     Node* right_node = NULL;
-
-//     if (TOKEN_VAL == kWhile)
-//     {
-//         node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-//         GO_TO_NEXT_TOKEN
-//         SYNTAX_ASSERT(kLeftBracket)
-//         GO_TO_NEXT_TOKEN
-//         left_node = GetExpr(src);
-//         SYNTAX_ASSERT(kRightBracket)
-//         GO_TO_NEXT_TOKEN
-//         right_node = GetState(src); 
-
-//         InsertLeave(src->tree, node, kLeft, left_node);
-//         InsertLeave(src->tree, node, kRight, right_node);
-//     }
-//     else 
-//         SYNTAX_ERROR
-
-//     return node;
-// }
-
-
-Node* GetSelectStateState(Parser* src)
-{   
-    Node* node = NULL;
-    Node* right_node = NULL; 
-
-    if (TOKEN_VAL == kContinue || TOKEN_VAL == kBreak)
-    {
-        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-        GO_TO_NEXT_TOKEN
-    }
-    else if (TOKEN_VAL == kRet)
-    {
-        node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-        GO_TO_NEXT_TOKEN
-        right_node = GetExpr(src);
-        InsertLeave(src->tree, node, kRight, right_node);
-    }
-    else  
-        SYNTAX_ERROR
-
-    return node;
 }
 
 //-----------------------------------------------
@@ -530,13 +461,20 @@ Node* GetMulExpr(Parser* src)
 Node* GetPrimaryExpr(Parser* src)
 {
     Node* node = NULL;
+    Node* left_node = NULL;
+    Node* right_node =  NULL;
 
     switch (src->cur_token->data_type)
     {
         case kPtrData:
         {
-            node = GetId(src);
+            node = CreateNode(NULL, NULL, NULL, kCall, {.num = 0});
+            right_node = GetId(src); 
+
+            SYNTAX_ASSERT(kLeftBracket)
             GO_TO_NEXT_TOKEN
+
+            left_node = GetDeclList(src); // TODO: GetParams
             break;
         } 
         case kNumData:

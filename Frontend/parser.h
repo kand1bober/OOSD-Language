@@ -1,10 +1,10 @@
 #include <wchar.h>
 #include <math.h>
 
-#include "../../NumberList/list.h"
-#include "../../Tree/tree.h"
-#include "../../Utilities/utilities.h"
-#include "../Tokenizer/tokenizer.h"
+#include "../NumberList/list.h"
+#include "../Tree/tree.h"
+#include "../Utilities/utilities.h"
+#include "lexer.h"
 
 #ifndef SYNTAX_HEADER
 #define SYNTAX_HEADER
@@ -26,8 +26,9 @@ typedef struct
 } Parser;
 
 //-----------------------------------------------
+void StartParser(Parser* parser, Lexer* tokenizer);
 
-Node* GetTransUnit(Parser* src, Tokenizer* tokenizer);
+Node* GetTransUnit(Parser* src, Lexer* tokenizer);
 
 Node* GetExtDecl(Parser* src);
 

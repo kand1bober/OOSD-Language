@@ -4,7 +4,7 @@
 #include <string.h>
 #include <wchar.h>
 
-#include "../Frontend/keywords.h"
+#include "../Common/keywords.h"
 
 
 #ifndef NUMBER_LIST_FUNC_HEADER
