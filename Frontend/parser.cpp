@@ -195,7 +195,7 @@ Node* GetStateList(Parser* src)
     GO_TO_NEXT_TOKEN
 
     //TODO: вопрос чем соединять узлы, видимо здесь запятая и появляется 
-    while (TOKEN_VAL == )
+    while (TOKEN_VAL == kRight)
 
     return node;
 }
@@ -521,7 +521,7 @@ Node* GetPrimaryExpr(Parser* src)
                     SYNTAX_ASSERT(kRightBracket)
                     GO_TO_NEXT_TOKEN
 
-                    node = CreateNode(NULL, NULL, NULL, kConst, {.num = OLD_TOKEN_VAL});
+                    node = CreateNode(NULL, NULL, NULL, kConstant, {.num = OLD_TOKEN_VAL});
                     InsertLeave(src->tree, node, kRight, right_node);
 
                     break;
@@ -544,7 +544,7 @@ Node* GetPrimaryExpr(Parser* src)
 */
 Node* GetNumber(Parser* src)
 {    
-    Node* new_node = CreateNode(NULL, NULL, NULL, kConst, {.num = TOKEN_VAL});
+    Node* new_node = CreateNode(NULL, NULL, NULL, kConstant, {.num = TOKEN_VAL});
 
     GO_TO_NEXT_TOKEN
 

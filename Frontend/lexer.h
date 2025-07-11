@@ -8,6 +8,7 @@
 #include "../StringList/list.h"
 #include "../StringList/list_dump.h"
 #include "../NumberList/list.h"
+#include "../NumberList/list_dump.h"
 #include "../Common/keywords.h"
 
 
@@ -51,8 +52,6 @@ void InitLexer(Lexer* lexer, const char* filename);
 
 void CloseLexer(Lexer* lexer, const char* filename);
 
-void MakeAnalysis(Lexer* lexer);
-
 void SplitLexems(Lexer* lexer);
 
 //-----------------------------------------------
@@ -61,7 +60,7 @@ void Tokenization(Lexer* tokenizer);
 
 KeyCode SearchKeyWord(const wchar_t* str, int str_len);
 
-void CloseTokenizer(Lexer* tokenizer);
+bool IsNum(const wchar_t* token, int token_len);
 
 //-----------------------------------------------
 

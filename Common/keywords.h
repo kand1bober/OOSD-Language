@@ -8,7 +8,8 @@
 typedef enum 
 { 
     // default/initial
-    kError = -2,        // Initial value
+    kError = -3,        // Initial value
+    kConst = -2,        // numeric constant
     kId = -1,           // identifier
 
     // brackets
@@ -66,7 +67,7 @@ typedef struct
 {
     const wchar_t* key_word;
 
-    const char* C_key_word;
+    const wchar_t* C_key_word;
 
     KeyCode key_code;
 
@@ -78,43 +79,43 @@ static const KeyWord keyword_table[] =
 {
     #define DEF_KEYWORD(key_word, C_key_word, key_code) {key_word, C_key_word, key_code, wcslen(key_word)}
 
-    DEF_KEYWORD(L"нахуй",            "nop",      kNOP),
-    DEF_KEYWORD(L"блять",            "nop",      kNOP),
-    DEF_KEYWORD(L"кунимэн",          "(",        kLeftBracket),
-    DEF_KEYWORD(L"кишкоблуд",        ")",        kRightBracket),
-    DEF_KEYWORD(L"забаристый",       "{",        kLeftCurlyBracket),
-    DEF_KEYWORD(L"с-горемыкой",      "}",        kRightCurlyBracket),
-    DEF_KEYWORD(L"если",             "if",       kIf),
-    DEF_KEYWORD(L"пока",             "while",    kWhile),
-    DEF_KEYWORD(L"равно",            "=",        kEqual),
-    DEF_KEYWORD(L"синус",            "sin",      kSin),
-    DEF_KEYWORD(L"косинус",          "cos",      kCos),
-    DEF_KEYWORD(L"опустить",         "floor",    kFloor),
-    DEF_KEYWORD(L"плюс",             "+",        kAdd),
-    DEF_KEYWORD(L"минус",            "-",        kSub),
-    DEF_KEYWORD(L"умножить",         "*",        kMul),
-    DEF_KEYWORD(L"поделить",         "/",        kDiv),
-    DEF_KEYWORD(L"производная",      "diff",     kDiff),
-    DEF_KEYWORD(L"корень",           "sqrt",     kSqrt),
-    DEF_KEYWORD(L"степень",          "^",        kPow),
-    DEF_KEYWORD(L"равно?",           "==",       kEcmp),
-    DEF_KEYWORD(L"под",              "<",        kBcmp),
-    DEF_KEYWORD(L"над",              ">",        kAcmp),
-    DEF_KEYWORD(L"сприподнизу",      "<=",       kBEcmp),
-    DEF_KEYWORD(L"сприподверху",     ">=",       kAEcmp),
-    DEF_KEYWORD(L"не-равно?",        "!=",       kNEcmp),
-    DEF_KEYWORD(L"и",                "&&",       kAND),
-    DEF_KEYWORD(L"или",              "||",       kOR),
-    DEF_KEYWORD(L"не",               "!",        kNOT),
-    DEF_KEYWORD(L"конец",            ";",        kStep),
-    DEF_KEYWORD(L"к-тому-же",        ",",        kEnum),
-    DEF_KEYWORD(L"ячейка-из-говна",  "number",   kNumber),
-    DEF_KEYWORD(L"выслушать",        "in",       kIn),
-    DEF_KEYWORD(L"спиздануть",       "out",      kOut),
-    DEF_KEYWORD(L"на-базу",          "return",   kRet),
-    DEF_KEYWORD(L"стоп",             "break",    kBreak),
-    DEF_KEYWORD(L"продолжить",       "continue", kContinue),
-    DEF_KEYWORD(L"аборт",            "abort",    kAbort),
+    DEF_KEYWORD(L"нахуй",            L"nop",      kNOP),
+    DEF_KEYWORD(L"блять",            L"nop",      kNOP),
+    DEF_KEYWORD(L"кунимэн",          L"(",        kLeftBracket),
+    DEF_KEYWORD(L"кишкоблуд",        L")",        kRightBracket),
+    DEF_KEYWORD(L"забаристый",       L"{",        kLeftCurlyBracket),
+    DEF_KEYWORD(L"с-горемыкой",      L"}",        kRightCurlyBracket),
+    DEF_KEYWORD(L"если",             L"if",       kIf),
+    DEF_KEYWORD(L"пока",             L"while",    kWhile),
+    DEF_KEYWORD(L"равно",            L"=",        kEqual),
+    DEF_KEYWORD(L"синус",            L"sin",      kSin),
+    DEF_KEYWORD(L"косинус",          L"cos",      kCos),
+    DEF_KEYWORD(L"опустить",         L"floor",    kFloor),
+    DEF_KEYWORD(L"плюс",             L"+",        kAdd),
+    DEF_KEYWORD(L"минус",            L"-",        kSub),
+    DEF_KEYWORD(L"умножить",         L"*",        kMul),
+    DEF_KEYWORD(L"поделить",         L"/",        kDiv),
+    DEF_KEYWORD(L"производная",      L"diff",     kDiff),
+    DEF_KEYWORD(L"корень",           L"sqrt",     kSqrt),
+    DEF_KEYWORD(L"степень",          L"^",        kPow),
+    DEF_KEYWORD(L"равно?",           L"==",       kEcmp),
+    DEF_KEYWORD(L"под",              L"<",        kBcmp),
+    DEF_KEYWORD(L"над",              L">",        kAcmp),
+    DEF_KEYWORD(L"сприподнизу",      L"<=",       kBEcmp),
+    DEF_KEYWORD(L"сприподверху",     L">=",       kAEcmp),
+    DEF_KEYWORD(L"не-равно?",        L"!=",       kNEcmp),
+    DEF_KEYWORD(L"и",                L"&&",       kAND),
+    DEF_KEYWORD(L"или",              L"||",       kOR),
+    DEF_KEYWORD(L"не",               L"!",        kNOT),
+    DEF_KEYWORD(L"конец",            L";",        kStep),
+    DEF_KEYWORD(L"к-тому-же",        L",",        kEnum),
+    DEF_KEYWORD(L"ячейка-из-говна",  L"number",   kNumber),
+    DEF_KEYWORD(L"выслушать",        L"in",       kIn),
+    DEF_KEYWORD(L"спиздануть",       L"out",      kOut),
+    DEF_KEYWORD(L"на-базу",          L"return",   kRet),
+    DEF_KEYWORD(L"стоп",             L"break",    kBreak),
+    DEF_KEYWORD(L"продолжить",       L"continue", kContinue),
+    DEF_KEYWORD(L"аборт",            L"abort",    kAbort),
 
     #undef DEF_KEYWORD 
 };

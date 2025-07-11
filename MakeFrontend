@@ -7,17 +7,17 @@ SOURCES_DIR_FRONT = Frontend
 SOURCES_FRONT = $(wildcard $(SOURCES_DIR_FRONT)/*cpp ) 
 OBJECTS_FRONT = $(SOURCES_FRONT:.cpp =.o) 
 
-SOURCES_DIR_LEXER = Frontend/Lexer
-SOURCES_LEXER = $(wildcard $(SOURCES_DIR_LEXER)/*cpp ) 
-OBJECTS_LEXER = $(SOURCES_LEXER:.cpp =.o) 
+# SOURCES_DIR_LEXER = Frontend/Lexer
+# SOURCES_LEXER = $(wildcard $(SOURCES_DIR_LEXER)/*cpp ) 
+# OBJECTS_LEXER = $(SOURCES_LEXER:.cpp =.o) 
 
-SOURCES_DIR_TOKENIZER = Frontend/Tokenizer
-SOURCES_TOKENIZER = $(wildcard $(SOURCES_DIR_TOKENIZER)/*cpp ) 
-OBJECTS_TOKENIZER = $(SOURCES_TOKENIZER:.cpp =.o) 
+# SOURCES_DIR_TOKENIZER = Frontend/Tokenizer
+# SOURCES_TOKENIZER = $(wildcard $(SOURCES_DIR_TOKENIZER)/*cpp ) 
+# OBJECTS_TOKENIZER = $(SOURCES_TOKENIZER:.cpp =.o) 
 
-SOURCES_DIR_PARSER = Frontend/Parser
-SOURCES_PARSER = $(wildcard $(SOURCES_DIR_PARSER)/*cpp ) 
-OBJECTS_PARSER = $(SOURCES_PARSER:.cpp =.o) 
+# SOURCES_DIR_PARSER = Frontend/Parser
+# SOURCES_PARSER = $(wildcard $(SOURCES_DIR_PARSER)/*cpp ) 
+# OBJECTS_PARSER = $(SOURCES_PARSER:.cpp =.o) 
 
 SOURCES_DIR_STR_LIST = StringList
 SOURCES_STR_LIST = $(wildcard $(SOURCES_DIR_STR_LIST)/*cpp ) 
@@ -31,19 +31,23 @@ SOURCES_DIR_UTILITIES = Utilities
 SOURCES_UTILITIES = $(wildcard $(SOURCES_DIR_UTILITIES)/*cpp ) 
 OBJECTS_UTILITIES = $(SOURCES_UTILITIES:.cpp=.o) 
 
+SOURCES_DIR_TREE = Tree
+SOURCES_TREE = $(wildcard $(SOURCES_DIR_TREE)/*cpp ) 
+OBJECTS_TREE = $(SOURCES_TREE:.cpp=.o) 
+
 EXECUTABLE = Front
 
 
 all: $(EXECUTABLE)
 
-$(EXECUTABLE): $(OBJECTS_FRONT) $(OBJECTS_LEXER) $(OBJECTS_TOKENIZER) $(OBJECTS_PARSER) $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) 
-	$(CC) $(OBJECTS_FRONT) $(OBJECTS_LEXER) $(OBJECTS_TOKENIZER) $(OBJECTS_PARSER) $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) $(CFLAGS) -o $(EXECUTABLE)
+$(EXECUTABLE): $(OBJECTS_FRONT)  $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_TREE)
+	$(CC) $(OBJECTS_FRONT)  $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_TREE) $(CFLAGS) -o $(EXECUTABLE)
 
 
 %.o: %.cpp
-	$(CC) -c $(CFLAGS) -IFrontend -IFrontend/Lexer -IFrontend/Tokenizer -IFrontend/Parser -IStringList -INumberList -IUtilities $< -o $@ 
+	$(CC) -c $(CFLAGS) -IFrontend -ICommon -IStringList -INumberList -IUtilities -ITree $< -o $@ 
 
 clean:
-	@rm $(EXECUTABLE) /home/vyacheslav/Language/Utilities/utilities.o
+	@rm $(EXECUTABLE) Utilities/utilities.o Tree/tree.o 
 
 	

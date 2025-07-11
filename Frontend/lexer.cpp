@@ -12,16 +12,14 @@ void LexicalAnalysis(Lexer* lexer, const char* filename)
 
     SplitLexems(lexer);
 
+    // StrListDot(lexer->str_list);
+
     //----------Tokens----------
     Tokenization(lexer);
 
-    //----------Close Lexer----------
-    StrListDot(lexer->str_list);
+    StrListDot(lexer->id_table);
 
-    CloseLexer(lexer, filename);
-
-    //----------Close Tokenizer----------
-    CloseTokenizer(lexer);
+    NumListDot(lexer->num_list);
 }   
 //-----------------------------------------------
 
@@ -126,13 +124,23 @@ void Tokenization(Lexer* lexer)
     {
         token_type = SearchKeyWord(GET_NODE_DATA(str_list), str_list->str_len);
         if (token_type == kId)
-        {
-            StrListAdd(lexer->id_table, GET_NODE_DATA(lexer->str_list), lexer->id_table_size);
+        {       
+            StrListAdd(lexer->id_table, GET_NODE_DATA(str_list), lexer->id_table_size);
             lexer->id_table_size++;
+
             NumListAdd(lexer->num_list, kPtrData, {.ptr = StrListGetNode(lexer->id_table, lexer->id_table_size)}, lexer->num_list_size);
             lexer->num_list_size++;
+        }   
+        else if (token_type == kConst)
+        {
+            wchar_t* end;
+            int64_t constant = 0;
+            constant = (int64_t)wcstol(GET_NODE_DATA(str_list), &end, 10);
+
+            NumListAdd(lexer->num_list, kConstData, {.number = constant}, lexer->num_list_size);
+            lexer->num_list_size++;
         }
-        else  
+        else 
         {
             NumListAdd(lexer->num_list, kNumData, {.number = token_type}, lexer->num_list_size);
             lexer->num_list_size++;
@@ -140,8 +148,6 @@ void Tokenization(Lexer* lexer)
 
         str_list = str_list->next;
     }   
-
-    StrListDot(lexer->id_table);
 }
 
 
@@ -158,12 +164,21 @@ KeyCode SearchKeyWord(const wchar_t* str, int str_len)
         }
     }
 
-    return kId;  // keyword not found
+    // keyword not found
+    if (IsNum(str, str_len))
+        return kConst; 
+    else 
+        return kId; 
 }
 
 
-void CloseTokenizer(Lexer* lexer)
-{
-    StrListDtor(lexer->id_table);
-    NumListDtor(lexer->num_list);
-}
+bool IsNum(const wchar_t* token, int token_len)
+{   
+    for (int i = 0; i < token_len; i++)
+    {
+        if (!iswdigit(token[i]))
+            return false;
+    }
+
+    return true;
+}   

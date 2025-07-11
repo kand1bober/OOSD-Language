@@ -26,8 +26,9 @@
 
     typedef enum 
     {
-        kPtrData,   // for identifiers 
-        kNumData,   // for enums
+        kPtrData = 1,   // for identifiers 
+        kNumData,   // for keywords
+        kConstData, // for numeric constants 
     } DataTypes;
 
     typedef struct num_list

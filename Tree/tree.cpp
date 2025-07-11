@@ -30,7 +30,7 @@ Node* CreateNode(Node* left, Node* right, Node* parent, NodeTypes type, TreeData
     new_node->type = type;
 
     if (type == kConst || type == kKeyWord || 
-        type == kFuncDef || type == kParam || 
+        type == kFuncDef || type == kParameters || 
         type == kVarDecl || type == kCall )
     {
         new_node->data.num = data.num;
@@ -319,7 +319,7 @@ Node* FindNode(Node* node_search, NodeTypes type, TreeData to_find)
     {
 
         if (type == kConst || type == kKeyWord || 
-            type == kFuncDef || type == kParam || 
+            type == kFuncDef || type == kParameters || 
             type == kVarDecl || type == kCall )
         {
             if (node_search->data.num == to_find.num)

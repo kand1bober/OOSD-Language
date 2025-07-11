@@ -31,7 +31,7 @@ typedef enum
 {
     kNoType = 0, // default/initial
 
-    kConst = 1,
+    kConstant = 1,
     kIdentifier = 2,
     kKeyWord = 3,
     kFuncDef = 4,

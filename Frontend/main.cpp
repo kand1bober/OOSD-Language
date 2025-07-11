@@ -8,7 +8,7 @@ int main()
 
     LexicalAnalysis(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
 
-    StartParser(&parser, &lexer);
+    // StartParser(&parser, &lexer);
 
     CloseLexer(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
         
