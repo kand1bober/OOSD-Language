@@ -9,15 +9,6 @@
 #ifndef SYNTAX_HEADER
 #define SYNTAX_HEADER
 
-#define SYNTAX_ERROR    wprintf(RED L"Syntax error:"  \
-                                "file: %s\n"        \
-                                "func: %s\n"        \
-                                "line: %d\n" DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__); \
-                        exit(1); \
-
-#define SYNTAX_ASSERT(expr)     if (TOKEN_VAL != expr) \
-                                    SYNTAX_ERROR
-
 typedef struct 
 {
     NumList* cur_token;     // move in list of tokens
@@ -26,9 +17,9 @@ typedef struct
 } Parser;
 
 //-----------------------------------------------
-void StartParser(Parser* parser, Lexer* tokenizer);
+void GetSyntaxTree(Parser* src, Lexer* tokenizer);
 
-Node* GetTransUnit(Parser* src, Lexer* tokenizer);
+Node* GetTransUnit(Parser* src);
 
 Node* GetExtDecl(Parser* src);
 

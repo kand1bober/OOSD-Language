@@ -1,0 +1,16 @@
+digraph G
+{
+charset="latin1";
+label="AST";
+labelloc="t";
+fontsize=30
+fontname="Verdana";
+fontcolor="#FFFFFF"
+
+rankdir=TB;size="200,300";bgcolor="#ffd480";
+ node_0x5040000001d0 [shape=record,style="rounded,filled",fillcolor="#34cb34",color="#FFE9C7",label=" { { data type: } | { data: ; } } " ]; node_0x5040000001d0 -> node_0x504000000150 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x504000000150 [shape=record,style="rounded,filled",fillcolor="#34cb34",color="#FFE9C7",label=" { { data type: } | { data:  } } " ]; node_0x504000000150 -> node_0x5040000000d0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5040000000d0 [shape=record,style="rounded,filled",fillcolor="#34cb34",color="#FFE9C7",label=" { { data type: } | { data: number } } " ]; node_0x504000000150 -> node_0x504000000190 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x504000000190 [shape=record,style="rounded,filled",fillcolor="#34cb34",color="#FFE9C7",label=" { { data type: } | { data: = } } " ]; node_0x504000000190 -> node_0x504000000110 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x504000000110 [shape=record,style="rounded,filled",fillcolor="#34cb34",color="#FFE9C7",label=" { { data type: } | { data:  } } " ]; 
+}

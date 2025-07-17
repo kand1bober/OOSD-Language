@@ -1,13 +1,5 @@
 #include "parser.h"
 
-// //------------RECURSIVE DESCENT------------------
-void StartParser(Parser* parser, Lexer* tokenizer)
-{
-    parser->cur_token = tokenizer->num_list;
-
-    parser->tree->root = GetTransUnit(parser, tokenizer);
-}
-
 #define GO_TO_NEXT_TOKEN src->cur_token = src->cur_token->next;    
 #define GO_TO_PREV_TOKEN src->cur_token = src->cur_token->prev;
 #define TOKEN_VAL        src->cur_token->data.number
@@ -16,24 +8,55 @@ void StartParser(Parser* parser, Lexer* tokenizer)
 #define SET_OLD_TOKEN    src->old_token = src->cur_token;
 #define OLD_TOKEN_VAL    src->old_token->data.number
 
-//-----------------------------------------------
-Node* GetTransUnit(Parser* src, Lexer* tokenizer)
+#define SYNTAX_ERROR    wprintf(RED L"Syntax error:\n"  \
+                                RED "file:" DELETE_COLOR " %s\n"        \
+                                RED "func:" DELETE_COLOR " %s\n"        \
+                                RED "line:" DELETE_COLOR " %d\n" DELETE_COLOR, __FILE__, __PRETTY_FUNCTION__, __LINE__); \
+                        exit(1); \
+
+#define SYNTAX_ASSERT(expr)     if (TOKEN_VAL != expr) \
+                                {                   \
+                                    SYNTAX_ERROR    \
+                                }                   
+
+//------------RECURSIVE DESCENT------------------
+
+void GetSyntaxTree(Parser* src, Lexer* tokenizer)
+{   
+    src->cur_token = tokenizer->num_list;
+
+    SYNTAX_ASSERT(NUM_LIST_POISON)
+    GO_TO_NEXT_TOKEN
+
+    src->tree = TreeCtor();
+    src->tree->root = GetTransUnit(src);
+
+    wprintf(PURPLE L"data: %ld\n %p\n" DELETE_COLOR, src->cur_token->data.number, src->cur_token->data.ptr);
+
+    SYNTAX_ASSERT(NUM_LIST_POISON)
+
+    // wprintf(YELLOW L"LABEL 1\n" DELETE_COLOR);
+}
+
+
+Node* GetTransUnit(Parser* src)
 {   
     Node* node = NULL;
     Node* tmp_node = NULL;
     Node* right_node = NULL;
 
-    GO_TO_NEXT_TOKEN
     node = GetExtDecl(src);
     while (TOKEN_VAL == kStep)
     {
         tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+        InsertLeave(src->tree, tmp_node, kLeft, node);
+
         GO_TO_NEXT_TOKEN
 
         right_node = GetExtDecl(src);
-        
-        InsertLeave(src->tree, tmp_node, kLeft, node);
-        InsertLeave(src->tree, tmp_node, kRight, right_node);
+
+        if (right_node)        
+            InsertLeave(src->tree, tmp_node, kRight, right_node);
 
         node = tmp_node;
     }   
@@ -52,7 +75,7 @@ Node* GetExtDecl(Parser* src)
     {
         GO_TO_NEXT_TOKEN
 
-        if (TOKEN_VAL == kId)
+        if (src->cur_token->data_type == kPtrData)
         {
             GO_TO_NEXT_TOKEN
 
@@ -77,8 +100,7 @@ Node* GetExtDecl(Parser* src)
     }
     else  
     {
-        wprintf(RED L"Wrong data type\n" DELETE_COLOR);
-        SYNTAX_ERROR 
+        node = NULL;
     }
 
     return node;
@@ -87,56 +109,56 @@ Node* GetExtDecl(Parser* src)
 
 Node* GetFuncDef(Parser* src)
 {
-    Node* node = NULL;
-    Node* left_node = NULL;
-    Node* right_node = NULL;
-    Node* right_left_node = NULL;
-    Node* right_right_node = NULL;
+    // Node* node = NULL;
+    // Node* left_node = NULL;
+    // Node* right_node = NULL;
+    // Node* right_left_node = NULL;
+    // Node* right_right_node = NULL;
 
-    left_node = CreateNode(NULL, NULL, node, kKeyWord, {.num = TOKEN_VAL});
-    GO_TO_NEXT_TOKEN
+    // left_node = CreateNode(NULL, NULL, node, kKeyWord, {.num = TOKEN_VAL});
+    // GO_TO_NEXT_TOKEN
 
-    node = CreateNode(NULL, NULL, NULL, kFuncDef, {.str = (wchar_t*)TOKEN_ID_VAL});
-    GO_TO_NEXT_TOKEN
+    // node = CreateNode(NULL, NULL, NULL, kFuncDef, {.str = (wchar_t*)TOKEN_ID_VAL});
+    // GO_TO_NEXT_TOKEN
     
-    right_node = CreateNode(NULL, NULL, node, kParameters, {.num = TOKEN_VAL});
-    GO_TO_NEXT_TOKEN
+    // right_node = CreateNode(NULL, NULL, node, kParameters, {.num = TOKEN_VAL});
+    // GO_TO_NEXT_TOKEN
 
-    right_left_node = GetDeclList(src);
-    right_right_node = GetCompoundState(src);
+    // right_left_node = GetDeclList(src);
+    // right_right_node = GetCompoundState(src);
 
-    InsertLeave(src->tree, right_node, kLeft, right_left_node);
-    InsertLeave(src->tree, right_node, kRight, right_right_node);
+    // InsertLeave(src->tree, right_node, kLeft, right_left_node);
+    // InsertLeave(src->tree, right_node, kRight, right_right_node);
 
-    InsertLeave(src->tree, node, kLeft, left_node);
-    InsertLeave(src->tree, node, kRight, right_node);
+    // InsertLeave(src->tree, node, kLeft, left_node);
+    // InsertLeave(src->tree, node, kRight, right_node);
 
-    return node;
+    // return node;
 }
 
 
 Node* GetDeclList(Parser* src)
 {
-    Node* node = NULL;
-    Node* tmp_node = NULL;
-    Node* right_node = NULL;
+    // Node* node = NULL;
+    // Node* tmp_node = NULL;
+    // Node* right_node = NULL;
 
-    node = GetDeclInit(src);
-    GO_TO_NEXT_TOKEN
-    while (TOKEN_VAL == kEnum)
-    {
-        tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-        GO_TO_NEXT_TOKEN
+    // node = GetDeclInit(src);
+    // GO_TO_NEXT_TOKEN
+    // while (TOKEN_VAL == kEnum)
+    // {
+    //     tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+    //     GO_TO_NEXT_TOKEN
 
-        right_node = GetDeclInit(src);
+    //     right_node = GetDeclInit(src);
         
-        InsertLeave(src->tree, tmp_node, kLeft, node);
-        InsertLeave(src->tree, tmp_node, kRight, right_node);
+    //     InsertLeave(src->tree, tmp_node, kLeft, node);
+    //     InsertLeave(src->tree, tmp_node, kRight, right_node);
 
-        node = tmp_node;
-    }   
+    //     node = tmp_node;
+    // }   
 
-    return node;
+    // return node;
 }
 
 
@@ -154,25 +176,28 @@ Node* GetDeclInit(Parser* src)
         GO_TO_NEXT_TOKEN
 
         tmp_node = GetId(src);
-        GO_TO_NEXT_TOKEN
     }
     else  
+    {
         SYNTAX_ERROR
+    }
 
     node = CreateNode(NULL, NULL, NULL, kVarDecl, {.num = 0});
     InsertLeave(src->tree, node, kLeft, left_node);
-    GO_TO_NEXT_TOKEN
+
     
     if (TOKEN_VAL == kEqual)
     {
         right_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
         GO_TO_NEXT_TOKEN
 
-        right_right_node = GetLogic_OR_Expr(src);
+            GO_TO_NEXT_TOKEN
 
-        InsertLeave(src->tree, right_node, kLeft, tmp_node);
-        InsertLeave(src->tree, right_node, kRight, right_right_node);
+        // right_right_node = GetLogic_OR_Expr(src);
+
         InsertLeave(src->tree, node, kRight, right_node);
+        InsertLeave(src->tree, right_node, kLeft, tmp_node);
+        // InsertLeave(src->tree, right_node, kRight, right_right_node);
     }
     else  
     {

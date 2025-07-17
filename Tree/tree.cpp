@@ -17,10 +17,27 @@ TreeInfo TreeDtor(Tree* tree)
 
     FreeTree(tree, tree->root);
 
-    if (!tree)
-        return kGoodTree;
-    else 
-        return kBadTree;
+    free(tree);
+
+    return kGoodTree;
+}
+
+
+void FreeTree (Tree* tree, Node* node)
+{   
+    assert(tree);
+    assert(node);
+    
+    Node* left = node->left;
+    Node* right = node->right;
+
+    if (left)
+        FreeTree(tree, left);
+
+    if (right)
+        FreeTree(tree, right);
+
+    free(node);
 }
 
 
@@ -29,7 +46,7 @@ Node* CreateNode(Node* left, Node* right, Node* parent, NodeTypes type, TreeData
     Node* new_node = (Node*)calloc(1, sizeof(Node));
     new_node->type = type;
 
-    if (type == kConst || type == kKeyWord || 
+    if (type == kConstant || type == kKeyWord || 
         type == kFuncDef || type == kParameters || 
         type == kVarDecl || type == kCall )
     {
@@ -195,24 +212,6 @@ TreeInfo InsertNode(Node* left, Node* right, Node* node)
 }
 
 
-void FreeTree (Tree* tree, Node* node)
-{   
-    assert(tree);
-    assert(node);
-    
-    Node* left = node->left;
-    Node* right = node->right;
-
-    if (left)
-        FreeTree(tree, left);
-
-    if (right)
-        FreeTree(tree, right);
-
-    free(node);
-}
-
-
 TreeInfo BranchDelete (Tree* tree, Node* node, NodeTypes node_type) 
 {
     if (node)
@@ -317,8 +316,7 @@ Node* FindNode(Node* node_search, NodeTypes type, TreeData to_find)
     }
     else 
     {
-
-        if (type == kConst || type == kKeyWord || 
+        if (type == kConstant || type == kKeyWord || 
             type == kFuncDef || type == kParameters || 
             type == kVarDecl || type == kCall )
         {

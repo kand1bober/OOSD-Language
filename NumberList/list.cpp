@@ -62,7 +62,7 @@ NumList* NumListCreatePtrNode (void* data)
 
 NumList* NumListCtor ()
 {
-    NumList* phantom = NumListCreateNumNode (NUM_LIST_POISON);
+    NumList* phantom = NumListCreateNumNode(NUM_LIST_POISON);
 
     phantom->next = phantom;
     phantom->prev = phantom;

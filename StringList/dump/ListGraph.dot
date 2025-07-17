@@ -7,19 +7,13 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
-{ node_0x5060000001a0 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x5060000001a0 } | { { prev: 0x503000000340 } | { next: 0x504000000150 } }  "] 
+{ node_0x506000000080 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000080 } | { { prev: 0x503000000100 } | { next: 0x503000000100 } }  "] 
 }
-node_0x504000000150 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x504000000150 } | { { prev: 0x5060000001a0 } | { next: 0x503000000220 } }  "] 
-node_0x503000000220 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: x } | { curr: 0x503000000220 } | { { prev: 0x504000000150 } | { next: 0x503000000340 } }  "] 
-node_0x503000000340 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: x } | { curr: 0x503000000340 } | { { prev: 0x503000000220 } | { next: 0x5060000001a0 } }  "] 
+node_0x503000000100 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: x } | { curr: 0x503000000100 } | { { prev: 0x506000000080 } | { next: 0x506000000080 } }  "] 
 
-node_0x5060000001a0 -> node_0x504000000150 [color ="#ff6699"];
-node_0x5060000001a0 -> node_0x503000000340 [color ="#34cb34"];
-node_0x504000000150 -> node_0x503000000220 [color ="#ff6699"];
-node_0x504000000150 -> node_0x5060000001a0 [color ="#34cb34"];
-node_0x503000000220 -> node_0x503000000340 [color ="#ff6699"];
-node_0x503000000220 -> node_0x504000000150 [color ="#34cb34"];
-node_0x503000000340 -> node_0x5060000001a0 [color ="#ff6699"];
-node_0x503000000340 -> node_0x503000000220 [color ="#34cb34"];
+node_0x506000000080 -> node_0x503000000100 [color ="#ff6699"];
+node_0x506000000080 -> node_0x503000000100 [color ="#34cb34"];
+node_0x503000000100 -> node_0x506000000080 [color ="#ff6699"];
+node_0x503000000100 -> node_0x506000000080 [color ="#34cb34"];
 
 }

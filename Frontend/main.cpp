@@ -1,5 +1,6 @@
 #include "lexer.h"
 #include "parser.h"
+#include "../Tree/tree_dump.h"
 
 int main()
 {
@@ -8,9 +9,13 @@ int main()
 
     LexicalAnalysis(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
 
-    // StartParser(&parser, &lexer);
+    GetSyntaxTree(&parser, &lexer);
+    
+    TreeDotOutput(parser.tree);
 
     CloseLexer(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
+
+    TreeDtor(parser.tree);
         
     return 0;
 }

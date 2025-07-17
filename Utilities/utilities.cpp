@@ -70,3 +70,18 @@ wchar_t* OverwriteSpaces(wchar_t* ptr)
 
     return ptr;
 }
+
+
+const wchar_t* KeyWordStrVal(int64_t keycode)
+{   
+    for (int i = 0; i < kKeyWordsAmount; i++)
+    {       
+        if (keycode == (int64_t)keyword_table[i].key_code)
+        {
+            return keyword_table[i].C_key_word;
+        }
+    }
+
+    return L"huy";
+}
+

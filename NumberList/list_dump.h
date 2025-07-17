@@ -41,7 +41,5 @@ NumListInfo_t NumDotDriver (NumList* list, FileInfo* file);
 NumListInfo_t NumDotCollector (NumList* list, FileInfo* file);
 //-------------------------------------------------------------------
 
-const wchar_t* KeyWordStrVal(int64_t keycode);
-
 #endif
 

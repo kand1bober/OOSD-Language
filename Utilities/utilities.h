@@ -7,6 +7,8 @@
 #include <wctype.h>
 #include <locale.h>
 
+#include "../Common/keywords.h"
+
 #ifndef UTILITIES_HEADER
 #define UTILITIES_HEADER
 
@@ -35,6 +37,8 @@ void CloseFile(FileInfo* file_info);
 
 wchar_t* SkipNulls(wchar_t* ptr);
 wchar_t* OverwriteSpaces(wchar_t* ptr);
+
+const wchar_t* KeyWordStrVal(int64_t keycode);
 
 #endif 
 
