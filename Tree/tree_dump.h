@@ -19,9 +19,13 @@ static const wchar_t tree_default_pointer_color[20] = L"#FFE9C7";
 static const wchar_t tree_pointer_left_color[20] =    L"#9ACD32"; 
 static const wchar_t tree_pointer_right_color[20] =   L"#FF2B00";
 
-static const wchar_t tree_var_fillcolor[20] = L"#ff6699"; //#FFA9B8
-static const wchar_t tree_num_fillcolor[20] = L"#34cb34";
-static const wchar_t tree_op_fillcolor[20] =  L"#9966FF";
+static const wchar_t tree_id_fillcolor[20] = L"#ff6699"; //#FFA9B8
+static const wchar_t tree_const_fillcolor[20] = L"#03cffc";
+static const wchar_t tree_keyword_fillcolor[20] =  L"#9966FF";
+static const wchar_t tree_funcdef_fillcolor[20] =  L"#fca103";
+static const wchar_t tree_param_fillcolor[20] =  L"#fc0303";
+static const wchar_t tree_vardecl_fillcolor[20] =  L"#08c41e";
+static const wchar_t tree_call_fillcolor[20] =  L"#6200ff";
 
 static const wchar_t tree_bgcolor[20] =   L"#ffd480";
 static const wchar_t tree_fontcolor[20] = L"#FFFFFF";

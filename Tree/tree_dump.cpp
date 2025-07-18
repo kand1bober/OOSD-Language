@@ -76,49 +76,53 @@ void TreeDotWriteEdge(FileInfo* file, Node* node)
 
     wchar_t node_data[100] = {0};
     wchar_t node_type[50] = {0};
+    wchar_t node_color[50] = {0};
 
     switch((int)node->type)
     {
         case kConstant:
         {   
-            // swprintf(node_type, 50, L"Constant");
-            // swprintf(node_data, 100, L"%ld", node->data.num);
+            swprintf(node_type, 50, L"Constant");
+            swprintf(node_data, 100, L"%ld", node->data.num);
+            swprintf(node_color, 50, L"%ls", tree_const_fillcolor);
             break;
         }
         case kIdentifier: 
         {
-            // swprintf(node_type, 50, L"Identifier");
-            // swprintf(node_data, 100, L"%ls", );
+            swprintf(node_type, 50, L"Identifier");
+            swprintf(node_data, 100, L"%ls", node->data.str);
+            swprintf(node_color, 50, L"%ls", tree_id_fillcolor);
             break; 
         }
         case kKeyWord:
         {
             swprintf(node_type, 50, L"KeyWord");
             swprintf(node_data, 100, L"%ls", KeyWordStrVal(node->data.num));
+            swprintf(node_color, 50, L"%ls", tree_keyword_fillcolor);
             break;
         }
         case kFuncDef:
         {
-            // swprintf(node_type, 50, L"Func Def");
-            // swprintf(node_data, 100, L"");
+            swprintf(node_type, 50, L"Func Def");
+            swprintf(node_color, 50, L"%ls", tree_funcdef_fillcolor);
             break;
         }
         case kParameters:
         {
-            // swprintf(node_type, 50, L"Parameters");
-            // swprintf(node_data, 100, L"");
+            swprintf(node_type, 50, L"Parameters");
+            swprintf(node_color, 50, L"%ls", tree_param_fillcolor);
             break;
         }
         case kVarDecl:
         {
             swprintf(node_type, 50, L"Var Decl");
-            swprintf(node_data, 100, L"");
+            swprintf(node_color, 50, L"%ls", tree_vardecl_fillcolor);
             break;
         }
         case kCall:
         {
-            // swprintf(node_type, 50, L"Call");
-            // swprintf(node_data, 100, L"");
+            swprintf(node_type, 50, L"Call");
+            swprintf(node_color, 50, L"%ls", tree_call_fillcolor);
             break;
         }
         default:
@@ -130,8 +134,8 @@ void TreeDotWriteEdge(FileInfo* file, Node* node)
     }
 
     fwprintf(file->file, L" node_%p [shape=record,style=\"rounded,filled\",fillcolor=\"%ls\",color=\"%ls\","
-                "label=\" { { data type: } | { data: %ls } } \" ]; ",
-                node, tree_num_fillcolor, tree_default_pointer_color, node_data );
+                "label=\" { { node type: %ls } | { data: %ls } } \" ]; ",
+                node, node_color, tree_default_pointer_color, node_type, node_data );
 
     if (node->left)
     {

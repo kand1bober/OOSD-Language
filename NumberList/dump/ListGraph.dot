@@ -8,16 +8,19 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
-{ node_0x5030000000a0 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | {data: Phantom } | { curr: 0x5030000000a0 } | { { prev: 0x5030000001c0 } | { next: 0x5030000000d0 } }  "] 
+{ node_0x5030000000a0 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | {data: Phantom } | { curr: 0x5030000000a0 } | { { prev: 0x503000000250 } | { next: 0x5030000000d0 } }  "] 
 }
 node_0x5030000000d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data_type: KeyWord } | {data: number } | { curr: 0x5030000000d0 } | { { prev: 0x5030000000a0 } | { next: 0x503000000130 } }  "] 
 node_0x503000000130 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 1 } | { data_type: Identifier } | {data: x } | { curr: 0x503000000130 } | { { prev: 0x5030000000d0 } | { next: 0x503000000160 } }  "] 
 node_0x503000000160 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data_type: KeyWord } | {data: = } | { curr: 0x503000000160 } | { { prev: 0x503000000130 } | { next: 0x503000000190 } }  "] 
-node_0x503000000190 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 3 } | { data_type: Constant } | {data: 15 } | { curr: 0x503000000190 } | { { prev: 0x503000000160 } | { next: 0x5030000001c0 } }  "] 
-node_0x5030000001c0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data_type: KeyWord } | {data: ; } | { curr: 0x5030000001c0 } | { { prev: 0x503000000190 } | { next: 0x5030000000a0 } }  "] 
+node_0x503000000190 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data_type: KeyWord } | {data: sin } | { curr: 0x503000000190 } | { { prev: 0x503000000160 } | { next: 0x5030000001c0 } }  "] 
+node_0x5030000001c0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data_type: KeyWord } | {data: ( } | { curr: 0x5030000001c0 } | { { prev: 0x503000000190 } | { next: 0x5030000001f0 } }  "] 
+node_0x5030000001f0 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 5 } | { data_type: Constant } | {data: 15 } | { curr: 0x5030000001f0 } | { { prev: 0x5030000001c0 } | { next: 0x503000000220 } }  "] 
+node_0x503000000220 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 6 } | { data_type: KeyWord } | {data: ) } | { curr: 0x503000000220 } | { { prev: 0x5030000001f0 } | { next: 0x503000000250 } }  "] 
+node_0x503000000250 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 7 } | { data_type: KeyWord } | {data: ; } | { curr: 0x503000000250 } | { { prev: 0x503000000220 } | { next: 0x5030000000a0 } }  "] 
 
 node_0x5030000000a0 -> node_0x5030000000d0 [color ="#ff6699"];
-node_0x5030000000a0 -> node_0x5030000001c0 [color ="#34cb34"];
+node_0x5030000000a0 -> node_0x503000000250 [color ="#34cb34"];
 node_0x5030000000d0 -> node_0x503000000130 [color ="#ff6699"];
 node_0x5030000000d0 -> node_0x5030000000a0 [color ="#34cb34"];
 node_0x503000000130 -> node_0x503000000160 [color ="#ff6699"];
@@ -26,7 +29,13 @@ node_0x503000000160 -> node_0x503000000190 [color ="#ff6699"];
 node_0x503000000160 -> node_0x503000000130 [color ="#34cb34"];
 node_0x503000000190 -> node_0x5030000001c0 [color ="#ff6699"];
 node_0x503000000190 -> node_0x503000000160 [color ="#34cb34"];
-node_0x5030000001c0 -> node_0x5030000000a0 [color ="#ff6699"];
+node_0x5030000001c0 -> node_0x5030000001f0 [color ="#ff6699"];
 node_0x5030000001c0 -> node_0x503000000190 [color ="#34cb34"];
+node_0x5030000001f0 -> node_0x503000000220 [color ="#ff6699"];
+node_0x5030000001f0 -> node_0x5030000001c0 [color ="#34cb34"];
+node_0x503000000220 -> node_0x503000000250 [color ="#ff6699"];
+node_0x503000000220 -> node_0x5030000001f0 [color ="#34cb34"];
+node_0x503000000250 -> node_0x5030000000a0 [color ="#ff6699"];
+node_0x503000000250 -> node_0x503000000220 [color ="#34cb34"];
 
 }
