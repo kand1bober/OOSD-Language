@@ -39,6 +39,7 @@ wchar_t* SkipNulls(wchar_t* ptr);
 wchar_t* OverwriteSpaces(wchar_t* ptr);
 
 const wchar_t* KeyWordStrVal(int64_t keycode);
+const wchar_t* KeyWordHTMLVal(int64_t keycode);
 
 #endif 
 

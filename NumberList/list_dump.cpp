@@ -99,15 +99,41 @@ NumListInfo_t NumDotCollector (NumList* list, FileInfo* file_info)
             case kNumData:
             {
                 wcscpy(node_data_type, L"KeyWord");
-                wcscpy(node_data, KeyWordStrVal(curr_node->data.number)); 
 
-                if (curr_node->data.number == kLeftCurlyBracket)
+                int keycode = curr_node->data.number;
+                switch (keycode)
                 {
-                    swprintf(node_data, 20, L"\\{");
-                }
-                else if (curr_node->data.number == kRightCurlyBracket)
-                {
-                    swprintf(node_data, 20, L"\\}");
+                    case kLeftBracket:
+                    case kRightBracket:
+                    case kLeftCurlyBracket:
+                    case kRightCurlyBracket:
+                    case kEqual:
+                    case kAdd:
+                    case kSub:
+                    case kMul:
+                    case kDiv:
+                    case kPow:
+                    case kEcmp:
+                    case kAcmp:
+                    case kAEcmp:
+                    case kBcmp:
+                    case kBEcmp:
+                    case kNEcmp:
+                    case kAND:
+                    case kOR:
+                    case kNOT:
+                    case kStep:
+                    case kEnum:
+                    {   
+                        swprintf(node_data, 20, L"%ls", KeyWordHTMLVal(curr_node->data.number));
+                        break;
+                    }
+
+                    default:
+                    {
+                        wcscpy(node_data, KeyWordStrVal(curr_node->data.number)); 
+                        break;
+                    }
                 }
 
                 fillcolor = num_third_fillcolor;

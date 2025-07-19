@@ -8,11 +8,12 @@ fontname="Verdana";
 fontcolor="#FFFFFF"
 
 rankdir=TB;size="200,300";bgcolor="#ffd480";
- node_0x504000000290 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { node type: KeyWord } | { data: ; } } " ]; node_0x504000000290 -> node_0x504000000190 [color = "#9ACD32", arrowsize = 1] ;
- node_0x504000000190 [shape=record,style="rounded,filled",fillcolor="#08c41e",color="#FFE9C7",label=" { { node type: Var Decl } | { data:  } } " ]; node_0x504000000190 -> node_0x504000000110 [color = "#9ACD32", arrowsize = 1] ;
- node_0x504000000110 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { node type: KeyWord } | { data: number } } " ]; node_0x504000000190 -> node_0x5040000001d0 [color = "#FF2B00", arrowsize = 1] ;
- node_0x5040000001d0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { node type: KeyWord } | { data: = } } " ]; node_0x5040000001d0 -> node_0x504000000150 [color = "#9ACD32", arrowsize = 1] ;
- node_0x504000000150 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { node type: Identifier } | { data: x } } " ]; node_0x5040000001d0 -> node_0x504000000210 [color = "#FF2B00", arrowsize = 1] ;
- node_0x504000000210 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { node type: KeyWord } | { data: sin } } " ]; node_0x504000000210 -> node_0x504000000250 [color = "#FF2B00", arrowsize = 1] ;
- node_0x504000000250 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { node type: Constant } | { data: 15 } } " ]; 
+ node_0x504000000190 [shape=record,style="rounded,filled",fillcolor="#fca103",color="#FFE9C7",label=" { { Func Def } | { main } } " ]; node_0x504000000190 -> node_0x504000000150 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x504000000150 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x504000000190 -> node_0x5040000001d0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5040000001d0 [shape=record,style="rounded,filled",fillcolor="#fc0303",color="#FFE9C7",label=" { { Parameters } | { &#8709; } } " ]; node_0x5040000001d0 -> node_0x504000000290 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x504000000290 [shape=record,style="rounded,filled",fillcolor="#08c41e",color="#FFE9C7",label=" { { Var Decl } | { one } } " ]; node_0x504000000290 -> node_0x504000000210 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x504000000210 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x504000000290 -> node_0x5040000002d0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5040000002d0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3D; } } " ]; node_0x5040000002d0 -> node_0x504000000250 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x504000000250 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { Identifier } | { one } } " ]; node_0x5040000002d0 -> node_0x504000000310 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x504000000310 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { Constant } | { 1 } } " ]; 
 }
