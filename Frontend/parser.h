@@ -31,6 +31,8 @@ Node* GetDeclInit(Parser* src);
 
 Node* GetStateList(Parser* src);
 
+bool IsStatement(Parser* src);
+
 Node* GetCompoundState(Parser* src);
 
 Node* GetState(Parser* src);
