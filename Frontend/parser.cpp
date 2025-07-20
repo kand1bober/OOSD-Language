@@ -627,15 +627,19 @@ Node* GetPrimaryExpr(Parser* src)
 
             if (TOKEN_VAL == kLeftBracket)
             {
-                // tmp_node = node;
-                // node = CreateNode(NULL, NULL, NULL, kCall, {.num = 0});                
-                // left_node = GetDeclList(src); // TODO: GetParams
+                GO_TO_NEXT_TOKEN
+                
+                right_node = node;
+                node = CreateNode(NULL, NULL, NULL, kCall, {.num = 0});
 
-                // SYNTAX_ASSERT(kLeftBracket)
-                // GO_TO_NEXT_TOKEN
+                InsertLeave(src->tree, node, kRight, right_node);
 
-                // InsertLeave(src->tree, node, kLeft, left_node);
-                // InsertLeave(src->tree, node, kRight, tmp_node);
+                left_node = GetCallParams(src); 
+                if (left_node)
+                    InsertLeave(src->tree, node, kLeft, left_node);
+
+                SYNTAX_ASSERT(kRightBracket)
+                GO_TO_NEXT_TOKEN
             }
 
             break;
@@ -694,6 +698,37 @@ Node* GetPrimaryExpr(Parser* src)
             SYNTAX_ERROR
         }
     }    
+
+    return node;
+}
+
+//-----------------------------------------------
+
+Node* GetCallParams(Parser* src)
+{
+    Node* node = NULL;
+    Node* tmp_node = NULL;
+    Node* left_node = NULL;
+    Node* right_node = NULL;
+
+    if (TOKEN_VAL != kRightBracket)
+    {
+        node = GetExpr(src);
+        left_node = node;
+        while (TOKEN_VAL == kEnum)
+        {
+            tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
+            GO_TO_NEXT_TOKEN
+            right_node = GetExpr(src);
+
+            InsertLeave(src->tree, tmp_node, kLeft, left_node);
+            InsertLeave(src->tree, tmp_node, kRight, right_node);
+
+            left_node = tmp_node;
+        }   
+
+        node = left_node;
+    }
 
     return node;
 }

@@ -25,7 +25,7 @@ static const wchar_t tree_keyword_fillcolor[20] =  L"#9966FF";
 static const wchar_t tree_funcdef_fillcolor[20] =  L"#fca103";
 static const wchar_t tree_param_fillcolor[20] =  L"#fc0303";
 static const wchar_t tree_vardecl_fillcolor[20] =  L"#08c41e";
-static const wchar_t tree_call_fillcolor[20] =  L"#6200ff";
+static const wchar_t tree_call_fillcolor[20] =  L"#916306";
 
 static const wchar_t tree_bgcolor[20] =   L"#ffd480";
 static const wchar_t tree_fontcolor[20] = L"#FFFFFF";

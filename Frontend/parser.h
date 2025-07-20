@@ -37,8 +37,6 @@ Node* GetCompoundState(Parser* src);
 
 Node* GetState(Parser* src);
 
-Node* GetSelectStateState(Parser* src);
-
 Node* GetExpr(Parser* src);
 
 Node* GetLogic_OR_Expr(Parser* src) ;
@@ -54,6 +52,8 @@ Node* GetAdditiveExpr(Parser* src);
 Node* GetMulExpr(Parser* src);
 
 Node* GetPrimaryExpr(Parser* src);
+
+Node* GetCallParams(Parser* src);
 
 Node* GetNumber(Parser* src);
 
