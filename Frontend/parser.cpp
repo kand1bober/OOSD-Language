@@ -411,29 +411,7 @@ Node* GetState(Parser* src)
 
 Node* GetExpr(Parser* src)
 {
-    Node* node = NULL;
-    Node* tmp_node = NULL;
-    Node* left_node = NULL;
-    Node* right_node = NULL;
-
-    node = GetLogic_OR_Expr(src);
-    left_node = node;
-    while (TOKEN_VAL == kEnum)
-    {
-        tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-        GO_TO_NEXT_TOKEN
-
-        right_node = GetLogic_OR_Expr(src);
-
-        InsertLeave(src->tree, tmp_node, kLeft, left_node);
-        InsertLeave(src->tree, tmp_node, kRight, right_node);
-
-        left_node = tmp_node;
-    }   
-
-    node = left_node;
-
-    return node;
+    return GetLogic_OR_Expr(src);
 }
 
 
@@ -662,7 +640,6 @@ Node* GetPrimaryExpr(Parser* src)
                 case kSin: 
                 case kCos: 
                 case kFloor: 
-                case kDiff:
                 {
                     node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
                     GO_TO_NEXT_TOKEN
@@ -670,14 +647,19 @@ Node* GetPrimaryExpr(Parser* src)
                     SYNTAX_ASSERT(kLeftBracket)
                     GO_TO_NEXT_TOKEN
 
-                    // Node* right_node = GetExpr(src);
-                    Node* right_node = GetNumber(src);
+                    Node* right_node = GetExpr(src);
+                    // Node* right_node = GetNumber(src);
                     
                     SYNTAX_ASSERT(kRightBracket)
                     GO_TO_NEXT_TOKEN
 
                     InsertLeave(src->tree, node, kRight, right_node);
                     break;
+                }
+                case kDiff:
+                {
+                    wprintf(YELLOW L"Дифференицирования нет, мне было лень его добавлять :)\n" DELETE_COLOR);
+                    SYNTAX_ERROR
                 }
 
                 default:
