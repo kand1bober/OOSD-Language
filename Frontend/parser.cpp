@@ -47,28 +47,27 @@ Node* GetTransUnit(Parser* src)
 {   
     Node* node = NULL;
     Node* tmp_node = NULL;
+    Node* left_node = NULL;
     Node* right_node = NULL;
 
     node = GetExtDecl(src);
-    while (TOKEN_VAL == kStep)
+    if (TOKEN_VAL != NUM_LIST_POISON)
     {
-        tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = TOKEN_VAL});
-        InsertLeave(src->tree, tmp_node, kLeft, node);
-
-        GO_TO_NEXT_TOKEN
-
-        right_node = GetExtDecl(src);
-
-        if (right_node)        
-            InsertLeave(src->tree, tmp_node, kRight, right_node);
-        else  
+        left_node = node;
+        while (TOKEN_VAL != NUM_LIST_POISON)
         {
-            free(tmp_node);
-            break;
-        }
+            tmp_node = CreateNode(NULL, NULL, NULL, kKeyWord, {.num = kStep});
 
-        node = tmp_node;
-    }   
+            right_node = GetExtDecl(src);
+
+            InsertLeave(src->tree, tmp_node, kLeft, left_node);
+            InsertLeave(src->tree, tmp_node, kRight, right_node);
+
+            left_node = tmp_node;
+        }   
+
+        node = left_node;
+    }
 
     return node;
 }
@@ -99,6 +98,9 @@ Node* GetExtDecl(Parser* src)
                 GO_TO_PREV_TOKEN
                 GO_TO_PREV_TOKEN
                 node = GetDeclInit(src);  
+
+                SYNTAX_ASSERT(kStep)
+                GO_TO_NEXT_TOKEN
             }
         } 
         else  
@@ -221,7 +223,6 @@ Node* GetDeclInit(Parser* src)
     }
     else  
     {
-        GO_TO_PREV_TOKEN
         InsertLeave(src->tree, node, kRight, tmp_node);
     }
 
@@ -248,17 +249,24 @@ Node* GetStateList(Parser* src)
 
 Node* GetCompoundState(Parser* src)
 {
-    // Node* node = NULL;
-    // Node* left_node = NULL;
-    // Node* right_node = NULL;
-    // Node* tmp_node = NULL;
+    Node* node = NULL;
+    Node* left_node = NULL;
+    Node* right_node = NULL;
+    Node* tmp_node = NULL;
 
-    // SYNTAX_ASSERT(kLeftCurlyBracket)
-    // GO_TO_NEXT_TOKEN
+    SYNTAX_ASSERT(kLeftCurlyBracket)
+    GO_TO_NEXT_TOKEN
 
-    
+    if (TOKEN_VAL == kNumber)
+    {
+        node = GetDeclList(src);
+    }
+    if (TOKEN_VAL == kNumber)
+    {
+        node = GetStateList(src);
+    }
 
-    // return node;
+    return node;
 }
 
 

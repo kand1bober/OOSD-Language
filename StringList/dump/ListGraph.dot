@@ -7,16 +7,31 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
-{ node_0x506000000140 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000140 } | { { prev: 0x504000000110 } | { next: 0x5040000000d0 } }  "] 
+{ node_0x506000000320 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000320 } | { { prev: 0x504000000310 } | { next: 0x5040000001d0 } }  "] 
 }
-node_0x5040000000d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x5040000000d0 } | { { prev: 0x506000000140 } | { next: 0x504000000110 } }  "] 
-node_0x504000000110 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: one } | { curr: 0x504000000110 } | { { prev: 0x5040000000d0 } | { next: 0x506000000140 } }  "] 
+node_0x5040000001d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x5040000001d0 } | { { prev: 0x506000000320 } | { next: 0x504000000210 } }  "] 
+node_0x504000000210 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: one } | { curr: 0x504000000210 } | { { prev: 0x5040000001d0 } | { next: 0x504000000250 } }  "] 
+node_0x504000000250 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: one } | { curr: 0x504000000250 } | { { prev: 0x504000000210 } | { next: 0x506000000380 } }  "] 
+node_0x506000000380 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data: second } | { curr: 0x506000000380 } | { { prev: 0x504000000250 } | { next: 0x504000000290 } }  "] 
+node_0x504000000290 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data: one } | { curr: 0x504000000290 } | { { prev: 0x506000000380 } | { next: 0x5040000002d0 } }  "] 
+node_0x5040000002d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 5 } | { data: one } | { curr: 0x5040000002d0 } | { { prev: 0x504000000290 } | { next: 0x504000000310 } }  "] 
+node_0x504000000310 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 6 } | { data: two } | { curr: 0x504000000310 } | { { prev: 0x5040000002d0 } | { next: 0x506000000320 } }  "] 
 
-node_0x506000000140 -> node_0x5040000000d0 [color ="#ff6699"];
-node_0x506000000140 -> node_0x504000000110 [color ="#34cb34"];
-node_0x5040000000d0 -> node_0x504000000110 [color ="#ff6699"];
-node_0x5040000000d0 -> node_0x506000000140 [color ="#34cb34"];
-node_0x504000000110 -> node_0x506000000140 [color ="#ff6699"];
-node_0x504000000110 -> node_0x5040000000d0 [color ="#34cb34"];
+node_0x506000000320 -> node_0x5040000001d0 [color ="#ff6699"];
+node_0x506000000320 -> node_0x504000000310 [color ="#34cb34"];
+node_0x5040000001d0 -> node_0x504000000210 [color ="#ff6699"];
+node_0x5040000001d0 -> node_0x506000000320 [color ="#34cb34"];
+node_0x504000000210 -> node_0x504000000250 [color ="#ff6699"];
+node_0x504000000210 -> node_0x5040000001d0 [color ="#34cb34"];
+node_0x504000000250 -> node_0x506000000380 [color ="#ff6699"];
+node_0x504000000250 -> node_0x504000000210 [color ="#34cb34"];
+node_0x506000000380 -> node_0x504000000290 [color ="#ff6699"];
+node_0x506000000380 -> node_0x504000000250 [color ="#34cb34"];
+node_0x504000000290 -> node_0x5040000002d0 [color ="#ff6699"];
+node_0x504000000290 -> node_0x506000000380 [color ="#34cb34"];
+node_0x5040000002d0 -> node_0x504000000310 [color ="#ff6699"];
+node_0x5040000002d0 -> node_0x504000000290 [color ="#34cb34"];
+node_0x504000000310 -> node_0x506000000320 [color ="#ff6699"];
+node_0x504000000310 -> node_0x5040000002d0 [color ="#34cb34"];
 
 }

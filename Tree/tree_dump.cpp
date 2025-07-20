@@ -161,6 +161,7 @@ void TreeDotWriteEdge(FileInfo* file, Node* node)
         case kCall:
         {
             swprintf(node_type, 50, L"Call");
+            swprintf(node_data, 100, L"&#8709;");
             node_color = tree_call_fillcolor;
             break;
         }
