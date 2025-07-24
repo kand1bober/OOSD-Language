@@ -25,14 +25,19 @@
 
 #define kSizeOfCyrillic 2
 
+typedef struct 
+{   
+    wchar_t* buf;
+    int size;
+} BufferInfo;
+
 typedef struct
 {   
     FILE* file;
-    wchar_t* code;
-    size_t size;
+    BufferInfo buffer_info;
 } FileInfo;
 
-void OpenFile(FileInfo* file_info, const char* filename);
+void OpenFile(FileInfo* file_info, const char* filename, const char* mode);
 void CloseFile(FileInfo* file_info);
 
 wchar_t* SkipNulls(wchar_t* ptr);
@@ -40,6 +45,8 @@ wchar_t* OverwriteSpaces(wchar_t* ptr);
 
 const wchar_t* KeyWordStrVal(int64_t keycode);
 const wchar_t* KeyWordHTMLVal(int64_t keycode);
+
+void BufferAppend(BufferInfo* buf, BufferInfo* to_add);
 
 #endif 
 

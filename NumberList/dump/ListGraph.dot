@@ -8,43 +8,32 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
-{ node_0x5030000000d0 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | {data: Phantom } | { curr: 0x5030000000d0 } | { { prev: 0x5030000006d0 } | { next: 0x503000000100 } }  "] 
+{ node_0x5030000000a0 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | {data: Phantom } | { curr: 0x5030000000a0 } | { { prev: 0x503000000430 } | { next: 0x5030000000d0 } }  "] 
 }
-node_0x503000000100 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data_type: KeyWord } | {data: int } | { curr: 0x503000000100 } | { { prev: 0x5030000000d0 } | { next: 0x503000000130 } }  "] 
-node_0x503000000130 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 1 } | { data_type: Identifier } | {data: main } | { curr: 0x503000000130 } | { { prev: 0x503000000100 } | { next: 0x503000000160 } }  "] 
-node_0x503000000160 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x503000000160 } | { { prev: 0x503000000130 } | { next: 0x503000000190 } }  "] 
-node_0x503000000190 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x503000000190 } | { { prev: 0x503000000160 } | { next: 0x5030000001c0 } }  "] 
-node_0x5030000001c0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data_type: KeyWord } | {data: &#x7B; } | { curr: 0x5030000001c0 } | { { prev: 0x503000000190 } | { next: 0x5030000001f0 } }  "] 
-node_0x5030000001f0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 5 } | { data_type: KeyWord } | {data: int } | { curr: 0x5030000001f0 } | { { prev: 0x5030000001c0 } | { next: 0x503000000220 } }  "] 
-node_0x503000000220 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 6 } | { data_type: Identifier } | {data: one } | { curr: 0x503000000220 } | { { prev: 0x5030000001f0 } | { next: 0x503000000250 } }  "] 
-node_0x503000000250 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 7 } | { data_type: KeyWord } | {data: &#x3D; } | { curr: 0x503000000250 } | { { prev: 0x503000000220 } | { next: 0x503000000280 } }  "] 
-node_0x503000000280 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 8 } | { data_type: Identifier } | {data: func } | { curr: 0x503000000280 } | { { prev: 0x503000000250 } | { next: 0x5030000002b0 } }  "] 
-node_0x5030000002b0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 9 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x5030000002b0 } | { { prev: 0x503000000280 } | { next: 0x5030000002e0 } }  "] 
-node_0x5030000002e0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 10 } | { data_type: KeyWord } | {data: sin } | { curr: 0x5030000002e0 } | { { prev: 0x5030000002b0 } | { next: 0x503000000310 } }  "] 
-node_0x503000000310 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 11 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x503000000310 } | { { prev: 0x5030000002e0 } | { next: 0x503000000340 } }  "] 
-node_0x503000000340 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 12 } | { data_type: Constant } | {data: 15 } | { curr: 0x503000000340 } | { { prev: 0x503000000310 } | { next: 0x503000000370 } }  "] 
-node_0x503000000370 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 13 } | { data_type: KeyWord } | {data: &#x2B; } | { curr: 0x503000000370 } | { { prev: 0x503000000340 } | { next: 0x5030000003a0 } }  "] 
-node_0x5030000003a0 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 14 } | { data_type: Constant } | {data: 1 } | { curr: 0x5030000003a0 } | { { prev: 0x503000000370 } | { next: 0x5030000003d0 } }  "] 
-node_0x5030000003d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 15 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x5030000003d0 } | { { prev: 0x5030000003a0 } | { next: 0x503000000400 } }  "] 
-node_0x503000000400 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 16 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x503000000400 } | { { prev: 0x5030000003d0 } | { next: 0x503000000430 } }  "] 
-node_0x503000000430 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 17 } | { data_type: KeyWord } | {data: &#x3B; } | { curr: 0x503000000430 } | { { prev: 0x503000000400 } | { next: 0x503000000460 } }  "] 
-node_0x503000000460 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 18 } | { data_type: KeyWord } | {data: &#x7D; } | { curr: 0x503000000460 } | { { prev: 0x503000000430 } | { next: 0x503000000490 } }  "] 
-node_0x503000000490 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 19 } | { data_type: KeyWord } | {data: int } | { curr: 0x503000000490 } | { { prev: 0x503000000460 } | { next: 0x5030000004c0 } }  "] 
-node_0x5030000004c0 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 20 } | { data_type: Identifier } | {data: func } | { curr: 0x5030000004c0 } | { { prev: 0x503000000490 } | { next: 0x5030000004f0 } }  "] 
-node_0x5030000004f0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 21 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x5030000004f0 } | { { prev: 0x5030000004c0 } | { next: 0x503000000520 } }  "] 
-node_0x503000000520 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 22 } | { data_type: KeyWord } | {data: int } | { curr: 0x503000000520 } | { { prev: 0x5030000004f0 } | { next: 0x503000000550 } }  "] 
-node_0x503000000550 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 23 } | { data_type: Identifier } | {data: one } | { curr: 0x503000000550 } | { { prev: 0x503000000520 } | { next: 0x503000000580 } }  "] 
-node_0x503000000580 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 24 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x503000000580 } | { { prev: 0x503000000550 } | { next: 0x5030000005b0 } }  "] 
-node_0x5030000005b0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 25 } | { data_type: KeyWord } | {data: &#x7B; } | { curr: 0x5030000005b0 } | { { prev: 0x503000000580 } | { next: 0x5030000005e0 } }  "] 
-node_0x5030000005e0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 26 } | { data_type: KeyWord } | {data: return } | { curr: 0x5030000005e0 } | { { prev: 0x5030000005b0 } | { next: 0x503000000610 } }  "] 
-node_0x503000000610 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 27 } | { data_type: Identifier } | {data: one } | { curr: 0x503000000610 } | { { prev: 0x5030000005e0 } | { next: 0x503000000640 } }  "] 
-node_0x503000000640 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 28 } | { data_type: KeyWord } | {data: &#x2D; } | { curr: 0x503000000640 } | { { prev: 0x503000000610 } | { next: 0x503000000670 } }  "] 
-node_0x503000000670 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 29 } | { data_type: Constant } | {data: 1 } | { curr: 0x503000000670 } | { { prev: 0x503000000640 } | { next: 0x5030000006a0 } }  "] 
-node_0x5030000006a0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 30 } | { data_type: KeyWord } | {data: &#x3B; } | { curr: 0x5030000006a0 } | { { prev: 0x503000000670 } | { next: 0x5030000006d0 } }  "] 
-node_0x5030000006d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 31 } | { data_type: KeyWord } | {data: &#x7D; } | { curr: 0x5030000006d0 } | { { prev: 0x5030000006a0 } | { next: 0x5030000000d0 } }  "] 
+node_0x5030000000d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data_type: KeyWord } | {data: int } | { curr: 0x5030000000d0 } | { { prev: 0x5030000000a0 } | { next: 0x503000000100 } }  "] 
+node_0x503000000100 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 1 } | { data_type: Identifier } | {data: main } | { curr: 0x503000000100 } | { { prev: 0x5030000000d0 } | { next: 0x503000000130 } }  "] 
+node_0x503000000130 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x503000000130 } | { { prev: 0x503000000100 } | { next: 0x503000000160 } }  "] 
+node_0x503000000160 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x503000000160 } | { { prev: 0x503000000130 } | { next: 0x503000000190 } }  "] 
+node_0x503000000190 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data_type: KeyWord } | {data: &#x7B; } | { curr: 0x503000000190 } | { { prev: 0x503000000160 } | { next: 0x5030000001c0 } }  "] 
+node_0x5030000001c0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 5 } | { data_type: KeyWord } | {data: int } | { curr: 0x5030000001c0 } | { { prev: 0x503000000190 } | { next: 0x5030000001f0 } }  "] 
+node_0x5030000001f0 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 6 } | { data_type: Identifier } | {data: one } | { curr: 0x5030000001f0 } | { { prev: 0x5030000001c0 } | { next: 0x503000000220 } }  "] 
+node_0x503000000220 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 7 } | { data_type: KeyWord } | {data: &#x3D; } | { curr: 0x503000000220 } | { { prev: 0x5030000001f0 } | { next: 0x503000000250 } }  "] 
+node_0x503000000250 [shape = record; style="rounded, filled", fillcolor="#34cb34", color="#FFE9C7", label=" { num: 8 } | { data_type: Identifier } | {data: func } | { curr: 0x503000000250 } | { { prev: 0x503000000220 } | { next: 0x503000000280 } }  "] 
+node_0x503000000280 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 9 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x503000000280 } | { { prev: 0x503000000250 } | { next: 0x5030000002b0 } }  "] 
+node_0x5030000002b0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 10 } | { data_type: KeyWord } | {data: sin } | { curr: 0x5030000002b0 } | { { prev: 0x503000000280 } | { next: 0x5030000002e0 } }  "] 
+node_0x5030000002e0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 11 } | { data_type: KeyWord } | {data: &#x28; } | { curr: 0x5030000002e0 } | { { prev: 0x5030000002b0 } | { next: 0x503000000310 } }  "] 
+node_0x503000000310 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 12 } | { data_type: Constant } | {data: 15 } | { curr: 0x503000000310 } | { { prev: 0x5030000002e0 } | { next: 0x503000000340 } }  "] 
+node_0x503000000340 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 13 } | { data_type: KeyWord } | {data: &#x2B; } | { curr: 0x503000000340 } | { { prev: 0x503000000310 } | { next: 0x503000000370 } }  "] 
+node_0x503000000370 [shape = record; style="rounded, filled", fillcolor="#e8d92e", color="#FFE9C7", label=" { num: 14 } | { data_type: Constant } | {data: 1 } | { curr: 0x503000000370 } | { { prev: 0x503000000340 } | { next: 0x5030000003a0 } }  "] 
+node_0x5030000003a0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 15 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x5030000003a0 } | { { prev: 0x503000000370 } | { next: 0x5030000003d0 } }  "] 
+node_0x5030000003d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 16 } | { data_type: KeyWord } | {data: &#x29; } | { curr: 0x5030000003d0 } | { { prev: 0x5030000003a0 } | { next: 0x503000000400 } }  "] 
+node_0x503000000400 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 17 } | { data_type: KeyWord } | {data: &#x3B; } | { curr: 0x503000000400 } | { { prev: 0x5030000003d0 } | { next: 0x503000000430 } }  "] 
+node_0x503000000430 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 18 } | { data_type: KeyWord } | {data: &#x7D; } | { curr: 0x503000000430 } | { { prev: 0x503000000400 } | { next: 0x5030000000a0 } }  "] 
 
+node_0x5030000000a0 -> node_0x5030000000d0 [color ="#ff6699"];
+node_0x5030000000a0 -> node_0x503000000430 [color ="#34cb34"];
 node_0x5030000000d0 -> node_0x503000000100 [color ="#ff6699"];
-node_0x5030000000d0 -> node_0x5030000006d0 [color ="#34cb34"];
+node_0x5030000000d0 -> node_0x5030000000a0 [color ="#34cb34"];
 node_0x503000000100 -> node_0x503000000130 [color ="#ff6699"];
 node_0x503000000100 -> node_0x5030000000d0 [color ="#34cb34"];
 node_0x503000000130 -> node_0x503000000160 [color ="#ff6699"];
@@ -79,35 +68,7 @@ node_0x5030000003d0 -> node_0x503000000400 [color ="#ff6699"];
 node_0x5030000003d0 -> node_0x5030000003a0 [color ="#34cb34"];
 node_0x503000000400 -> node_0x503000000430 [color ="#ff6699"];
 node_0x503000000400 -> node_0x5030000003d0 [color ="#34cb34"];
-node_0x503000000430 -> node_0x503000000460 [color ="#ff6699"];
+node_0x503000000430 -> node_0x5030000000a0 [color ="#ff6699"];
 node_0x503000000430 -> node_0x503000000400 [color ="#34cb34"];
-node_0x503000000460 -> node_0x503000000490 [color ="#ff6699"];
-node_0x503000000460 -> node_0x503000000430 [color ="#34cb34"];
-node_0x503000000490 -> node_0x5030000004c0 [color ="#ff6699"];
-node_0x503000000490 -> node_0x503000000460 [color ="#34cb34"];
-node_0x5030000004c0 -> node_0x5030000004f0 [color ="#ff6699"];
-node_0x5030000004c0 -> node_0x503000000490 [color ="#34cb34"];
-node_0x5030000004f0 -> node_0x503000000520 [color ="#ff6699"];
-node_0x5030000004f0 -> node_0x5030000004c0 [color ="#34cb34"];
-node_0x503000000520 -> node_0x503000000550 [color ="#ff6699"];
-node_0x503000000520 -> node_0x5030000004f0 [color ="#34cb34"];
-node_0x503000000550 -> node_0x503000000580 [color ="#ff6699"];
-node_0x503000000550 -> node_0x503000000520 [color ="#34cb34"];
-node_0x503000000580 -> node_0x5030000005b0 [color ="#ff6699"];
-node_0x503000000580 -> node_0x503000000550 [color ="#34cb34"];
-node_0x5030000005b0 -> node_0x5030000005e0 [color ="#ff6699"];
-node_0x5030000005b0 -> node_0x503000000580 [color ="#34cb34"];
-node_0x5030000005e0 -> node_0x503000000610 [color ="#ff6699"];
-node_0x5030000005e0 -> node_0x5030000005b0 [color ="#34cb34"];
-node_0x503000000610 -> node_0x503000000640 [color ="#ff6699"];
-node_0x503000000610 -> node_0x5030000005e0 [color ="#34cb34"];
-node_0x503000000640 -> node_0x503000000670 [color ="#ff6699"];
-node_0x503000000640 -> node_0x503000000610 [color ="#34cb34"];
-node_0x503000000670 -> node_0x5030000006a0 [color ="#ff6699"];
-node_0x503000000670 -> node_0x503000000640 [color ="#34cb34"];
-node_0x5030000006a0 -> node_0x5030000006d0 [color ="#ff6699"];
-node_0x5030000006a0 -> node_0x503000000670 [color ="#34cb34"];
-node_0x5030000006d0 -> node_0x5030000000d0 [color ="#ff6699"];
-node_0x5030000006d0 -> node_0x5030000006a0 [color ="#34cb34"];
 
 }

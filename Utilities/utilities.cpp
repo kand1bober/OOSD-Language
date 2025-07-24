@@ -1,7 +1,7 @@
 #include "utilities.h"
 
 
-void OpenFile(FileInfo* file_info, const char* filename)
+void OpenFile(FileInfo* file_info, const char* filename, const char* mode)
 {
     if (setlocale(LC_ALL, "ru_RU.utf8") == NULL)
     {
@@ -9,7 +9,7 @@ void OpenFile(FileInfo* file_info, const char* filename)
         exit(1);   
     }
 
-    FILE* file = fopen(filename, "r");  
+    FILE* file = fopen(filename, mode);  
 
     if (!file)
     {
@@ -17,38 +17,54 @@ void OpenFile(FileInfo* file_info, const char* filename)
         exit(1);
     }   
 
-    struct stat info = {};                  // 
-    stat (filename, &info);                 //
-    size_t size = (size_t)info.st_size + 1; // find size
-    file_info->size = size;                 //
-
-
-    wchar_t* array = (wchar_t*)calloc(size, sizeof(wchar_t));   // read  
-    char* char_array = (char*)calloc(2 * size, sizeof(char));   // read  
-    fread(char_array, sizeof(char), 2 * size, file);                  // to array
-
-    int read_bytes = 0, bytes_sum = 0;
-    for (size_t i = 0; i < size; i++)
+    switch (*mode)
     {
-        read_bytes = mbtowc(array + i, char_array + bytes_sum, sizeof(wchar_t));
-    
-        if (!read_bytes)
+        case 'r':
+        {
+            struct stat info = {};                  // 
+            stat (filename, &info);                 //
+            size_t size = (size_t)info.st_size + 1; // find size
+            file_info->buffer_info.size = size;                 //
+
+            wchar_t* array = (wchar_t*)calloc(size, sizeof(wchar_t));   // read  
+            char* char_array = (char*)calloc(size, sizeof(char));   // read  
+            fread(char_array, sizeof(char), size, file);    // to array
+
+            int read_bytes = 0, bytes_sum = 0;
+            for (size_t i = 0; i < size; i++)
+            {
+                read_bytes = mbtowc(array + i, char_array + bytes_sum, sizeof(wchar_t));
+            
+                if (!read_bytes)
+                    break;
+
+                bytes_sum += read_bytes;
+            }
+            
+            free(char_array);
+            
+            file_info->buffer_info.buf = array;    
+
             break;
-
-        bytes_sum += read_bytes;
+        }
+        case 'w':
+        {
+            break;
+        }
+        default:
+        {
+            printf("\nError in opening file for writing\n");
+        }
     }
-
-    free(char_array);
-
+    
     file_info->file = file;     // save structure
-    file_info->code = array;    //
 }
 
 
 void CloseFile(FileInfo* file_info)
 {
     fclose(file_info->file);
-    free(file_info->code);
+    free(file_info->buffer_info.buf);
 }
 
 
@@ -99,3 +115,16 @@ const wchar_t* KeyWordHTMLVal(int64_t keycode)
     return L"huy";
 }
 
+
+void BufferAppend(BufferInfo* buf, BufferInfo* to_add)
+{
+    buf->buf = (wchar_t*)realloc(buf->buf, (buf->size + to_add->size) * 4);
+    swprintf(buf->buf + buf->size, to_add->size, L"%ls", to_add->buf);
+    buf->size += to_add->size;
+
+    if (!buf->buf)
+    {
+        wprintf(RED L"Error in allocating memory for BufferAppend\n" DELETE_COLOR);
+        exit(1);
+    }
+}

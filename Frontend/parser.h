@@ -14,10 +14,24 @@ typedef struct
     NumList* cur_token;     // move in list of tokens
     NumList* old_token;       
     Tree* tree;
+
+    Node* node;     // for making NameTable
 } Parser;
 
+typedef struct 
+{   
+    int lines_amount;
+
+    StrList* id_list;
+} LocalNmaeTable;
+
 //-----------------------------------------------
+
 void GetSyntaxTree(Parser* src, Lexer* tokenizer);
+
+void MakeNameTable(Parser* src, Lexer* tokenizer);
+
+BufferInfo* DumpIdentifiers(BufferInfo* name_table, StrList* list);
 
 Node* GetTransUnit(Parser* src);
 

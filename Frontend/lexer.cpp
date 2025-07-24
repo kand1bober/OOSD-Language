@@ -27,14 +27,14 @@ void LexicalAnalysis(Lexer* lexer, const char* filename)
 //-----------------------------------------------
 void InitLexer(Lexer* lexer, const char* filename)
 {
-    OpenFile(&lexer->file, filename);
+    OpenFile(&lexer->file, filename, "r");
  
     lexer->str_list = StrListCtor();
     lexer->str_list_size = 0;
 
     lexer->colomn = 0;
     lexer->line = 0;
-    lexer->pos = lexer->file.code;
+    lexer->pos = lexer->file.buffer_info.buf;
 }
 
 
@@ -65,7 +65,7 @@ void SplitLexems(Lexer* lexer)
     size_t lexems_amount = 0;
 
     // change '\n' to '\0'
-    for (size_t i = 0; i < lexer->file.size; i++)
+    for (size_t i = 0; i < lexer->file.buffer_info.size; i++)
     {
         if (iswspace(*code))
         {   
@@ -119,17 +119,29 @@ void Tokenization(Lexer* lexer)
     lexer->id_table = StrListCtor();
     lexer->id_table_size = 0;
 
+    StrList* id_node = NULL;
     KeyCode token_type = kId;
+
     while (str_list != lexer->str_list) 
     {
         token_type = SearchKeyWord(GET_NODE_DATA(str_list), str_list->str_len);
         if (token_type == kId)
         {       
-            StrListAdd(lexer->id_table, GET_NODE_DATA(str_list), lexer->id_table_size);
-            lexer->id_table_size++;
+            id_node = StrListSearchNode(lexer->id_table, GET_NODE_DATA(str_list));
 
-            NumListAdd(lexer->num_list, kPtrData, {.ptr = StrListGetNode(lexer->id_table, lexer->id_table_size)}, lexer->num_list_size);
-            lexer->num_list_size++;
+            if (id_node)
+            {
+                NumListAdd(lexer->num_list, kPtrData, {.ptr = id_node}, lexer->num_list_size);
+                lexer->num_list_size++;
+            }
+            else 
+            {
+                StrListAdd(lexer->id_table, GET_NODE_DATA(str_list), lexer->id_table_size);
+                lexer->id_table_size++;
+
+                NumListAdd(lexer->num_list, kPtrData, {.ptr = StrListGetNode(lexer->id_table, lexer->id_table_size)}, lexer->num_list_size);
+                lexer->num_list_size++;
+            }
         }   
         else if (token_type == kConst)
         {

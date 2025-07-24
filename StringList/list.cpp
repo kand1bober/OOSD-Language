@@ -104,43 +104,46 @@ StrListInfo_t StrListDelete (StrList* list, int number)
 * 
 * 2nd arg -- string to search 
 *
-* return -- number of elem node, if found; (< 0), if not found
+* return -- pointer of node, if found; null, if not found
 */
-int StrListFindNode (StrList* list, const wchar_t* string)
+StrList* StrListSearchNode (StrList* list, const wchar_t* string)
 {
     StrList* tmp_node = list->next;
     StrList* next_node = nullptr;
-    int iter = 0;
 
     while (1)
     {   
-        next_node = tmp_node->next;
-
-        if (next_node)
+        if (tmp_node != list)
         {
-            if (tmp_node != list)
+            if (!wcscmp( GET_NODE_DATA(tmp_node), string))
             {
-                if (!wcscmp( GET_NODE_DATA(tmp_node), string))
-                {
-                    return iter;
-                }
-                else  
-                {
-                    tmp_node = next_node;
-                    iter++;
-                }
+                return tmp_node;
             }
             else  
             {
-                return -1;
+                tmp_node = tmp_node->next;
             }
         }
         else  
         {
-            printf("Bad list allocation");
-            exit(1);
+            return nullptr;
         }
     }
+}
 
-    return -1;
+/*
+* return = amount of nodes without phntom node
+*/
+int StrListSize(StrList* list)
+{   
+    StrList* node = list->next;
+    int size = 0;
+
+    while (node != list)
+    {
+        node = node->next;
+        size++;
+    }
+
+    return size;
 }

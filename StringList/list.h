@@ -39,7 +39,9 @@
 
     StrListInfo_t StrListDelete (StrList* list, int number);
 
-    int StrListFindNode (StrList* list, const wchar_t* string);
+    StrList* StrListSearchNode (StrList* list, const wchar_t* string);
+
+    int StrListSize(StrList* list);
     //-------------------------------------------
 
 #endif

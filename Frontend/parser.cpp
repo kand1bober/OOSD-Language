@@ -40,8 +40,84 @@ void GetSyntaxTree(Parser* src, Lexer* tokenizer)
 
     SYNTAX_ASSERT(NUM_LIST_POISON)
 
+    MakeNameTable(src, tokenizer);
 }
 
+//-----------------------------------------------
+
+#define NODE_VAL node->data.num
+
+void MakeNameTable(Parser* src, Lexer* tokenizer)
+{
+    //-----------------------
+    FileInfo name_table = {};
+    OpenFile(&name_table, "Frontend/dump/NameTable.txt", "w");
+    //-----------------------
+
+    //-----------------------
+    DumpIdentifiers(&name_table.buffer_info, tokenizer->id_table);
+    //-----------------------    
+
+    wprintf(YELLOW L"HUY\n" DELETE_COLOR);
+
+    // name_table.buffer_info.buf = (wchar_t*)realloc(name_table.buffer_info.buf, name_table.buffer_info.size + 4);
+    // swprintf(name_table.buffer_info.buf, 2, L"\0");
+    // name_table.buffer_info.size+=1;
+
+    fwrite(name_table.buffer_info.buf, sizeof(wchar_t), name_table.buffer_info.size, name_table.file);
+
+    // Node* node = src->tree->root;
+
+    // while (NODE_VAL == kStep)
+    // {
+    //     MakeLocalNameTable(, node->right);
+        
+    //     node = node->left;
+    // }
+    // MakeLocalNameTable(, node);
+
+    CloseFile(&name_table);
+}
+
+
+BufferInfo* DumpIdentifiers(BufferInfo* name_table, StrList* list)
+{
+    int size = StrListSize(list);
+    BufferInfo node_buf = {0};
+    StrList* list_node = list->next;
+
+    name_table->buf = (wchar_t*)calloc(10, sizeof(wchar_t));
+    name_table->size = swprintf(name_table->buf, 10, L"%d\n", size);
+
+    while (list_node != list)
+    {
+        node_buf.buf = GET_NODE_DATA(list_node);
+        node_buf.size = list_node->str_len;     // delete \0, that included in str_len
+
+        BufferAppend(name_table, &node_buf);
+        
+        name_table->buf = (wchar_t*)realloc(name_table->buf, (name_table->size + 1) * 4);
+        swprintf(name_table->buf + name_table->size, 2, L"\n");
+        name_table->size++;
+
+        list_node = list_node->next;
+    }
+
+    return name_table;
+}
+
+
+/*
+*   return = size of table (amount of lines)
+*/
+// int MakeLocalNameTable(Node* node, )
+// {
+
+// }
+
+#undef NODE_VAL
+
+//-----------------------------------------------
 
 Node* GetTransUnit(Parser* src)
 {   
