@@ -96,7 +96,7 @@ BufferInfo* DumpIdentifiers(BufferInfo* name_table, StrList* list)
 
         BufferAppend(name_table, &node_buf);
         
-        name_table->buf = (wchar_t*)realloc(name_table->buf, (name_table->size + 1) * 4);
+        name_table->buf = (wchar_t*)realloc(name_table->buf, (name_table->size + 1) * sizeof(wchar_t));
         swprintf(name_table->buf + name_table->size, 2, L"\n");
         name_table->size++;
 

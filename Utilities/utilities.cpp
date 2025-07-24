@@ -119,7 +119,7 @@ const wchar_t* KeyWordHTMLVal(int64_t keycode)
 void BufferAppend(BufferInfo* buf, BufferInfo* to_add)
 {
     buf->buf = (wchar_t*)realloc(buf->buf, (buf->size + to_add->size) * 4);
-    swprintf(buf->buf + buf->size, to_add->size, L"%ls", to_add->buf);
+    swprintf(buf->buf + buf->size + 1, to_add->size, L"%ls", to_add->buf);
     buf->size += to_add->size;
 
     if (!buf->buf)
