@@ -63,38 +63,56 @@ void MakeNameTable(Parser* src, Lexer* tokenizer)
     //-----------------------    
 
     //-----------------------
-    BufferInfo all_funcs_buf = {0};     // for part of name table, 
-    BufferInfo all_funcs_buf_body = {0};// where only function names placed
-    int func_count = 0;                 // 
+    BufferInfo all_funcs_buf = {0};         // for part of name table, 
+    BufferInfo all_funcs_buf_header = {0};  // where only function names placed
+    int funcs_count = 0;                    // 
 
     BufferInfo funcs_buf = {0};         // for local name tables 
-    int lines_count = 0;                //
-    BufferInfo funcs_buf_body = {0};    //
+    funcs_buf.buf = (wchar_t*)calloc(10, sizeof(wchar_t));
+
+    BufferInfo one_func_buf = {0};          // buffer for identifiers from one function, 
+    BufferInfo one_func_buf_header = {0};   // doesn't include header( size and id )
+    one_func_buf_header.buf = (wchar_t*)calloc(10, sizeof(wchar_t));
+    int lines_count = 0;
 
     NumList* used_id = NULL;    // to avoid multiple appearence of same variable 
     int used_id_size = 0;       // in name table, and redefinition of functions 
-    
 
     Node* node = src->tree->root;
+    Node* old_node = NULL;
     while (NODE_VAL == kStep)
     {
+        old_node = node->right;
         used_id = NumListCtor();
         used_id_size = 0;
         lines_count = 0;
         used_id_size = 0;
-        DumpId(node->right, &all_funcs_buf, &func_count, &funcs_buf, &lines_count, src->id_table, used_id, &used_id_size);
+        
+        DumpId(node->right, &all_funcs_buf, &funcs_count, &one_func_buf, &lines_count, src->id_table, used_id, &used_id_size);
+
+        one_func_buf_header.size = swprintf(one_func_buf_header.buf, 10, L"%d %d\n", lines_count, old_node->data.num);
+        BufferAppend(&funcs_buf, &one_func_buf_header);
+        BufferAppend(&funcs_buf, &one_func_buf);
         ADD_NEWLINE(funcs_buf)
 
+        one_func_buf.size = 0;
+        one_func_buf_header.size = 0;
         NumListDtor(used_id);
         node = node->left;
     }
     if (node)
     {
-        used_id = NumListCtor();
+        old_node = node;
+        used_id = NumListCtor();    
         used_id_size = 0;
         lines_count = 0;
         used_id_size = 0;
-        DumpId(node, &all_funcs_buf, &func_count, &funcs_buf, &lines_count, src->id_table, used_id, &used_id_size);
+
+        DumpId(node, &all_funcs_buf, &funcs_count, &one_func_buf, &lines_count, src->id_table, used_id, &used_id_size);
+
+        one_func_buf_header.size = swprintf(one_func_buf_header.buf, 10, L"%d %d\n", lines_count, old_node->data.num);
+        BufferAppend(&funcs_buf, &one_func_buf_header);
+        BufferAppend(&funcs_buf, &one_func_buf);
 
         NumListDtor(used_id);
     }
@@ -103,15 +121,22 @@ void MakeNameTable(Parser* src, Lexer* tokenizer)
         wprintf(WHITE L"Дерево синтаксиса пусто :(\n" DELETE_COLOR);
         exit(0);
     }
-
+    
     ADD_NEWLINE(all_funcs_buf)
+
+    all_funcs_buf_header.buf = (wchar_t*)calloc(10, sizeof(wchar_t));
+    all_funcs_buf_header.size = swprintf(all_funcs_buf_header.buf, 10, L"%d -1\n", funcs_count);
     //-----------------------
+    BufferAppend(&name_table.buffer_info, &all_funcs_buf_header);
     BufferAppend(&name_table.buffer_info, &all_funcs_buf);
     BufferAppend(&name_table.buffer_info, &funcs_buf);
     fwrite(name_table.buffer_info.buf, sizeof(wchar_t), name_table.buffer_info.size, name_table.file);
 
     free(all_funcs_buf.buf);
+    free(all_funcs_buf_header.buf);
     free(funcs_buf.buf);
+    free(one_func_buf.buf);
+    free(one_func_buf_header.buf);
     CloseFile(&name_table);
 }
 
@@ -148,7 +173,7 @@ BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list)
 void DumpId(Node*           node, 
             BufferInfo*     all_funcs_buf, 
             int*            funcs_count, 
-            BufferInfo*     funcs_buf, 
+            BufferInfo*     one_func_buf, 
             int*            lines_count, 
             StrList*        id_table, 
             NumList*        used_id,
@@ -164,7 +189,7 @@ void DumpId(Node*           node,
             if (NumListSearchNode(used_id, node->data.num) < 0)
             {
                 local_buf.size = swprintf(local_buf.buf, 10, L"%ld 1\n", node->data.num); 
-                BufferAppend(funcs_buf, &local_buf);
+                BufferAppend(one_func_buf, &local_buf);
                 (*lines_count)++;
 
                 NumListAdd(used_id, kNumData, {.number = node->data.num}, *used_id_size);
@@ -182,13 +207,14 @@ void DumpId(Node*           node,
     }
     
     if (node->left)
-        DumpId(node->left, all_funcs_buf, funcs_count, funcs_buf, lines_count, id_table, used_id, used_id_size);
+        DumpId(node->left, all_funcs_buf, funcs_count, one_func_buf, lines_count, id_table, used_id, used_id_size);
 
     if (node->right && node->type != kCall)
-        DumpId(node->right, all_funcs_buf, funcs_count, funcs_buf, lines_count, id_table, used_id, used_id_size);
+        DumpId(node->right, all_funcs_buf, funcs_count, one_func_buf, lines_count, id_table, used_id, used_id_size);
 }
 
 #undef NODE_VAL
+#undef ADD_NEWLINE
 
 //-----------------------------------------------
 

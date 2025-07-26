@@ -38,7 +38,7 @@ BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list);
 void DumpId(Node*           node, 
             BufferInfo*     all_funcs_buf, 
             int*            funcs_count, 
-            BufferInfo*     funcs_buf, 
+            BufferInfo*     one_func_buf, 
             int*            lines_count, 
             StrList*        id_table, 
             NumList*        used_id, 

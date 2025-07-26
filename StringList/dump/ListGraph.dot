@@ -7,25 +7,34 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
-{ node_0x506000000500 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000500 } | { { prev: 0x504000000910 } | { next: 0x504000000810 } }  "] 
+{ node_0x506000000440 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000440 } | { { prev: 0x504000000750 } | { next: 0x504000000590 } }  "] 
 }
-node_0x504000000810 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x504000000810 } | { { prev: 0x506000000500 } | { next: 0x504000000850 } }  "] 
-node_0x504000000850 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: one } | { curr: 0x504000000850 } | { { prev: 0x504000000810 } | { next: 0x504000000890 } }  "] 
-node_0x504000000890 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: func } | { curr: 0x504000000890 } | { { prev: 0x504000000850 } | { next: 0x5040000008d0 } }  "] 
-node_0x5040000008d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data: two } | { curr: 0x5040000008d0 } | { { prev: 0x504000000890 } | { next: 0x504000000910 } }  "] 
-node_0x504000000910 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data: foo } | { curr: 0x504000000910 } | { { prev: 0x5040000008d0 } | { next: 0x506000000500 } }  "] 
+node_0x504000000590 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x504000000590 } | { { prev: 0x506000000440 } | { next: 0x5040000005d0 } }  "] 
+node_0x5040000005d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: one } | { curr: 0x5040000005d0 } | { { prev: 0x504000000590 } | { next: 0x504000000610 } }  "] 
+node_0x504000000610 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: func } | { curr: 0x504000000610 } | { { prev: 0x5040000005d0 } | { next: 0x504000000650 } }  "] 
+node_0x504000000650 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data: two } | { curr: 0x504000000650 } | { { prev: 0x504000000610 } | { next: 0x504000000690 } }  "] 
+node_0x504000000690 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data: foo } | { curr: 0x504000000690 } | { { prev: 0x504000000650 } | { next: 0x5040000006d0 } }  "] 
+node_0x5040000006d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 5 } | { data: three } | { curr: 0x5040000006d0 } | { { prev: 0x504000000690 } | { next: 0x504000000710 } }  "] 
+node_0x504000000710 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 6 } | { data: fee } | { curr: 0x504000000710 } | { { prev: 0x5040000006d0 } | { next: 0x504000000750 } }  "] 
+node_0x504000000750 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 7 } | { data: four } | { curr: 0x504000000750 } | { { prev: 0x504000000710 } | { next: 0x506000000440 } }  "] 
 
-node_0x506000000500 -> node_0x504000000810 [color ="#ff6699"];
-node_0x506000000500 -> node_0x504000000910 [color ="#34cb34"];
-node_0x504000000810 -> node_0x504000000850 [color ="#ff6699"];
-node_0x504000000810 -> node_0x506000000500 [color ="#34cb34"];
-node_0x504000000850 -> node_0x504000000890 [color ="#ff6699"];
-node_0x504000000850 -> node_0x504000000810 [color ="#34cb34"];
-node_0x504000000890 -> node_0x5040000008d0 [color ="#ff6699"];
-node_0x504000000890 -> node_0x504000000850 [color ="#34cb34"];
-node_0x5040000008d0 -> node_0x504000000910 [color ="#ff6699"];
-node_0x5040000008d0 -> node_0x504000000890 [color ="#34cb34"];
-node_0x504000000910 -> node_0x506000000500 [color ="#ff6699"];
-node_0x504000000910 -> node_0x5040000008d0 [color ="#34cb34"];
+node_0x506000000440 -> node_0x504000000590 [color ="#ff6699"];
+node_0x506000000440 -> node_0x504000000750 [color ="#34cb34"];
+node_0x504000000590 -> node_0x5040000005d0 [color ="#ff6699"];
+node_0x504000000590 -> node_0x506000000440 [color ="#34cb34"];
+node_0x5040000005d0 -> node_0x504000000610 [color ="#ff6699"];
+node_0x5040000005d0 -> node_0x504000000590 [color ="#34cb34"];
+node_0x504000000610 -> node_0x504000000650 [color ="#ff6699"];
+node_0x504000000610 -> node_0x5040000005d0 [color ="#34cb34"];
+node_0x504000000650 -> node_0x504000000690 [color ="#ff6699"];
+node_0x504000000650 -> node_0x504000000610 [color ="#34cb34"];
+node_0x504000000690 -> node_0x5040000006d0 [color ="#ff6699"];
+node_0x504000000690 -> node_0x504000000650 [color ="#34cb34"];
+node_0x5040000006d0 -> node_0x504000000710 [color ="#ff6699"];
+node_0x5040000006d0 -> node_0x504000000690 [color ="#34cb34"];
+node_0x504000000710 -> node_0x504000000750 [color ="#ff6699"];
+node_0x504000000710 -> node_0x5040000006d0 [color ="#34cb34"];
+node_0x504000000750 -> node_0x506000000440 [color ="#ff6699"];
+node_0x504000000750 -> node_0x504000000710 [color ="#34cb34"];
 
 }
