@@ -49,7 +49,8 @@ typedef union
 typedef struct node_t 
 {   
     NodeTypes type;
-    TreeData data;
+    TreeData data;   
+
     node_t* left;
     node_t* right;
     node_t* parent;
@@ -57,7 +58,7 @@ typedef struct node_t
 
 typedef struct
 {
-    int64_t data;           
+    int64_t data;   
     NodeTypes type;          
 
     TreeInfo info;

@@ -53,6 +53,8 @@
     NumListInfo_t NumListAdd (NumList* list, DataTypes data_type, NumListData data, size_t number);
 
     NumListInfo_t NumListDelete (NumList* list, int number);
+
+    int NumListSearchNode(NumList* list, int64_t to_search);
     //-------------------------------------------
 
 #endif

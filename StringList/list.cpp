@@ -131,6 +131,35 @@ StrList* StrListSearchNode (StrList* list, const wchar_t* string)
     }
 }
 
+
+int StrListGetNodeNum (StrList* list, const wchar_t* string)
+{
+    StrList* tmp_node = list->next;
+    StrList* next_node = nullptr;
+
+    int count = 0;
+    while (1)
+    {   
+        if (tmp_node != list)
+        {
+            if (!wcscmp( GET_NODE_DATA(tmp_node), string))
+            {
+                return count;
+            }
+            else  
+            {
+                count++;
+                tmp_node = tmp_node->next;
+            }
+        }
+        else  
+        {
+            return -1;
+        }
+    }
+}
+
+
 /*
 * return = amount of nodes without phntom node
 */

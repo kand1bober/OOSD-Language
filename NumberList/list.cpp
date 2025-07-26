@@ -157,3 +157,27 @@ NumListInfo_t NumListDelete (NumList* list, int number)
     return kGoodNumList;
 }
 
+
+/*
+*   Searches only in {.number}
+* 
+*   return if found, = number of node; if not, = -1  
+*/
+int NumListSearchNode(NumList* list, int64_t to_search)
+{
+    int count = 0;
+    NumList* node = list->next;
+
+    while (node != list)
+    {
+        if (node->data.number == to_search)
+        {
+            return count;
+        }
+
+        node = node->next;
+        count++;
+    }
+
+    return -1;
+}

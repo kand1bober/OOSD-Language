@@ -90,10 +90,10 @@ void TreeDotWriteEdge(FileInfo* file, Node* node)
         case kIdentifier: 
         {
             swprintf(node_type, 50, L"Identifier");
-            swprintf(node_data, 100, L"%ls", node->data.str);
+            swprintf(node_data, 100, L"%ld", node->data.num);
             node_color = tree_id_fillcolor;
-            break; 
-        }
+            break;  
+        }   
         case kKeyWord:
         {
             swprintf(node_type, 50, L"KeyWord");
@@ -140,7 +140,7 @@ void TreeDotWriteEdge(FileInfo* file, Node* node)
         case kFuncDef:
         {
             swprintf(node_type, 50, L"Func Def");
-            swprintf(node_data, 100, L"%ls", node->data.str);
+            swprintf(node_data, 100, L"%ld", node->data.num);
             node_color = tree_funcdef_fillcolor;
             break;
         }

@@ -31,6 +31,7 @@
 void GetSyntaxTree(Parser* src, Lexer* tokenizer)
 {   
     src->cur_token = tokenizer->num_list;
+    src->id_table = tokenizer->id_table;
 
     SYNTAX_ASSERT(NUM_LIST_POISON)
     GO_TO_NEXT_TOKEN
@@ -46,41 +47,80 @@ void GetSyntaxTree(Parser* src, Lexer* tokenizer)
 //-----------------------------------------------
 
 #define NODE_VAL node->data.num
+#define ADD_NEWLINE(expr) expr.buf = (wchar_t*)realloc(expr.buf, (expr.size + 1) * sizeof(wchar_t)); \
+                        swprintf(expr.buf + expr.size, 2, L"\n"); \
+                        expr.size++; \
 
 void MakeNameTable(Parser* src, Lexer* tokenizer)
-{
+{    
     //-----------------------
     FileInfo name_table = {};
     OpenFile(&name_table, "Frontend/dump/NameTable.txt", "w");
     //-----------------------
 
     //-----------------------
-    DumpIdentifiers(&name_table.buffer_info, tokenizer->id_table);
+    DumpIdList(&name_table.buffer_info, tokenizer->id_table);
     //-----------------------    
 
-    wprintf(YELLOW L"HUY\n" DELETE_COLOR);
+    //-----------------------
+    BufferInfo all_funcs_buf = {0};     // for part of name table, 
+    BufferInfo all_funcs_buf_body = {0};// where only function names placed
+    int func_count = 0;                 // 
 
-    // name_table.buffer_info.buf = (wchar_t*)realloc(name_table.buffer_info.buf, name_table.buffer_info.size + 4);
-    // swprintf(name_table.buffer_info.buf, 2, L"\0");
-    // name_table.buffer_info.size+=1;
+    BufferInfo funcs_buf = {0};         // for local name tables 
+    int lines_count = 0;                //
+    BufferInfo funcs_buf_body = {0};    //
 
+    NumList* used_id = NULL;    // to avoid multiple appearence of same variable 
+    int used_id_size = 0;       // in name table, and redefinition of functions 
+    
+
+    Node* node = src->tree->root;
+    while (NODE_VAL == kStep)
+    {
+        used_id = NumListCtor();
+        used_id_size = 0;
+        lines_count = 0;
+        used_id_size = 0;
+        DumpId(node->right, &all_funcs_buf, &func_count, &funcs_buf, &lines_count, src->id_table, used_id, &used_id_size);
+        ADD_NEWLINE(funcs_buf)
+
+        NumListDtor(used_id);
+        node = node->left;
+    }
+    if (node)
+    {
+        used_id = NumListCtor();
+        used_id_size = 0;
+        lines_count = 0;
+        used_id_size = 0;
+        DumpId(node, &all_funcs_buf, &func_count, &funcs_buf, &lines_count, src->id_table, used_id, &used_id_size);
+
+        NumListDtor(used_id);
+    }
+    else  
+    {
+        wprintf(WHITE L"Дерево синтаксиса пусто :(\n" DELETE_COLOR);
+        exit(0);
+    }
+
+    ADD_NEWLINE(all_funcs_buf)
+    //-----------------------
+    BufferAppend(&name_table.buffer_info, &all_funcs_buf);
+    BufferAppend(&name_table.buffer_info, &funcs_buf);
     fwrite(name_table.buffer_info.buf, sizeof(wchar_t), name_table.buffer_info.size, name_table.file);
 
-    // Node* node = src->tree->root;
-
-    // while (NODE_VAL == kStep)
-    // {
-    //     MakeLocalNameTable(, node->right);
-        
-    //     node = node->left;
-    // }
-    // MakeLocalNameTable(, node);
-
+    free(all_funcs_buf.buf);
+    free(funcs_buf.buf);
     CloseFile(&name_table);
 }
 
+#undef ADD_NEWLINE
+#define ADD_NEWLINE(expr) expr->buf = (wchar_t*)realloc(expr->buf, (expr->size + 1) * sizeof(wchar_t)); \
+                        swprintf(expr->buf + expr->size, 2, L"\n"); \
+                        expr->size++; \
 
-BufferInfo* DumpIdentifiers(BufferInfo* name_table, StrList* list)
+BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list)
 {
     int size = StrListSize(list);
     BufferInfo node_buf = {0};
@@ -95,25 +135,58 @@ BufferInfo* DumpIdentifiers(BufferInfo* name_table, StrList* list)
         node_buf.size = list_node->str_len;     // delete \0, that included in str_len
 
         BufferAppend(name_table, &node_buf);
-        
-        name_table->buf = (wchar_t*)realloc(name_table->buf, (name_table->size + 1) * sizeof(wchar_t));
-        swprintf(name_table->buf + name_table->size, 2, L"\n");
-        name_table->size++;
+        ADD_NEWLINE(name_table)
 
         list_node = list_node->next;
     }
+    ADD_NEWLINE(name_table)
 
     return name_table;
 }
 
 
-/*
-*   return = size of table (amount of lines)
-*/
-// int MakeLocalNameTable(Node* node, )
-// {
+void DumpId(Node*           node, 
+            BufferInfo*     all_funcs_buf, 
+            int*            funcs_count, 
+            BufferInfo*     funcs_buf, 
+            int*            lines_count, 
+            StrList*        id_table, 
+            NumList*        used_id,
+            int*            used_id_size)
+{
+    if (node->type == kIdentifier || node->type == kFuncDef)
+    {
+        BufferInfo local_buf = {0};
+        local_buf.buf = (wchar_t*)calloc(10, sizeof(wchar_t));
 
-// }
+        if (node->type == kIdentifier)
+        {
+            if (NumListSearchNode(used_id, node->data.num) < 0)
+            {
+                local_buf.size = swprintf(local_buf.buf, 10, L"%ld 1\n", node->data.num); 
+                BufferAppend(funcs_buf, &local_buf);
+                (*lines_count)++;
+
+                NumListAdd(used_id, kNumData, {.number = node->data.num}, *used_id_size);
+                (*used_id_size)++;
+            }
+        }
+        else if (node->type == kFuncDef)
+        {
+            local_buf.size = swprintf(local_buf.buf, 10, L"%ld 2\n", node->data.num); 
+            BufferAppend(all_funcs_buf, &local_buf);
+            (*funcs_count)++;
+        }
+
+        free(local_buf.buf);
+    }
+    
+    if (node->left)
+        DumpId(node->left, all_funcs_buf, funcs_count, funcs_buf, lines_count, id_table, used_id, used_id_size);
+
+    if (node->right && node->type != kCall)
+        DumpId(node->right, all_funcs_buf, funcs_count, funcs_buf, lines_count, id_table, used_id, used_id_size);
+}
 
 #undef NODE_VAL
 
@@ -202,7 +275,7 @@ Node* GetFuncDef(Parser* src)
     left_node = CreateNode(NULL, NULL, node, kKeyWord, {.num = TOKEN_VAL});
     GO_TO_NEXT_TOKEN
 
-    node = CreateNode(NULL, NULL, NULL, kFuncDef, {.str = TOKEN_ID_VAL});
+    node = CreateNode(NULL, NULL, NULL, kFuncDef, {.num = StrListGetNodeNum(src->id_table, TOKEN_ID_VAL)});
     GO_TO_NEXT_TOKEN
 
     SYNTAX_ASSERT(kLeftBracket)
@@ -277,8 +350,10 @@ Node* GetDeclInit(Parser* src)
         SYNTAX_ERROR
     }
 
-    node = CreateNode(NULL, NULL, NULL, kVarDecl, {.str = tmp_node->data.str});
+    GO_TO_PREV_TOKEN
+    node = CreateNode(NULL, NULL, NULL, kVarDecl, {.str = TOKEN_ID_VAL});
     InsertLeave(src->tree, node, kLeft, left_node);
+    GO_TO_NEXT_TOKEN
 
     if (TOKEN_VAL == kEqual)
     {
@@ -810,7 +885,7 @@ Node* GetNumber(Parser* src)
 */
 Node* GetId(Parser* src)
 {
-    Node* new_node = CreateNode(NULL, NULL, NULL, kIdentifier, {.str = TOKEN_ID_VAL});
+    Node* new_node = CreateNode(NULL, NULL, NULL, kIdentifier, {.num = StrListGetNodeNum(src->id_table, TOKEN_ID_VAL)});
  
     GO_TO_NEXT_TOKEN
 

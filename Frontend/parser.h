@@ -15,7 +15,7 @@ typedef struct
     NumList* old_token;       
     Tree* tree;
 
-    Node* node;     // for making NameTable
+    StrList* id_table;
 } Parser;
 
 typedef struct 
@@ -29,9 +29,22 @@ typedef struct
 
 void GetSyntaxTree(Parser* src, Lexer* tokenizer);
 
+//-----------------------------------------------
+
 void MakeNameTable(Parser* src, Lexer* tokenizer);
 
-BufferInfo* DumpIdentifiers(BufferInfo* name_table, StrList* list);
+BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list);
+
+void DumpId(Node*           node, 
+            BufferInfo*     all_funcs_buf, 
+            int*            funcs_count, 
+            BufferInfo*     funcs_buf, 
+            int*            lines_count, 
+            StrList*        id_table, 
+            NumList*        used_id, 
+            int*            used_id_size);
+
+//-----------------------------------------------
 
 Node* GetTransUnit(Parser* src);
 

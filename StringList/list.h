@@ -41,6 +41,8 @@
 
     StrList* StrListSearchNode (StrList* list, const wchar_t* string);
 
+    int StrListGetNodeNum (StrList* list, const wchar_t* string);
+
     int StrListSize(StrList* list);
     //-------------------------------------------
 
