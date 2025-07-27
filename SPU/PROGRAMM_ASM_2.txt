@@ -1,0 +1,24 @@
+in
+pop AX
+push 1
+pop BX
+call COUNT:
+push BX
+out
+hlt
+COUNT:
+push AX
+push 0
+ja YES:
+ret
+YES:
+push BX
+push AX
+mul
+pop BX
+push AX
+push 1
+sub
+pop AX
+call COUNT:
+ret

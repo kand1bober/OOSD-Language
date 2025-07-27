@@ -8,9 +8,9 @@
 
 static const char tree_project_directory[100] = "/home/vyacheslav/Language/Tree";
 
-static const char tree_output_image_name[100] = "/home/vyacheslav/Language/Tree/dump/TreeGraph.svg";
-static const char tree_output_graph_name[100] = "/home/vyacheslav/Language/Tree/dump/TreeGraph.dot";
-static const char tree_output_html_name[100] =  "/home/vyacheslav/Language/Tree/dump/TreeGraph.html";
+static const char tree_output_image_name[100] = "/home/vyacheslav/Language/Tree/graph_dump/TreeGraph.svg";
+static const char tree_output_graph_name[100] = "/home/vyacheslav/Language/Tree/graph_dump/TreeGraph.dot";
+static const char tree_output_html_name[100] =  "/home/vyacheslav/Language/Tree/graph_dump/TreeGraph.html";
 
 static const char tree_data_name[40] = "Data.txt";
 
@@ -40,6 +40,9 @@ TreeInfo StopTreeDotOutput(FileInfo* file);
 
 TreeInfo TreeDotPrint(FileInfo* file, Tree* tree);
 void TreeDotWriteEdge(FileInfo* file, Node* node);
+
+void TreeTextDump(Tree* tree);
+void RecursiveTreeDump(Node* node, char* node_data, FILE* file);
 //-------------------------------------------------------------------
 
 #endif 

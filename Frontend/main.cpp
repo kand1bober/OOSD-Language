@@ -15,6 +15,8 @@ int main()
 
     CloseLexer(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
 
+    TreeTextDump(parser.tree);
+
     TreeDtor(parser.tree);
         
     return 0;

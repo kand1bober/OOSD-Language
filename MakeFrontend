@@ -35,4 +35,4 @@ $(EXECUTABLE): $(OBJECTS_FRONT)  $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJEC
 	$(CC) -c $(CFLAGS) -IFrontend -ICommon -IStringList -INumberList -IUtilities -ITree $< -o $@ 
 
 clean:
-	@rm $(EXECUTABLE) Utilities/utilities.o Tree/tree.o Tree/tree_dump.o
+	@rm $(EXECUTABLE) Utilities/utilities.o Tree/tree.o Tree/tree_dump.o Tree/tree_text_dump.o 

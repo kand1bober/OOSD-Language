@@ -47,9 +47,6 @@ void GetSyntaxTree(Parser* src, Lexer* tokenizer)
 //-----------------------------------------------
 
 #define NODE_VAL node->data.num
-#define ADD_NEWLINE(expr) expr.buf = (wchar_t*)realloc(expr.buf, (expr.size + 1) * sizeof(wchar_t)); \
-                        swprintf(expr.buf + expr.size, 2, L"\n"); \
-                        expr.size++; \
 
 void MakeNameTable(Parser* src, Lexer* tokenizer)
 {    
@@ -91,9 +88,9 @@ void MakeNameTable(Parser* src, Lexer* tokenizer)
         DumpId(node->right, &all_funcs_buf, &funcs_count, &one_func_buf, &lines_count, src->id_table, used_id, &used_id_size);
 
         one_func_buf_header.size = swprintf(one_func_buf_header.buf, 10, L"%d %d\n", lines_count, old_node->data.num);
-        BufferAppend(&funcs_buf, &one_func_buf_header);
-        BufferAppend(&funcs_buf, &one_func_buf);
-        ADD_NEWLINE(funcs_buf)
+        BufAppendBuf(&funcs_buf, &one_func_buf_header);
+        BufAppendBuf(&funcs_buf, &one_func_buf);
+        BufAppendStr(&funcs_buf, L"\n");
 
         one_func_buf.size = 0;
         one_func_buf_header.size = 0;
@@ -111,8 +108,8 @@ void MakeNameTable(Parser* src, Lexer* tokenizer)
         DumpId(node, &all_funcs_buf, &funcs_count, &one_func_buf, &lines_count, src->id_table, used_id, &used_id_size);
 
         one_func_buf_header.size = swprintf(one_func_buf_header.buf, 10, L"%d %d\n", lines_count, old_node->data.num);
-        BufferAppend(&funcs_buf, &one_func_buf_header);
-        BufferAppend(&funcs_buf, &one_func_buf);
+        BufAppendBuf(&funcs_buf, &one_func_buf_header);
+        BufAppendBuf(&funcs_buf, &one_func_buf);
 
         NumListDtor(used_id);
     }
@@ -122,14 +119,14 @@ void MakeNameTable(Parser* src, Lexer* tokenizer)
         exit(0);
     }
     
-    ADD_NEWLINE(all_funcs_buf)
+    BufAppendStr(&all_funcs_buf, L"\n");
 
     all_funcs_buf_header.buf = (wchar_t*)calloc(10, sizeof(wchar_t));
     all_funcs_buf_header.size = swprintf(all_funcs_buf_header.buf, 10, L"%d -1\n", funcs_count);
     //-----------------------
-    BufferAppend(&name_table.buffer_info, &all_funcs_buf_header);
-    BufferAppend(&name_table.buffer_info, &all_funcs_buf);
-    BufferAppend(&name_table.buffer_info, &funcs_buf);
+    BufAppendBuf(&name_table.buffer_info, &all_funcs_buf_header);
+    BufAppendBuf(&name_table.buffer_info, &all_funcs_buf);
+    BufAppendBuf(&name_table.buffer_info, &funcs_buf);
     fwrite(name_table.buffer_info.buf, sizeof(wchar_t), name_table.buffer_info.size, name_table.file);
 
     free(all_funcs_buf.buf);
@@ -140,10 +137,6 @@ void MakeNameTable(Parser* src, Lexer* tokenizer)
     CloseFile(&name_table);
 }
 
-#undef ADD_NEWLINE
-#define ADD_NEWLINE(expr) expr->buf = (wchar_t*)realloc(expr->buf, (expr->size + 1) * sizeof(wchar_t)); \
-                        swprintf(expr->buf + expr->size, 2, L"\n"); \
-                        expr->size++; \
 
 BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list)
 {
@@ -159,12 +152,12 @@ BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list)
         node_buf.buf = GET_NODE_DATA(list_node);
         node_buf.size = list_node->str_len;     // delete \0, that included in str_len
 
-        BufferAppend(name_table, &node_buf);
-        ADD_NEWLINE(name_table)
+        BufAppendBuf(name_table, &node_buf);
+        BufAppendStr(name_table, L"\n");
 
         list_node = list_node->next;
     }
-    ADD_NEWLINE(name_table)
+    BufAppendStr(name_table, L"\n");
 
     return name_table;
 }
@@ -189,7 +182,7 @@ void DumpId(Node*           node,
             if (NumListSearchNode(used_id, node->data.num) < 0)
             {
                 local_buf.size = swprintf(local_buf.buf, 10, L"%ld 1\n", node->data.num); 
-                BufferAppend(one_func_buf, &local_buf);
+                BufAppendBuf(one_func_buf, &local_buf);
                 (*lines_count)++;
 
                 NumListAdd(used_id, kNumData, {.number = node->data.num}, *used_id_size);
@@ -199,7 +192,7 @@ void DumpId(Node*           node,
         else if (node->type == kFuncDef)
         {
             local_buf.size = swprintf(local_buf.buf, 10, L"%ld 2\n", node->data.num); 
-            BufferAppend(all_funcs_buf, &local_buf);
+            BufAppendBuf(all_funcs_buf, &local_buf);
             (*funcs_count)++;
         }
 
@@ -377,7 +370,7 @@ Node* GetDeclInit(Parser* src)
     }
 
     GO_TO_PREV_TOKEN
-    node = CreateNode(NULL, NULL, NULL, kVarDecl, {.str = TOKEN_ID_VAL});
+    node = CreateNode(NULL, NULL, NULL, kVarDecl, {.num = StrListGetNodeNum(src->id_table, TOKEN_ID_VAL)});
     InsertLeave(src->tree, node, kLeft, left_node);
     GO_TO_NEXT_TOKEN
 

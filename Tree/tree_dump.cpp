@@ -154,7 +154,7 @@ void TreeDotWriteEdge(FileInfo* file, Node* node)
         case kVarDecl:
         {
             swprintf(node_type, 50, L"Var Decl");
-            swprintf(node_data, 100, L"%ls", node->data.str);
+            swprintf(node_data, 100, L"%ld", node->data.num);
             node_color = tree_vardecl_fillcolor;
             break;
         }

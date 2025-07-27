@@ -116,11 +116,33 @@ const wchar_t* KeyWordHTMLVal(int64_t keycode)
 }
 
 
-void BufferAppend(BufferInfo* buf, BufferInfo* to_add)
+/*
+*   appends buffer with another buffer
+*/
+void BufAppendBuf(BufferInfo* buf, BufferInfo* to_add)
 {
     buf->buf = (wchar_t*)realloc(buf->buf, (buf->size + to_add->size) * 4);
     swprintf(buf->buf + buf->size, to_add->size + 1, L"%ls", to_add->buf);
     buf->size += to_add->size;
+
+    if (!buf->buf)
+    {
+        wprintf(RED L"Error in allocating memory for BufferAppend\n" DELETE_COLOR);
+        exit(1);
+    }
+}
+
+
+/*
+*   appends buffer with string
+*/
+void BufAppendStr(BufferInfo* buf, const wchar_t* to_add)
+{
+    int to_add_size = wcslen(to_add);
+
+    buf->buf = (wchar_t*)realloc(buf->buf, (buf->size + to_add_size) * 4);
+    swprintf(buf->buf + buf->size, to_add_size + 1, L"%ls", to_add);
+    buf->size += to_add_size;
 
     if (!buf->buf)
     {

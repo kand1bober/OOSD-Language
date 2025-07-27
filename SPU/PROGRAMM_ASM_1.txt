@@ -1,0 +1,66 @@
+push 11
+pop AX
+push 0
+pop DX
+push 0
+pop BX
+push 0
+pop CX
+
+HUY:
+push DX
+push 1
+add
+pop DX
+call STROKA:
+call PRINT:
+push 31
+push 31
+mul
+push DX
+jae HUY:
+dump
+draw
+hlt
+
+STROKA:
+push DX
+push 31
+div
+floor
+pop BX
+push DX
+push BX
+push 31
+mul
+sub
+pop CX
+ret
+
+PRINT:
+push 15
+push BX
+sub
+pop BX
+push BX
+push BX
+mul
+push 15
+push CX
+sub
+pop CX
+push CX
+push CX
+mul
+add
+root
+push AX
+je YES:
+push 0
+pop [ DX ]
+ret
+
+YES:
+push 1
+pop [ DX ]
+ret

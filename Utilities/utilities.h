@@ -46,7 +46,8 @@ wchar_t* OverwriteSpaces(wchar_t* ptr);
 const wchar_t* KeyWordStrVal(int64_t keycode);
 const wchar_t* KeyWordHTMLVal(int64_t keycode);
 
-void BufferAppend(BufferInfo* buf, BufferInfo* to_add);
+void BufAppendBuf(BufferInfo* buf, BufferInfo* to_add);
+void BufAppendStr(BufferInfo* buf, const wchar_t* to_add);
 
 #endif 
 
