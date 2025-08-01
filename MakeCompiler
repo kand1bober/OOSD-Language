@@ -1,0 +1,61 @@
+
+CC = g++
+
+CFLAGS = -fsanitize=address,undefined -D _DEBUG -O0 -Wall -Wextra
+
+# -----------------------------------------------
+SOURCES_DIR_FRONT = Frontend
+SOURCES_FRONT = $(wildcard $(SOURCES_DIR_FRONT)/*cpp ) 
+OBJECTS_FRONT = $(SOURCES_FRONT:.cpp =.o) 
+
+SOURCES_DIR_STR_LIST = StringList
+SOURCES_STR_LIST = $(wildcard $(SOURCES_DIR_STR_LIST)/*cpp ) 
+OBJECTS_STR_LIST = $(SOURCES_STR_LIST:.cpp =.o) 
+
+SOURCES_DIR_NUM_LIST = NumberList
+SOURCES_NUM_LIST = $(wildcard $(SOURCES_DIR_NUM_LIST)/*cpp ) 
+OBJECTS_NUM_LIST = $(SOURCES_NUM_LIST:.cpp =.o) 
+
+SOURCES_DIR_UTILITIES = Utilities
+SOURCES_UTILITIES = $(wildcard $(SOURCES_DIR_UTILITIES)/*cpp ) 
+OBJECTS_UTILITIES = $(SOURCES_UTILITIES:.cpp=.o) 
+
+SOURCES_DIR_TREE = Tree
+SOURCES_TREE = $(wildcard $(SOURCES_DIR_TREE)/*cpp ) 
+OBJECTS_TREE = $(SOURCES_TREE:.cpp=.o) 
+
+OBJECTS_FRONTEND = $(OBJECTS_FRONT) $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_TREE)
+# -----------------------------------------------
+
+# -----------------------------------------------
+SRC_BACK := SPU
+ifeq ($(SRC_BACK), SPU)
+	SOURCES_DIR_BACK = BackendSPU
+else ifeq ($(SRC_BACK), CPU)
+	SOURCES_DIR_BACK = BackendCPU
+else 
+	$(error build aborted: invalid variant of backend source)
+
+endif
+
+SOURCES_BACK = $(wildcard $(SOURCES_DIR_BACK)/*cpp ) 
+OBJECTS_BACK = $(SOURCES_BACK:.cpp =.o) 
+# -----------------------------------------------
+
+# OBJECTS = $(OBJECTS_FRONTEND) $(OBJECTS_BACK)
+OBJECTS = $(OBJECTS_FRONTEND)
+
+EXECUTABLE = G
+
+all: $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(OBJECTS) $(CFLAGS) -o $(EXECUTABLE)
+
+%.o: %.cpp
+	$(CC) -c $(CFLAGS) -IFrontend -ICommon -IStringList -INumberList -IUtilities -ITree $< -o $@ 
+
+clean: 
+	@rm $(EXECUTABLE)
+	@rm Utilities/utilities.o Tree/tree.o Tree/tree_dump.o Tree/tree_text_dump.o 
+

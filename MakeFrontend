@@ -1,4 +1,3 @@
-
 CC = g++
 
 CFLAGS = -fsanitize=address,undefined -D _DEBUG -O0 -Wall -Wextra
@@ -36,3 +35,4 @@ $(EXECUTABLE): $(OBJECTS_FRONT)  $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJEC
 
 clean:
 	@rm $(EXECUTABLE) Utilities/utilities.o Tree/tree.o Tree/tree_dump.o Tree/tree_text_dump.o 
+	

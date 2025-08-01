@@ -17,7 +17,6 @@ void GenSpuCode(Tree* tree, StrList* id_table)
     {
         GenFuncCode(node, id_table, &func_code);
         BufAppendBuf(&asm_file.buffer_info, &func_code);
-        // add \n for convenience of reading a file 
 
         node = node->left;
     }
@@ -34,7 +33,10 @@ void GenSpuCode(Tree* tree, StrList* id_table)
 
 void GenFuncCode(Node* node, StrList* id_table, BufferInfo* func_code)
 {
-    BufAppendStr(func_code, L"");
+    BufAppendStr(func_code, GET_NODE_DATA(StrListGetNode(id_table, node->data.num)));
+
+    BufAppendStr(func_code, L"\n");
 }
 
 #undef NODE_VAL
+
