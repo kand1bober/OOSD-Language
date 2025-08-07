@@ -1,12 +1,18 @@
 #include "../Frontend/parser.h"
 #include "spu_code_gen.h"
 
-int main()
+int MakeBackend(Parser* parser)
 {
-    extern Parser parser;       // from frontend main.cpp
-    Tree* tree = parser.tree;   //
+    Tree* tree = parser->tree;   //
 
-    GenSpuCode(tree);
+    GenSpuCode(tree, parser->id_table);
 
     return 0;
 }
+
+
+void CloseBackend()
+{
+
+}
+

@@ -2,22 +2,23 @@
 #include "parser.h"
 #include "../Tree/tree_dump.h"
 
-int main()
+int MakeFrontend(Parser* parser, Lexer* lexer)
 {
-    Lexer lexer = {};
-    Parser parser = {};
+    LexicalAnalysis(lexer, "/home/vyacheslav/Language/Utilities/input.txt");
 
-    LexicalAnalysis(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
-
-    GetSyntaxTree(&parser, &lexer);
+    GetSyntaxTree(parser, lexer);
     
-    TreeDotOutput(parser.tree);
-
-    CloseLexer(&lexer, "/home/vyacheslav/Language/Utilities/input.txt");
-
-    TreeTextDump(parser.tree);
-
-    TreeDtor(parser.tree);
+    TreeDotOutput(parser->tree);
+    
+    TreeTextDump(parser->tree);
         
     return 0;
+}
+
+
+void CloseFrontend(Parser* parser, Lexer* lexer)
+{
+    CloseLexer(lexer, "/home/vyacheslav/Language/Utilities/input.txt");
+
+    TreeDtor(parser->tree);
 }
