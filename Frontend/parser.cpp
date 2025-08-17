@@ -150,7 +150,7 @@ BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list)
     while (list_node != list)
     {
         node_buf.buf = GET_NODE_DATA(list_node);
-        node_buf.size = list_node->str_len;     // delete \0, that included in str_len
+        node_buf.size = list_node->str_len;     
 
         BufAppendBuf(name_table, &node_buf);
         BufAppendStr(name_table, L"\n");
@@ -158,6 +158,7 @@ BufferInfo* DumpIdList(BufferInfo* name_table, StrList* list)
         list_node = list_node->next;
     }
     BufAppendStr(name_table, L"\n");
+
 
     return name_table;
 }

@@ -30,11 +30,11 @@ SOURCES_FRONTEND = $(SOURCES_FRONT) $(SOURCES_STR_LIST) $(SOURCES_NUM_LIST) $(SO
 # -----------------------------------------------
 
 # -----------------------------------------------
-SRC_BACK := SPU
-ifeq ($(SRC_BACK), SPU)
-	SOURCES_DIR_BACK = BackendSPU
-	MAIN_SRC = main_spu.cpp 
-	MAIN_OBJ = main_spu.o
+SRC_BACK := ASM
+ifeq ($(SRC_BACK), ASM)
+	SOURCES_DIR_BACK = BackendASM
+	MAIN_SRC = main_asm.cpp 
+	MAIN_OBJ = main_asm.o
 else ifeq ($(SRC_BACK), CPU)
 	SOURCES_DIR_BACK = BackendCPU
 	MAIN_SRC = main_cpu.cpp	
@@ -66,4 +66,4 @@ clean:
 	@rm -f StringList/list_dump.o StringList/list.o
 	@rm -f NumberList/list_dump.o NumberList/list.o
 	@rm -f Frontend/lexer.o Frontend/main.o Frontend/parser.o 
-	@rm -f BackendSPU/main.o BackendSPU/spu_code_gen.o 
+	@rm -f BackendASM/main.o BackendASM/spu_code_gen.o 

@@ -10,7 +10,7 @@ void GenExtDecl();
 
 void GenFunc(Node* node, 
              StrList* id_table, 
-             BufferInfo* func_code);
+             BufferInfo* asm_code);
 
 void GenDeclList();
 

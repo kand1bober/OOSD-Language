@@ -1,0 +1,45 @@
+digraph G
+{
+charset="latin1";
+label="AST";
+labelloc="t";
+fontsize=30
+fontname="Verdana";
+fontcolor="#FFFFFF"
+
+rankdir=TB;size="200,300";bgcolor="#ffd480";
+ node_0x5bd593e3c400 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3B; } } " ]; node_0x5bd593e3c400 -> node_0x5bd593e36250 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e36250 [shape=record,style="rounded,filled",fillcolor="#fca103",color="#FFE9C7",label=" { { Func Def } | { 0 } } " ]; node_0x5bd593e36250 -> node_0x5bd593e36220 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e36220 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x5bd593e36250 -> node_0x5bd593e36280 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e36280 [shape=record,style="rounded,filled",fillcolor="#fc0303",color="#FFE9C7",label=" { { Parameters } | { &#8709; } } " ]; node_0x5bd593e36280 -> node_0x5bd593e3c070 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c070 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3B; } } " ]; node_0x5bd593e3c070 -> node_0x5bd593e3c280 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c280 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3B; } } " ]; node_0x5bd593e3c280 -> node_0x5bd593e3c100 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c100 [shape=record,style="rounded,filled",fillcolor="#08c41e",color="#FFE9C7",label=" { { Var Decl } | { 1 } } " ]; node_0x5bd593e3c100 -> node_0x5bd593e3c0a0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c0a0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x5bd593e3c100 -> node_0x5bd593e3c130 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c130 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3D; } } " ]; node_0x5bd593e3c130 -> node_0x5bd593e3c0d0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c0d0 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { Identifier } | { 1 } } " ]; node_0x5bd593e3c130 -> node_0x5bd593e3c190 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c190 [shape=record,style="rounded,filled",fillcolor="#916306",color="#FFE9C7",label=" { { Call } | { &#8709; } } " ]; node_0x5bd593e3c190 -> node_0x5bd593e3c1c0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c1c0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { sin } } " ]; node_0x5bd593e3c1c0 -> node_0x5bd593e3c220 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c220 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x2B; } } " ]; node_0x5bd593e3c220 -> node_0x5bd593e3c1f0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c1f0 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { Constant } | { 15 } } " ]; node_0x5bd593e3c220 -> node_0x5bd593e3c250 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c250 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { Constant } | { 1 } } " ]; node_0x5bd593e3c190 -> node_0x5bd593e3c160 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c160 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { Identifier } | { 2 } } " ]; node_0x5bd593e3c280 -> node_0x5bd593e3c310 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c310 [shape=record,style="rounded,filled",fillcolor="#08c41e",color="#FFE9C7",label=" { { Var Decl } | { 3 } } " ]; node_0x5bd593e3c310 -> node_0x5bd593e3c2b0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c2b0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x5bd593e3c310 -> node_0x5bd593e3c340 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c340 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3D; } } " ]; node_0x5bd593e3c340 -> node_0x5bd593e3c2e0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c2e0 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { Identifier } | { 3 } } " ]; node_0x5bd593e3c340 -> node_0x5bd593e3c370 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c370 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { Constant } | { 15 } } " ]; node_0x5bd593e3c070 -> node_0x5bd593e3c3a0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c3a0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { return } } " ]; node_0x5bd593e3c3a0 -> node_0x5bd593e3c3d0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c3d0 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { Constant } | { 0 } } " ]; node_0x5bd593e3c400 -> node_0x5bd593e3c460 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c460 [shape=record,style="rounded,filled",fillcolor="#fca103",color="#FFE9C7",label=" { { Func Def } | { 2 } } " ]; node_0x5bd593e3c460 -> node_0x5bd593e3c430 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c430 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x5bd593e3c460 -> node_0x5bd593e3c490 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c490 [shape=record,style="rounded,filled",fillcolor="#fc0303",color="#FFE9C7",label=" { { Parameters } | { &#8709; } } " ]; node_0x5bd593e3c490 -> node_0x5bd593e3c4c0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c4c0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3B; } } " ]; node_0x5bd593e3c4c0 -> node_0x5bd593e3c550 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c550 [shape=record,style="rounded,filled",fillcolor="#08c41e",color="#FFE9C7",label=" { { Var Decl } | { 3 } } " ]; node_0x5bd593e3c550 -> node_0x5bd593e3c4f0 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c4f0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { int } } " ]; node_0x5bd593e3c550 -> node_0x5bd593e3c580 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c580 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { &#x3D; } } " ]; node_0x5bd593e3c580 -> node_0x5bd593e3c520 [color = "#9ACD32", arrowsize = 1] ;
+ node_0x5bd593e3c520 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { Identifier } | { 3 } } " ]; node_0x5bd593e3c580 -> node_0x5bd593e3c5b0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c5b0 [shape=record,style="rounded,filled",fillcolor="#03cffc",color="#FFE9C7",label=" { { Constant } | { 753 } } " ]; node_0x5bd593e3c4c0 -> node_0x5bd593e3c5e0 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c5e0 [shape=record,style="rounded,filled",fillcolor="#9966FF",color="#FFE9C7",label=" { { KeyWord } | { return } } " ]; node_0x5bd593e3c5e0 -> node_0x5bd593e3c610 [color = "#FF2B00", arrowsize = 1] ;
+ node_0x5bd593e3c610 [shape=record,style="rounded,filled",fillcolor="#ff6699",color="#FFE9C7",label=" { { Identifier } | { 3 } } " ]; 
+}

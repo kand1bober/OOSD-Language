@@ -1,5 +1,5 @@
 #include "../Frontend/parser.h"
-#include "spu_code_gen.h"
+#include "asm_code_gen.h"
 
 int MakeBackend(Parser* parser)
 {
