@@ -3,3 +3,7 @@ test.cpp
 a.out
 
 test.s
+
+new.asm
+
+BackendASM/code.txt

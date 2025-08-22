@@ -66,4 +66,4 @@ clean:
 	@rm -f StringList/list_dump.o StringList/list.o
 	@rm -f NumberList/list_dump.o NumberList/list.o
 	@rm -f Frontend/lexer.o Frontend/main.o Frontend/parser.o 
-	@rm -f BackendASM/main.o BackendASM/spu_code_gen.o 
+	@rm -f BackendASM/main.o BackendASM/asm_code_gen.o 
