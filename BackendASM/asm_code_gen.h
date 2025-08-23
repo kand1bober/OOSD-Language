@@ -15,11 +15,19 @@ void GenFunc(Node* node,
              StrList* id_table, 
              BufferInfo* asm_code);
 
-void CountVariables(Node* node, int* count);
+void CountVariables(Node* node, 
+                    StrList* id_table, 
+                    StrList* var_table, 
+                    int* var_count);
 
-void GenDeclList();
+void GenDeclList(Node* node,
+                 StrList* id_table, 
+                 BufferInfo* func_code);
 
-void GenDeclInit();
+void GenDeclInit(Node* node,
+                 StrList* id_table, 
+                 BufferInfo* decl_list_code,
+                 int* var_count);
 
 void GenStateList();
 
@@ -49,10 +57,10 @@ void GenCallParams();
 
 void GenId(Node* node,
            StrList* id_table, 
-           BufferInfo* asm_code);
+           BufferInfo* code);
 
 void GenNumber(Node* node,
                StrList* id_table, 
-               BufferInfo* asm_code);
+               BufferInfo* code);
 
 #endif

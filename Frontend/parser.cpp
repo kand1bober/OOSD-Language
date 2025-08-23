@@ -500,12 +500,13 @@ Node* GetCompoundState(Parser* src)
         decl_node = left_node;
         InsertLeave(src->tree, node, kLeft, decl_node);
     }
-
-    if (TOKEN_VAL != kRightCurlyBracket && TOKEN_VAL != kNumber)
+    
+    if (TOKEN_VAL != kRightCurlyBracket)
     {
         state_node = GetStateList(src);
         InsertLeave(src->tree, node, kRight, state_node);
     }
+
 
     SYNTAX_ASSERT(kRightCurlyBracket)
     GO_TO_NEXT_TOKEN

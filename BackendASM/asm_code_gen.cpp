@@ -43,20 +43,27 @@ void GenFunc(Node* node,
     BufAppendStr(&func_code, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1)));
     BufAppendStr(&func_code, L":\n");
 
-    //form stack frame:
+    //arrange local variables for convenient access
     int var_count = 0;
-    CountVariables(node, &var_count);
+    StrList* var_table = StrListCtor();
+    CountVariables(node->right->right, id_table, var_table, &var_count);
 
+    //form stack frame:
     BufAppendStr(&func_code, L"    push rbp\n"
                               "    mov rbp, rsp\n");
-    
+     
     wchar_t tmp_string[20] = {0};
-    swprintf(tmp_string, 20, L"    sub rsp, %d\n", var_count);
+    swprintf(tmp_string, 20, L"    sub rsp, %d\n", var_count * sizeof(int)); // int is the only data type so far
     BufAppendStr(&func_code, tmp_string); 
-
+    
     BufAppendStr(&func_code, L"    and rsp, -32\n"); //allign by 8 bytes
 
-    /// вызов тела функции 
+    //function body:
+    node = node->right; //parameters node
+
+    //TODO: Compare Parameters in node->left with parameters in call  
+
+//    GenDeclList(node->right->left, id_table, &func_code);
 
     //exit function
     BufAppendStr(&func_code, L"    mov rsp, rbp\n"
@@ -70,47 +77,75 @@ void GenFunc(Node* node,
 
 //TODO: algorythm needs to be optimized 
 // node -- funcdef node
-void CountVariables(Node* node, int* count)
+void CountVariables(Node* node, 
+                    StrList* id_table, 
+                    StrList* var_table, 
+                    int* var_count)
 {
-    if (node->type == kVarDecl)
-        (*count)++;
-    
     if (node->left)
-        CountVariables(node->left, count);
-    if (node->right)
-        CountVariables(node->right, count);
+    {
+        node = node->left;
+        while (node->data.num == kStep)
+        {
+            StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->right->data.num)), *var_count);
+            (*var_count)++;
+            node = node->left;
+        }
+        StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->right->data.num)), *var_count);
+        (*var_count)++;
+    }
+}
+
+
+void GenDeclList(Node* node,
+                 StrList* id_table, 
+                 BufferInfo* func_code)
+{
+    BufferInfo decl_list = {};
+
+    int var_count = 0;
+    while (node->data.num == kStep)
+    {
+        GenDeclInit(node->right, id_table, &decl_list, &var_count);
+
+        node = node->left;
+    }
+
+    GenDeclInit(node, id_table, &decl_list, &var_count);
 }
 
 
 void GenDeclInit(Node* node,
                  StrList* id_table, 
-                 BufferInfo* asm_code)
+                 BufferInfo* decl_list_code, 
+                 int* var_count)
 {
-    
+    wchar_t decl[20] = {0};
 
-    if (node->right->type == kKeyWord && node->right->data.num == kEqual)
+    if (node->right->data.num == kEqual)
     {
 
     }
 
-}
+    (*var_count)++;
+}   
 
 //-----------------------------------------------
 
 void GenId(Node* node,
            StrList* id_table, 
-           BufferInfo* asm_code)
+           BufferInfo* code)
 {
     BACK_ASSERT(node->type == kIdentifier);
 
     StrList* id = StrListGetNode(id_table, node->data.num); 
-    BufAppendStr(asm_code, GET_NODE_DATA(id));
+    BufAppendStr(code, GET_NODE_DATA(id));
 }
 
 
 void GenNumber(Node* node,
                StrList* id_table, 
-               BufferInfo* asm_code)
+               BufferInfo* code)
 {
     BACK_ASSERT(node->type == kConstant)
 
@@ -118,7 +153,7 @@ void GenNumber(Node* node,
 
     swprintf(num_code, 15, L"%ld", node->data.num);
 
-    BufAppendStr(asm_code, num_code);
+    BufAppendStr(code, num_code);
     free(num_code);
 }
 
