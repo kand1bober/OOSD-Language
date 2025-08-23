@@ -1,11 +1,9 @@
 #include "../Tree/tree.h"
 #include "../StringList/list.h"
-#include "../StringList/list.h"
+#include "../StringList/list_dump.h"
 
 #ifndef SPU_CODE_GEN_HEADER
 #define SPU_CODE_GEN_HEADER
-
-static const wchar_t* tabulation = L"    ";
 
 void GenSpuCode(Tree* tree, StrList* id_table);
 
@@ -22,14 +20,23 @@ void CountVariables(Node* node,
 
 void GenDeclList(Node* node,
                  StrList* id_table, 
+                 StrList* var_table,
                  BufferInfo* func_code);
 
 void GenDeclInit(Node* node,
                  StrList* id_table, 
-                 BufferInfo* decl_list_code,
-                 int* var_count);
+                 StrList * var_table,
+                 BufferInfo* dec_list_code);
 
-void GenStateList();
+void GenRightValue(Node* node, // kEqual node
+                   StrList* id_table, 
+                   StrList * var_table,
+                   BufferInfo* decl_code);
+
+void GenStateList(Node* node,
+                 StrList* id_table, 
+                 StrList* var_table,
+                 BufferInfo* func_code);
 
 bool IsStatement();
 

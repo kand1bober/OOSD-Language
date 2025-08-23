@@ -1,8 +1,8 @@
 
 CC = g++
 
-# CFLAGS = -fsanitize=address,undefined -D _DEBUG -O0 -Wall -
-CFLAGS = -O0
+CFLAGS = -fsanitize=address,undefined -D _DEBUG -O0 -Wall
+# CFLAGS = -O0
 
 # -----------------------------------------------
 SOURCES_DIR_FRONT = Frontend

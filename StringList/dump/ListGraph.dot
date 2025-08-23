@@ -7,25 +7,34 @@ label="List";
  fontcolor="#FFFFFF"
 
 rankdir=LR; splines=ortho; size="200,300"; bgcolor="#ffd480";
-{ node_0x5ed7f9936250 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x5ed7f9936250 } | { { prev: 0x5ed7f9936940 } | { next: 0x5ed7f99362c0 } }  "] 
+{ node_0x506000000500 [shape = record; style="rounded, filled", fillcolor="#ff6699", color="#FFE9C7", label=" { Phantom } | { data: BADBABA } | { curr: 0x506000000500 } | { { prev: 0x5040000005d0 } | { next: 0x504000000490 } }  "] 
 }
-node_0x5ed7f99362c0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x5ed7f99362c0 } | { { prev: 0x5ed7f9936250 } | { next: 0x5ed7f99363f0 } }  "] 
-node_0x5ed7f99363f0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: one } | { curr: 0x5ed7f99363f0 } | { { prev: 0x5ed7f99362c0 } | { next: 0x5ed7f9936480 } }  "] 
-node_0x5ed7f9936480 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: func } | { curr: 0x5ed7f9936480 } | { { prev: 0x5ed7f99363f0 } | { next: 0x5ed7f99366d0 } }  "] 
-node_0x5ed7f99366d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data: two } | { curr: 0x5ed7f99366d0 } | { { prev: 0x5ed7f9936480 } | { next: 0x5ed7f9936940 } }  "] 
-node_0x5ed7f9936940 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data: param } | { curr: 0x5ed7f9936940 } | { { prev: 0x5ed7f99366d0 } | { next: 0x5ed7f9936250 } }  "] 
+node_0x504000000490 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 0 } | { data: main } | { curr: 0x504000000490 } | { { prev: 0x506000000500 } | { next: 0x5040000004d0 } }  "] 
+node_0x5040000004d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 1 } | { data: one } | { curr: 0x5040000004d0 } | { { prev: 0x504000000490 } | { next: 0x504000000510 } }  "] 
+node_0x504000000510 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 2 } | { data: func } | { curr: 0x504000000510 } | { { prev: 0x5040000004d0 } | { next: 0x504000000550 } }  "] 
+node_0x504000000550 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 3 } | { data: two } | { curr: 0x504000000550 } | { { prev: 0x504000000510 } | { next: 0x504000000590 } }  "] 
+node_0x504000000590 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 4 } | { data: param } | { curr: 0x504000000590 } | { { prev: 0x504000000550 } | { next: 0x506000000560 } }  "] 
+node_0x506000000560 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 5 } | { data: param1 } | { curr: 0x506000000560 } | { { prev: 0x504000000590 } | { next: 0x5060000005c0 } }  "] 
+node_0x5060000005c0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 6 } | { data: param2 } | { curr: 0x5060000005c0 } | { { prev: 0x506000000560 } | { next: 0x5040000005d0 } }  "] 
+node_0x5040000005d0 [shape = record; style="rounded, filled", fillcolor="#9966FF", color="#FFE9C7", label=" { num: 7 } | { data: three } | { curr: 0x5040000005d0 } | { { prev: 0x5060000005c0 } | { next: 0x506000000500 } }  "] 
 
-node_0x5ed7f9936250 -> node_0x5ed7f99362c0 [color ="#ff6699"];
-node_0x5ed7f9936250 -> node_0x5ed7f9936940 [color ="#34cb34"];
-node_0x5ed7f99362c0 -> node_0x5ed7f99363f0 [color ="#ff6699"];
-node_0x5ed7f99362c0 -> node_0x5ed7f9936250 [color ="#34cb34"];
-node_0x5ed7f99363f0 -> node_0x5ed7f9936480 [color ="#ff6699"];
-node_0x5ed7f99363f0 -> node_0x5ed7f99362c0 [color ="#34cb34"];
-node_0x5ed7f9936480 -> node_0x5ed7f99366d0 [color ="#ff6699"];
-node_0x5ed7f9936480 -> node_0x5ed7f99363f0 [color ="#34cb34"];
-node_0x5ed7f99366d0 -> node_0x5ed7f9936940 [color ="#ff6699"];
-node_0x5ed7f99366d0 -> node_0x5ed7f9936480 [color ="#34cb34"];
-node_0x5ed7f9936940 -> node_0x5ed7f9936250 [color ="#ff6699"];
-node_0x5ed7f9936940 -> node_0x5ed7f99366d0 [color ="#34cb34"];
+node_0x506000000500 -> node_0x504000000490 [color ="#ff6699"];
+node_0x506000000500 -> node_0x5040000005d0 [color ="#34cb34"];
+node_0x504000000490 -> node_0x5040000004d0 [color ="#ff6699"];
+node_0x504000000490 -> node_0x506000000500 [color ="#34cb34"];
+node_0x5040000004d0 -> node_0x504000000510 [color ="#ff6699"];
+node_0x5040000004d0 -> node_0x504000000490 [color ="#34cb34"];
+node_0x504000000510 -> node_0x504000000550 [color ="#ff6699"];
+node_0x504000000510 -> node_0x5040000004d0 [color ="#34cb34"];
+node_0x504000000550 -> node_0x504000000590 [color ="#ff6699"];
+node_0x504000000550 -> node_0x504000000510 [color ="#34cb34"];
+node_0x504000000590 -> node_0x506000000560 [color ="#ff6699"];
+node_0x504000000590 -> node_0x504000000550 [color ="#34cb34"];
+node_0x506000000560 -> node_0x5060000005c0 [color ="#ff6699"];
+node_0x506000000560 -> node_0x504000000590 [color ="#34cb34"];
+node_0x5060000005c0 -> node_0x5040000005d0 [color ="#ff6699"];
+node_0x5060000005c0 -> node_0x506000000560 [color ="#34cb34"];
+node_0x5040000005d0 -> node_0x506000000500 [color ="#ff6699"];
+node_0x5040000005d0 -> node_0x5060000005c0 [color ="#34cb34"];
 
 }
