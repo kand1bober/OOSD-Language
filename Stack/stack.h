@@ -27,4 +27,9 @@ typedef struct
     int capacity;
 } Stack_t;
 
+StackInfo StackCtor(Stack_t* stack);
+StackInfo StackDtor(Stack_t* stack);
+StackInfo StackPush(Stack_t* stack, StackElem elem);
+StackElem StackPop(Stack_t* stack);
+
 #endif

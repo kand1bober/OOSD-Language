@@ -1,6 +1,7 @@
 #include "../Tree/tree.h"
 #include "../StringList/list.h"
 #include "../StringList/list_dump.h"
+#include "../Stack/stack.h"
 
 #ifndef SPU_CODE_GEN_HEADER
 #define SPU_CODE_GEN_HEADER
@@ -13,15 +14,17 @@ void GenFunc(Node* node,
              StrList* id_table, 
              BufferInfo* asm_code);
 
-void CountVariables(Node* node, 
+void CountVariables(Node* start_node, 
                     StrList* id_table, 
                     StrList* var_table, 
-                    int* var_count);
+                    int* var_count, 
+                    Stack_t* stack);
 
 void GenDeclList(Node* node,
                  StrList* id_table, 
                  StrList* var_table,
-                 BufferInfo* func_code);
+                 BufferInfo* func_code, 
+                 Stack_t* stack);
 
 void GenDeclInit(Node* node,
                  StrList* id_table, 

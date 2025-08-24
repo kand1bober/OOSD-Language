@@ -57,7 +57,9 @@ void GenFunc(Node* node,
     //arrange local variables for convenient access
     int var_count = 0;
     StrList* var_table = StrListCtor();
-    CountVariables(node->right, id_table, var_table, &var_count);
+    Stack_t stack = {}; 
+    StackCtor(&stack);
+    CountVariables(node->right, id_table, var_table, &var_count, &stack);
     // StrListDot(var_table);
     // getchar();
 
@@ -69,29 +71,23 @@ void GenFunc(Node* node,
     swprintf(tmp_string, 20, L"    sub rsp, %d\n", var_count * sizeof(int)); // int is the only data type so far
     BufAppendStr(&func_code, tmp_string); 
     
-    BufAppendStr(&func_code, L"    and rsp, -32\n"); //allign by 8 bytes
+    BufAppendStr(&func_code, L"    and rsp, -32\n\n"); //allign by 8 bytes
 
     //function body:
-    node = node->right->right; //parameters node -> kStep node
-
     //TODO: Compare Parameters in node->left with parameters in call 
-    if (node->left)
-    {
-        // GenDeclList(node->left, id_table, var_table, &func_code);
-    }
-    if (node->right)
-    {
-        // GenStateList(node->left, id_table, var_table, &func_code);
-    }
-
+    GenDeclList(node->right, id_table, var_table, &func_code, &stack);
+    
+    // GenStateList(node->left, id_table, var_table, &func_code);
+    
     //exit function
-    BufAppendStr(&func_code, L"    mov rsp, rbp\n"
+    BufAppendStr(&func_code, L"\n    mov rsp, rbp\n"
                               "    pop rbp\n"
                               "    ret\n");
 
     BufAppendBuf(asm_code, &func_code);
     free(func_code.buf);
     StrListDtor(var_table);
+    StackDtor(&stack);
 }
 
 
@@ -100,63 +96,90 @@ void GenFunc(Node* node,
 *   should be called to the left and right->left son's 
 *   of prameter node of functon definition
 */
-void CountVariables(Node* node, 
+void CountVariables(Node* start_node, //parameter_node
                     StrList* id_table, 
                     StrList* var_table, 
-                    int* var_count)
+                    int* var_count,
+                    Stack_t* stack)
 {
-    #define COUNT_VAR(expr)   StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, expr->data.num + 1)), *var_count); \
-                              (*var_count)++; 
+    #define COUNT_LOCAL_VAR(expr)   StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, (expr)->data.num + 1)), *var_count); \
+                                    (*var_count)++; 
+
+    #define COUNT_PASSED_VAR(expr)   StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, (expr)->data.num + 1)), *var_count);
 
     //passed variables
-    if (node->left)
+    int count_nodes = 0;
+    Node* node = start_node->left;
+
+    if (node)
     {
         while (node->left->type != kKeyWord || node->left->data.num != kNumber) //stops when kNumber is faced
+        {
+            StackPush(stack, {.pointer_t = node->right});
             node = node->left;
-        
-        COUNT_VAR(node)       
-    }  
+            count_nodes++;
+        }     
 
-    do {
-        COUNT_VAR(node->right)
-        node = node->parent;
-    } while (node->type != kParameters);
+        COUNT_PASSED_VAR(node)
 
-    //local variables
-    if (node->right->left)
-    {
-        node = node->right->left;
-        while (node->left->type != kKeyWord || node->left->data.num != kNumber)
-            node = node->left;
-
-        COUNT_VAR(node)
+        while (count_nodes)
+        {
+            COUNT_PASSED_VAR((Node*)(StackPop(stack).pointer_t))
+            count_nodes--;
+        }
     }
 
-    do {
-        if (node->right->type == kVarDecl)
-            COUNT_VAR(node->right)
-        node = node->parent;
-    } while (node->type != kParameters);
+    //local variables
+    count_nodes = 0;
+    node = start_node->right->left;    
+    if (node)
+    {
+        while (node->left->type != kKeyWord || node->left->data.num != kNumber)
+        {
+            StackPush(stack, {.pointer_t = node->right});
+            node = node->left;
+            count_nodes++;
+        }
+
+        COUNT_LOCAL_VAR(node)
+        while (count_nodes)
+        {
+            COUNT_LOCAL_VAR((Node*)(StackPop(stack).pointer_t));
+            count_nodes--;
+        }
+    }
 
     #undef COUNT_VAR
 }
 
 
-void GenDeclList(Node* node,
+void GenDeclList(Node* start_node,
                  StrList* id_table, 
                  StrList* var_table,
-                 BufferInfo* func_code)
+                 BufferInfo* func_code,
+                 Stack_t* stack)
 {
     BufferInfo decl_list_code = {};
     
-    // while (node->data.num == kStep)
-    // {
-    //     GenDeclInit(node->right, id_table, var_table, &decl_list_code);
+    //local variables
+    int count_nodes = 0;
+    Node* node = start_node->right->left;    
+    if (node)
+    {
+        while (node->left->type != kKeyWord || node->left->data.num != kNumber)
+        {
+            StackPush(stack, {.pointer_t = node->right});
+            node = node->left;
+            count_nodes++;
+        }
 
-    //     node = node->left;
-    // }
-    // GenDeclInit(node, id_table, var_table, &decl_list_code);
-
+        GenDeclInit(node, id_table, var_table, &decl_list_code);
+        while (count_nodes)
+        {
+            GenDeclInit((Node*)(StackPop(stack).pointer_t), id_table, var_table, &decl_list_code);
+            count_nodes--;
+        }
+    }
 
     BufAppendBuf(func_code, &decl_list_code);
     free(decl_list_code.buf);
@@ -177,11 +200,11 @@ void GenDeclInit(Node* node,
 
     if (node->right->data.num == kEqual)
     {
-        GenRightValue(node->right, id_table, var_table, &decl_code);
+        GenRightValue(node->right->right, id_table, var_table, &decl_code);
         
         // calcuate shift in stack
-        var_shift = StrListGetNodeNum(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->data.num))) + 1;  
-        wprintf(YELLOW L"var_shift: %d\n" DELETE_COLOR, var_shift);
+        var_shift = StrListGetNodeNum(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1))) + 1;  
+        // wprintf(YELLOW L"var_shift: %d\n" DELETE_COLOR, var_shift);
         swprintf(string, 40, L"    mov dword [rbp - 4 * %d], eax\n", var_shift);
         BufAppendStr(&decl_code, string);
     }
@@ -189,29 +212,29 @@ void GenDeclInit(Node* node,
     BufAppendBuf(decl_list_code, &decl_code);
     free(decl_code.buf);
 }   
+ 
 
-
-void GenRightValue(Node* node, // kEqual node
+void GenRightValue(Node* node, // kEqual->right node
                    StrList* id_table, 
-                   StrList * var_table,
+                   StrList* var_table,
                    BufferInfo* decl_code)
 {
     wchar_t r_value_code[40] = {0};
 
-    switch (node->right->type)
+    switch (node->type)
     {
         case kCall:
             break;
         case kConstant:
         {
-            swprintf(r_value_code, 40, L"    mov eax, %d\n", node->right->data.num);
+            swprintf(r_value_code, 40, L"    mov eax, %d\n", node->data.num);
             break;
         }
         case kIdentifier:
         {
-            int r_var_shift = 0;
-            r_var_shift = StrListGetNodeNum(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->data.num))) + 1;
-            swprintf(r_value_code, 40, L"    mov eax, dword [rbp - 4 * %d]\n", r_var_shift);
+            int r_val_shift = 0;
+            r_val_shift = StrListGetNodeNum(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1))) + 1;
+            swprintf(r_value_code, 40, L"    mov eax, dword [rbp - 4 * %d]\n", r_val_shift);
             break;
         }
         default:

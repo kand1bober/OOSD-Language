@@ -25,8 +25,12 @@ SOURCES_DIR_TREE = Tree
 SOURCES_TREE = $(wildcard $(SOURCES_DIR_TREE)/*cpp ) 
 OBJECTS_TREE = $(SOURCES_TREE:.cpp=.o) 
 
-OBJECTS_FRONTEND = $(OBJECTS_FRONT) $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_TREE)
-SOURCES_FRONTEND = $(SOURCES_FRONT) $(SOURCES_STR_LIST) $(SOURCES_NUM_LIST) $(SOURCES_UTILITIES) $(SOURCES_TREE)
+SOURCES_DIR_STACK = Stack
+SOURCES_STACK = $(wildcard $(SOURCES_DIR_STACK)/*cpp ) 
+OBJECTS_STACK = $(SOURCES_STACK:.cpp=.o)  
+
+OBJECTS_FRONTEND = $(OBJECTS_FRONT) $(OBJECTS_STR_LIST) $(OBJECTS_NUM_LIST) $(OBJECTS_UTILITIES) $(OBJECTS_TREE) $(OBJECTS_STACK)
+SOURCES_FRONTEND = $(SOURCES_FRONT) $(SOURCES_STR_LIST) $(SOURCES_NUM_LIST) $(SOURCES_UTILITIES) $(SOURCES_TREE) $(SOURCES_STACK)
 # -----------------------------------------------
 
 # -----------------------------------------------
@@ -58,7 +62,7 @@ $(EXECUTABLE): $(OBJECTS)
 	$(CC) $(OBJECTS) $(CFLAGS) -o $(EXECUTABLE)
 
 %.o: %.cpp
-	$(CC) -c $(CFLAGS) -IFrontend -ICommon -IStringList -INumberList -IUtilities -ITree -IBackendSPU $< -o $@ 
+	$(CC) -c $(CFLAGS) -IFrontend -ICommon -IStringList -INumberList -IUtilities -ITree -IBackendSPU -IStack $< -o $@ 
 
 clean: 
 	@rm -f $(EXECUTABLE) Utilities/utilities.o $(MAIN_OBJ)
@@ -67,3 +71,4 @@ clean:
 	@rm -f NumberList/list_dump.o NumberList/list.o
 	@rm -f Frontend/lexer.o Frontend/main.o Frontend/parser.o 
 	@rm -f BackendASM/main.o BackendASM/asm_code_gen.o 
+	@rm -f Stack/stack.o 

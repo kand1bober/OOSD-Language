@@ -12,20 +12,20 @@
                             exit(1); \
                         }
 
-Stack_t* StackCtor()
+StackInfo StackCtor(Stack_t* stack)
 {
-    Stack_t* stack = (Stack_t*)malloc(sizeof(StackElem));
+    stack->data = (StackElem*)malloc(sizeof(StackElem));
     stack->size = 0;
 
     AlLOC_ASSERT 
 
-    return stack;
+    return kGoodStack;
 }
 
 
 StackInfo StackDtor(Stack_t* stack)
 {
-    free(stack);
+    free(stack->data);
 
     if (!stack)
         return kGoodStack;
@@ -39,11 +39,11 @@ StackInfo StackDtor(Stack_t* stack)
 
 StackInfo StackPush(Stack_t* stack, StackElem elem)
 {
-    stack = (Stack_t*)realloc(stack, sizeof(StackElem) * stack->size + 1);
+    stack->data = (StackElem*)realloc(stack->data, sizeof(StackElem) * (stack->size + 1));
 
     AlLOC_ASSERT
 
-    *(stack->data + stack->size * sizeof(StackElem)) = elem;
+    *(stack->data + stack->size) = elem;
     stack->size++;
 
     return kGoodStack;
@@ -56,9 +56,9 @@ StackElem StackPop(Stack_t* stack)
 
     stack->size--;
 
-    elem = *(stack->data + stack->size * sizeof(StackElem));
+    elem = *(stack->data + stack->size);
 
-    stack = (Stack_t*)realloc(stack, sizeof(StackElem) * stack->size);
+    stack->data = (StackElem*)realloc(stack->data, sizeof(StackElem) * stack->size);
 
     return elem;
 }
