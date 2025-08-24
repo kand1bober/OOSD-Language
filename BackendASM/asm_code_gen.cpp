@@ -53,6 +53,7 @@ void GenFunc(Node* node,
     BufAppendStr(&func_code, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1)));
     BufAppendStr(&func_code, L":\n");
 
+
     //arrange local variables for convenient access
     int var_count = 0;
     StrList* var_table = StrListCtor();
@@ -76,7 +77,7 @@ void GenFunc(Node* node,
     //TODO: Compare Parameters in node->left with parameters in call 
     if (node->left)
     {
-        GenDeclList(node->left, id_table, var_table, &func_code);
+        // GenDeclList(node->left, id_table, var_table, &func_code);
     }
     if (node->right)
     {
@@ -94,38 +95,50 @@ void GenFunc(Node* node,
 }
 
 
-//TODO: algorythm needs to be optimized 
-// node -- funcdef node
+/*
+*   recursive function; 
+*   should be called to the left and right->left son's 
+*   of prameter node of functon definition
+*/
 void CountVariables(Node* node, 
                     StrList* id_table, 
                     StrList* var_table, 
                     int* var_count)
 {
+    #define COUNT_VAR(expr)   StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, expr->data.num + 1)), *var_count); \
+                              (*var_count)++; 
+
+    //passed variables
     if (node->left)
     {
-        node = node->left;
-        while (node->data.num == kEnum)
-        {
-            StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->right->data.num + 1)), *var_count);
-            (*var_count)++;
+        while (node->left->type != kKeyWord || node->left->data.num != kNumber) //stops when kNumber is faced
             node = node->left;
-        }
-        StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1)), *var_count);
-        (*var_count)++;
-    }
+        
+        COUNT_VAR(node)       
+    }  
 
+    do {
+        COUNT_VAR(node->right)
+        node = node->parent;
+    } while (node->type != kParameters);
+
+    //local variables
     if (node->right->left)
     {
         node = node->right->left;
-        while (node->data.num == kStep)
-        {
-            StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->right->data.num + 1)), *var_count);
-            (*var_count)++;
+        while (node->left->type != kKeyWord || node->left->data.num != kNumber)
             node = node->left;
-        }
-        StrListAdd(var_table, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1)), *var_count);
-        (*var_count)++;
+
+        COUNT_VAR(node)
     }
+
+    do {
+        if (node->right->type == kVarDecl)
+            COUNT_VAR(node->right)
+        node = node->parent;
+    } while (node->type != kParameters);
+
+    #undef COUNT_VAR
 }
 
 
@@ -136,13 +149,14 @@ void GenDeclList(Node* node,
 {
     BufferInfo decl_list_code = {};
     
-    while (node->data.num == kStep)
-    {
-        GenDeclInit(node->right, id_table, var_table, &decl_list_code);
+    // while (node->data.num == kStep)
+    // {
+    //     GenDeclInit(node->right, id_table, var_table, &decl_list_code);
 
-        node = node->left;
-    }
-    GenDeclInit(node, id_table, var_table, &decl_list_code);
+    //     node = node->left;
+    // }
+    // GenDeclInit(node, id_table, var_table, &decl_list_code);
+
 
     BufAppendBuf(func_code, &decl_list_code);
     free(decl_list_code.buf);
