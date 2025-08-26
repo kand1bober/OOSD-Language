@@ -6,6 +6,17 @@
 #ifndef SPU_CODE_GEN_HEADER
 #define SPU_CODE_GEN_HEADER
 
+static const wchar_t* passed_vars_table[] = 
+{
+    L"trash :)",
+    L"edi",
+    L"esi", 
+    L"edx",
+    L"ecx",
+    L"r8d",
+    L"r9d",
+};
+
 void GenSpuCode(Tree* tree, StrList* id_table);
 
 void GenExtDecl();
@@ -14,32 +25,41 @@ void GenFunc(Node* node,
              StrList* id_table, 
              BufferInfo* asm_code);
 
-void CountVariables(Node* start_node, 
+void CountVariables(Node* start_node, //parameter_node
                     StrList* id_table, 
-                    StrList* var_table, 
-                    int* var_count, 
-                    Stack_t* stack);
+                    StrList* passed_vars,
+                    int* passed_var_count,
+                    StrList* local_vars, 
+                    int* local_var_count);
 
-void GenDeclList(Node* node,
+void GenDeclList(Node* start_node,
                  StrList* id_table, 
-                 StrList* var_table,
-                 BufferInfo* func_code, 
-                 Stack_t* stack);
+                 BufferInfo* func_code,
+                 StrList* passed_vars,
+                 int* passed_var_count,
+                 StrList* local_vars, 
+                 int* local_var_count);
 
 void GenDeclInit(Node* node,
                  StrList* id_table, 
-                 StrList * var_table,
-                 BufferInfo* dec_list_code);
+                 BufferInfo* decl_list_code,
+                 StrList* passed_vars,
+                 int* passed_var_count,
+                 StrList* local_vars, 
+                 int* local_var_count);
 
-void GenRightValue(Node* node, // kEqual node
+void GenRightValue(Node* node, // kEqual->right node
                    StrList* id_table, 
-                   StrList * var_table,
-                   BufferInfo* decl_code);
+                   BufferInfo* decl_code,
+                   StrList* passed_vars,
+                   int* passed_var_count,
+                   StrList* local_vars, 
+                   int* local_var_count);
 
 void GenStateList(Node* node,
-                 StrList* id_table, 
-                 StrList* var_table,
-                 BufferInfo* func_code);
+                  StrList* id_table, 
+                  StrList* var_table,
+                  BufferInfo* func_code);
 
 bool IsStatement();
 
@@ -72,5 +92,6 @@ void GenId(Node* node,
 void GenNumber(Node* node,
                StrList* id_table, 
                BufferInfo* code);
+
 
 #endif
