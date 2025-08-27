@@ -22,8 +22,8 @@ void GenSpuCode(Tree* tree, StrList* id_table)
 
     Node* node = tree->root;
 
-    BufAppendStr(&asm_file.buffer_info, L"\nsection .text\n"
-                                         "    global main\n");
+    BufAppendStr(&asm_file.buffer_info, L"section .text\n"
+                                         "    global main\n\n");
 
     while (node->type == kKeyWord && node->data.num == kStep)
     {
@@ -49,7 +49,6 @@ void GenFunc(Node* node,
     func_code.buf = (wchar_t*)calloc(10, sizeof(wchar_t));
 
     //label:
-    BufAppendStr(&func_code, L"\n");
     BufAppendStr(&func_code, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1)));
     BufAppendStr(&func_code, L":\n");
 
@@ -90,9 +89,9 @@ void GenFunc(Node* node,
     // GenStateList(node->left, id_table, var_table, &func_code);
     
     //exit function
-    BufAppendStr(&func_code, L"\n    mov rsp, rbp\n"
+    BufAppendStr(&func_code, L"    mov rsp, rbp\n"
                               "    pop rbp\n"
-                              "    ret\n");
+                              "    ret\n\n");
 
     BufAppendBuf(asm_code, &func_code);
     free(func_code.buf);
@@ -249,7 +248,7 @@ void GenDeclInit(Node* node,
         
         // calcuate shift in stack
         var_shift = StrListGetNodeNum(local_vars, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1))) + 1;  
-        swprintf(string, 40, L"    mov dword [rbp - 4 * %d], eax\n", var_shift);
+        swprintf(string, 40, L"    mov dword [rbp - 4 * %d], eax\n\n", var_shift);
         BufAppendStr(&decl_code, string);
     }
 
@@ -287,7 +286,7 @@ void GenRightValue(Node* node, // kEqual->right node
             }
             else
             {
-                    // wprintf(YELLOW L"Hello r_val_shift: %d\n" DELETE_COLOR, r_val_shift);
+                // wprintf(YELLOW L"Hello r_val_shift: %d\n" DELETE_COLOR, r_val_shift);
                 r_val_shift = StrListGetNodeNum(passed_vars, GET_NODE_DATA(StrListGetNode(id_table, node->data.num + 1))) + 1;
                 BACK_ASSERT(r_val_shift != -1)
 
@@ -297,7 +296,7 @@ void GenRightValue(Node* node, // kEqual->right node
                 } 
                 else  
                 {
-                    r_val_shift = (16 + 4 * (r_val_shift - 6)); 
+                    r_val_shift = (16 + 4 * (r_val_shift - 7)); 
                     swprintf(r_value_code, 40, L"    mov eax, dword [rbp + %d]\n", r_val_shift);
                 }
             }
@@ -319,7 +318,7 @@ void GetStateList(Node* node,
                  StrList * var_table,
                  BufferInfo* func_code)
 {
-
+    
 }
 
 //-----------------------------------------------
