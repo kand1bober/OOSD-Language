@@ -81,7 +81,7 @@ static const KeyWord keyword_table[] =
 {
     #define DEF_KEYWORD(key_word, C_key_word, key_code, html_entity) {key_word, C_key_word, key_code, wcslen(key_word), html_entity}
 
-    DEF_KEYWORD(L"нахуй",            L"nop",      kNOP,                 L""),
+    DEF_KEYWORD(L"бля",              L"nop",      kNOP,                 L""),
     DEF_KEYWORD(L"блять",            L"nop",      kNOP,                 L""),
     DEF_KEYWORD(L"кунимэн",          L"(",        kLeftBracket,         L"&#x28;"),
     DEF_KEYWORD(L"кишкоблуд",        L")",        kRightBracket,        L"&#x29;"),
@@ -113,7 +113,7 @@ static const KeyWord keyword_table[] =
     DEF_KEYWORD(L"к-тому-же",        L",",        kEnum,                L"&#x2C;"),
     DEF_KEYWORD(L"ячейка-из-говна",  L"int",      kNumber,              L""),
     DEF_KEYWORD(L"выслушать",        L"in",       kIn,                  L""),
-    DEF_KEYWORD(L"спиздануть",       L"out",      kOut,                 L""),
+    DEF_KEYWORD(L"сказать",          L"out",      kOut,                 L""),
     DEF_KEYWORD(L"на-базу",          L"return",   kRet,                 L""),
     DEF_KEYWORD(L"стоп",             L"break",    kBreak,               L""),
     DEF_KEYWORD(L"продолжить",       L"continue", kContinue,            L""),

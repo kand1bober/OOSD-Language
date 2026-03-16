@@ -506,7 +506,10 @@ Node* GetCompoundState(Parser* src)
         state_node = GetStateList(src);
         InsertLeave(src->tree, node, kRight, state_node);
     }
-
+    // else 
+    // {
+    //     wprintf(YELLOW L"HELLO\n" DELETE_COLOR);
+    // }
 
     SYNTAX_ASSERT(kRightCurlyBracket)
     GO_TO_NEXT_TOKEN

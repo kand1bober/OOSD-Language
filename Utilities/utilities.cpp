@@ -98,7 +98,7 @@ const wchar_t* KeyWordStrVal(int64_t keycode)
         }
     }
 
-    return L"huy";
+    return L"bad";
 }
 
 
@@ -112,7 +112,7 @@ const wchar_t* KeyWordHTMLVal(int64_t keycode)
         }
     }
 
-    return L"huy";
+    return L"bad";
 }
 
 

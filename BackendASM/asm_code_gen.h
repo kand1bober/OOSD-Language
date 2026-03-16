@@ -2,6 +2,7 @@
 #include "../StringList/list.h"
 #include "../StringList/list_dump.h"
 #include "../Stack/stack.h"
+#include "../Common/keywords.h"
 
 #ifndef SPU_CODE_GEN_HEADER
 #define SPU_CODE_GEN_HEADER
@@ -17,13 +18,21 @@ static const wchar_t* passed_vars_table[] =
     L"r9d",
 };
 
+typedef struct 
+{
+    int if_count;
+    int while_count;
+}LabelCounter;
+
+
 void GenSpuCode(Tree* tree, StrList* id_table);
 
 void GenExtDecl();
 
 void GenFunc(Node* node, 
              StrList* id_table, 
-             BufferInfo* asm_code);
+             BufferInfo* asm_code,
+             LabelCounter* label_counter);
 
 void CountVariables(Node* start_node, //parameter_node
                     StrList* id_table, 
@@ -56,16 +65,27 @@ void GenRightValue(Node* node, // kEqual->right node
                    StrList* local_vars, 
                    int* local_var_count);
 
-void GenStateList(Node* node,
+void GenStateList(Node* start_node,
                   StrList* id_table, 
-                  StrList* var_table,
-                  BufferInfo* func_code);
+                  BufferInfo* func_code,
+                  StrList* passed_vars,
+                  int* passed_var_count,
+                  StrList* local_vars, 
+                  int* local_var_count, 
+                  LabelCounter* label_counter);
 
-bool IsStatement();
+void GenState(Node* node,
+              StrList* id_table, 
+              BufferInfo* state_list_code,
+              StrList* passed_vars,
+              int* passed_var_count,
+              StrList* local_vars, 
+              int* local_var_count, 
+              LabelCounter* label_counter);
+
+void ChooseJump(Node* node, wchar_t* string);
 
 void GenCompoundState();
-
-void GenState();
 
 void GenExpr();
 
